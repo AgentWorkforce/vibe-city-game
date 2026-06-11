@@ -108,7 +108,7 @@ script = ExtResource("9_deescalation")
 player_root_path = NodePath("../Player")
 respawn_marker_path = NodePath("../PlayerSpawn")
 
-[node name="TrafficManager" type="Node" parent="."]
+[node name="TrafficManager" type="Node3D" parent="."]
 script = ExtResource("13_traffic")
 graph_name = &"district_grid"
 max_cars = 5
