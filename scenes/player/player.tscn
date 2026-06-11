@@ -26,7 +26,7 @@ rings = 8
 [node name="Player" type="Node3D"]
 script = ExtResource("1_root")
 
-[node name="Body" type="CharacterBody3D" parent="."]
+[node name="Body" type="CharacterBody3D" parent="." groups=["player"]]
 script = ExtResource("2_movement")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
