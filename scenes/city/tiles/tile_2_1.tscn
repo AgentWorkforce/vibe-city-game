@@ -1,0 +1,1347 @@
+[gd_scene load_steps=121 format=3]
+
+[sub_resource type="StandardMaterial3D" id="GroundMaterial"]
+albedo_color = Color(0.9, 0.84, 0.72, 1)
+roughness = 0.88
+
+[sub_resource type="StandardMaterial3D" id="RoadMaterial"]
+albedo_color = Color(0.43, 0.42, 0.5, 1)
+roughness = 0.92
+
+[sub_resource type="StandardMaterial3D" id="SidewalkMaterial"]
+albedo_color = Color(0.92, 0.97, 1, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="CurbMaterial"]
+albedo_color = Color(1, 0.64, 0.77, 1)
+roughness = 0.82
+
+[sub_resource type="StandardMaterial3D" id="SandMaterial"]
+albedo_color = Color(1, 0.86, 0.58, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="WaterMaterial"]
+transparency = 1
+albedo_color = Color(0.28, 0.78, 0.82, 0.6)
+roughness = 0.36
+
+[sub_resource type="StandardMaterial3D" id="PlazaMaterial"]
+albedo_color = Color(0.96, 0.8, 0.86, 1)
+roughness = 0.86
+
+[sub_resource type="StandardMaterial3D" id="FountainMaterial"]
+albedo_color = Color(0.72, 0.92, 0.98, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="BenchMaterial"]
+albedo_color = Color(0.74, 0.54, 0.34, 1)
+roughness = 0.78
+
+[sub_resource type="StandardMaterial3D" id="PlanterMaterial"]
+albedo_color = Color(0.58, 0.82, 0.65, 1)
+roughness = 0.86
+
+[sub_resource type="StandardMaterial3D" id="PalmTrunkMaterial"]
+albedo_color = Color(0.74, 0.54, 0.34, 1)
+roughness = 0.78
+
+[sub_resource type="StandardMaterial3D" id="PalmCanopyMaterial"]
+albedo_color = Color(0.34, 0.76, 0.45, 1)
+roughness = 0.82
+
+[sub_resource type="StandardMaterial3D" id="WindowBandMaterial"]
+albedo_color = Color(0.74, 0.97, 1, 1)
+emission_enabled = true
+emission = Color(0.55, 0.95, 1, 1)
+emission_energy_multiplier = 0.7
+roughness = 0.52
+
+[sub_resource type="StandardMaterial3D" id="LampMaterial"]
+albedo_color = Color(1, 0.9, 0.66, 1)
+emission_enabled = true
+emission = Color(1, 0.82, 0.45, 1)
+emission_energy_multiplier = 0.9
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="BuildingMintMaterial"]
+albedo_color = Color(0.64, 0.96, 0.8, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="BuildingFlamingoMaterial"]
+albedo_color = Color(1, 0.5, 0.69, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="BuildingCreamMaterial"]
+albedo_color = Color(1, 0.9, 0.68, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="BuildingSkyBlueMaterial"]
+albedo_color = Color(0.55, 0.84, 1, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="BuildingLilacMaterial"]
+albedo_color = Color(0.78, 0.68, 1, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="BuildingCoralMaterial"]
+albedo_color = Color(1, 0.62, 0.58, 1)
+roughness = 0.84
+
+[sub_resource type="CylinderMesh" id="PalmTrunkMesh"]
+material = SubResource("PalmTrunkMaterial")
+top_radius = 0.24
+bottom_radius = 0.34
+height = 8.0
+radial_segments = 12
+
+[sub_resource type="SphereMesh" id="PalmCanopyMesh"]
+material = SubResource("PalmCanopyMaterial")
+radius = 2.4
+height = 4.8
+radial_segments = 16
+rings = 8
+
+[sub_resource type="SphereMesh" id="LampMesh"]
+material = SubResource("LampMaterial")
+radius = 0.55
+height = 1.1
+radial_segments = 12
+rings = 6
+
+[sub_resource type="BoxShape3D" id="BoxShape_128_0p16_128"]
+size = Vector3(128, 0.16, 128)
+
+[sub_resource type="BoxMesh" id="BoxMesh_GroundMaterial_128_0p16_128"]
+material = SubResource("GroundMaterial")
+size = Vector3(128, 0.16, 128)
+
+[sub_resource type="BoxShape3D" id="BoxShape_8_0p1_88"]
+size = Vector3(8, 0.1, 88)
+
+[sub_resource type="BoxMesh" id="BoxMesh_RoadMaterial_8_0p1_88"]
+material = SubResource("RoadMaterial")
+size = Vector3(8, 0.1, 88)
+
+[sub_resource type="BoxShape3D" id="BoxShape_4_0p12_88"]
+size = Vector3(4, 0.12, 88)
+
+[sub_resource type="BoxMesh" id="BoxMesh_SidewalkMaterial_4_0p12_88"]
+material = SubResource("SidewalkMaterial")
+size = Vector3(4, 0.12, 88)
+
+[sub_resource type="BoxShape3D" id="BoxShape_0p35_0p15_88"]
+size = Vector3(0.35, 0.15, 88)
+
+[sub_resource type="BoxMesh" id="BoxMesh_CurbMaterial_0p35_0p15_88"]
+material = SubResource("CurbMaterial")
+size = Vector3(0.35, 0.15, 88)
+
+[sub_resource type="BoxShape3D" id="BoxShape_4_0p1_88"]
+size = Vector3(4, 0.1, 88)
+
+[sub_resource type="BoxMesh" id="BoxMesh_RoadMaterial_4_0p1_88"]
+material = SubResource("RoadMaterial")
+size = Vector3(4, 0.1, 88)
+
+[sub_resource type="BoxShape3D" id="BoxShape_128_0p1_4"]
+size = Vector3(128, 0.1, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_RoadMaterial_128_0p1_4"]
+material = SubResource("RoadMaterial")
+size = Vector3(128, 0.1, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape_128_0p12_4"]
+size = Vector3(128, 0.12, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_SidewalkMaterial_128_0p12_4"]
+material = SubResource("SidewalkMaterial")
+size = Vector3(128, 0.12, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape_128_0p15_0p35"]
+size = Vector3(128, 0.15, 0.35)
+
+[sub_resource type="BoxMesh" id="BoxMesh_CurbMaterial_128_0p15_0p35"]
+material = SubResource("CurbMaterial")
+size = Vector3(128, 0.15, 0.35)
+
+[sub_resource type="BoxShape3D" id="BoxShape_128_0p1_8"]
+size = Vector3(128, 0.1, 8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_RoadMaterial_128_0p1_8"]
+material = SubResource("RoadMaterial")
+size = Vector3(128, 0.1, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape_128_0p12_6"]
+size = Vector3(128, 0.12, 6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_SidewalkMaterial_128_0p12_6"]
+material = SubResource("SidewalkMaterial")
+size = Vector3(128, 0.12, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape_128_0p09_12"]
+size = Vector3(128, 0.09, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_SandMaterial_128_0p09_12"]
+material = SubResource("SandMaterial")
+size = Vector3(128, 0.09, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_128_0p08_12"]
+size = Vector3(128, 0.08, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_SandMaterial_128_0p08_12"]
+material = SubResource("SandMaterial")
+size = Vector3(128, 0.08, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_128_0p06_7p5"]
+size = Vector3(128, 0.06, 7.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_SandMaterial_128_0p06_7p5"]
+material = SubResource("SandMaterial")
+size = Vector3(128, 0.06, 7.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WaterMaterial_128_0p04_12"]
+material = SubResource("WaterMaterial")
+size = Vector3(128, 0.04, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_20_0p12_20"]
+size = Vector3(20, 0.12, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_PlazaMaterial_20_0p12_20"]
+material = SubResource("PlazaMaterial")
+size = Vector3(20, 0.12, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape_8_0p45_8"]
+size = Vector3(8, 0.45, 8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_FountainMaterial_8_0p45_8"]
+material = SubResource("FountainMaterial")
+size = Vector3(8, 0.45, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape_6_0p08_6"]
+size = Vector3(6, 0.08, 6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WaterMaterial_6_0p08_6"]
+material = SubResource("WaterMaterial")
+size = Vector3(6, 0.08, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape_3p2_0p7_3p2"]
+size = Vector3(3.2, 0.7, 3.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_PlanterMaterial_3p2_0p7_3p2"]
+material = SubResource("PlanterMaterial")
+size = Vector3(3.2, 0.7, 3.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_PalmCanopyMaterial_2p4_0p35_2p4"]
+material = SubResource("PalmCanopyMaterial")
+size = Vector3(2.4, 0.35, 2.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape_16_26_14"]
+size = Vector3(16, 26, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingFlamingoMaterial_16_26_14"]
+material = SubResource("BuildingFlamingoMaterial")
+size = Vector3(16, 26, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_12p48_0p45_0p1"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(12.48, 0.45, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_0p1_0p45_10p08"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(0.1, 0.45, 10.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingFlamingoMaterial_11p52_0p9_10p08"]
+material = SubResource("BuildingFlamingoMaterial")
+size = Vector3(11.52, 0.9, 10.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_1p92_13p52_0p12"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(1.92, 13.52, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_14_18_16"]
+size = Vector3(14, 18, 16)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingCreamMaterial_14_18_16"]
+material = SubResource("BuildingCreamMaterial")
+size = Vector3(14, 18, 16)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_10p92_0p45_0p1"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(10.92, 0.45, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_0p1_0p45_11p52"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(0.1, 0.45, 11.52)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingCreamMaterial_10p08_0p9_11p52"]
+material = SubResource("BuildingCreamMaterial")
+size = Vector3(10.08, 0.9, 11.52)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_1p68_9p36_0p12"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(1.68, 9.36, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_18_32_14"]
+size = Vector3(18, 32, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingSkyBlueMaterial_18_32_14"]
+material = SubResource("BuildingSkyBlueMaterial")
+size = Vector3(18, 32, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_14p04_0p45_0p1"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(14.04, 0.45, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingSkyBlueMaterial_12p96_0p9_10p08"]
+material = SubResource("BuildingSkyBlueMaterial")
+size = Vector3(12.96, 0.9, 10.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_2p16_16p64_0p12"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(2.16, 16.64, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_12_16_12"]
+size = Vector3(12, 16, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingLilacMaterial_12_16_12"]
+material = SubResource("BuildingLilacMaterial")
+size = Vector3(12, 16, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_9p36_0p45_0p1"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(9.36, 0.45, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_0p1_0p45_8p64"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(0.1, 0.45, 8.64)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingLilacMaterial_8p64_0p9_8p64"]
+material = SubResource("BuildingLilacMaterial")
+size = Vector3(8.64, 0.9, 8.64)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_1p44_8p32_0p12"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(1.44, 8.32, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_18_44_16"]
+size = Vector3(18, 44, 16)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingCoralMaterial_18_44_16"]
+material = SubResource("BuildingCoralMaterial")
+size = Vector3(18, 44, 16)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingCoralMaterial_12p96_0p9_11p52"]
+material = SubResource("BuildingCoralMaterial")
+size = Vector3(12.96, 0.9, 11.52)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_2p16_22p88_0p12"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(2.16, 22.88, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_14_28_14"]
+size = Vector3(14, 28, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingMintMaterial_14_28_14"]
+material = SubResource("BuildingMintMaterial")
+size = Vector3(14, 28, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingMintMaterial_10p08_0p9_10p08"]
+material = SubResource("BuildingMintMaterial")
+size = Vector3(10.08, 0.9, 10.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_1p68_14p56_0p12"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(1.68, 14.56, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_18_36_12"]
+size = Vector3(18, 36, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingFlamingoMaterial_18_36_12"]
+material = SubResource("BuildingFlamingoMaterial")
+size = Vector3(18, 36, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingFlamingoMaterial_12p96_0p9_8p64"]
+material = SubResource("BuildingFlamingoMaterial")
+size = Vector3(12.96, 0.9, 8.64)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_2p16_18p72_0p12"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(2.16, 18.72, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_12_18_14"]
+size = Vector3(12, 18, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingCreamMaterial_12_18_14"]
+material = SubResource("BuildingCreamMaterial")
+size = Vector3(12, 18, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingCreamMaterial_8p64_0p9_10p08"]
+material = SubResource("BuildingCreamMaterial")
+size = Vector3(8.64, 0.9, 10.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_1p44_9p36_0p12"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(1.44, 9.36, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_16_24_12"]
+size = Vector3(16, 24, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingSkyBlueMaterial_16_24_12"]
+material = SubResource("BuildingSkyBlueMaterial")
+size = Vector3(16, 24, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingSkyBlueMaterial_11p52_0p9_8p64"]
+material = SubResource("BuildingSkyBlueMaterial")
+size = Vector3(11.52, 0.9, 8.64)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_1p92_12p48_0p12"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(1.92, 12.48, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_14_20_12"]
+size = Vector3(14, 20, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingLilacMaterial_14_20_12"]
+material = SubResource("BuildingLilacMaterial")
+size = Vector3(14, 20, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingLilacMaterial_10p08_0p9_8p64"]
+material = SubResource("BuildingLilacMaterial")
+size = Vector3(10.08, 0.9, 8.64)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_1p68_10p4_0p12"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(1.68, 10.4, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_18_30_12"]
+size = Vector3(18, 30, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingCoralMaterial_18_30_12"]
+material = SubResource("BuildingCoralMaterial")
+size = Vector3(18, 30, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingCoralMaterial_12p96_0p9_8p64"]
+material = SubResource("BuildingCoralMaterial")
+size = Vector3(12.96, 0.9, 8.64)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_2p16_15p6_0p12"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(2.16, 15.6, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_14_22_12"]
+size = Vector3(14, 22, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingMintMaterial_14_22_12"]
+material = SubResource("BuildingMintMaterial")
+size = Vector3(14, 22, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BuildingMintMaterial_10p08_0p9_8p64"]
+material = SubResource("BuildingMintMaterial")
+size = Vector3(10.08, 0.9, 8.64)
+
+[sub_resource type="BoxMesh" id="BoxMesh_WindowBandMaterial_1p68_11p44_0p12"]
+material = SubResource("WindowBandMaterial")
+size = Vector3(1.68, 11.44, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape_0p7_8_0p7"]
+size = Vector3(0.7, 8, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape_4p6_4p2_4p6"]
+size = Vector3(4.6, 4.2, 4.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape_4p5_0p5_1p1"]
+size = Vector3(4.5, 0.5, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_BenchMaterial_4p5_0p5_1p1"]
+material = SubResource("BenchMaterial")
+size = Vector3(4.5, 0.5, 1.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape_0p35_5_0p35"]
+size = Vector3(0.35, 5, 0.35)
+
+[sub_resource type="BoxMesh" id="BoxMesh_SidewalkMaterial_0p35_5_0p35"]
+material = SubResource("SidewalkMaterial")
+size = Vector3(0.35, 5, 0.35)
+
+[node name="Tile_2_1" type="Node3D"]
+
+[node name="Terrain" type="Node3D" parent="."]
+
+[node name="GroundPlane" type="StaticBody3D" parent="Terrain"]
+position = Vector3(64, -0.08, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/GroundPlane"]
+shape = SubResource("BoxShape_128_0p16_128")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/GroundPlane"]
+mesh = SubResource("BoxMesh_GroundMaterial_128_0p16_128")
+
+[node name="Roads" type="Node3D" parent="."]
+
+[node name="VerticalRoad_64" type="StaticBody3D" parent="Roads"]
+position = Vector3(64, 0.05, 44)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roads/VerticalRoad_64"]
+shape = SubResource("BoxShape_8_0p1_88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Roads/VerticalRoad_64"]
+mesh = SubResource("BoxMesh_RoadMaterial_8_0p1_88")
+
+[node name="Sidewalks" type="Node3D" parent="."]
+
+[node name="VerticalSidewalkWest_64" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(58, 0.08, 44)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/VerticalSidewalkWest_64"]
+shape = SubResource("BoxShape_4_0p12_88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/VerticalSidewalkWest_64"]
+mesh = SubResource("BoxMesh_SidewalkMaterial_4_0p12_88")
+
+[node name="VerticalSidewalkEast_64" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(70, 0.08, 44)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/VerticalSidewalkEast_64"]
+shape = SubResource("BoxShape_4_0p12_88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/VerticalSidewalkEast_64"]
+mesh = SubResource("BoxMesh_SidewalkMaterial_4_0p12_88")
+
+[node name="Curbs" type="Node3D" parent="."]
+
+[node name="VerticalCurbWest_64" type="StaticBody3D" parent="Curbs"]
+position = Vector3(59.825, 0.175, 44)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/VerticalCurbWest_64"]
+shape = SubResource("BoxShape_0p35_0p15_88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/VerticalCurbWest_64"]
+mesh = SubResource("BoxMesh_CurbMaterial_0p35_0p15_88")
+
+[node name="VerticalCurbEast_64" type="StaticBody3D" parent="Curbs"]
+position = Vector3(68.175, 0.175, 44)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/VerticalCurbEast_64"]
+shape = SubResource("BoxShape_0p35_0p15_88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/VerticalCurbEast_64"]
+mesh = SubResource("BoxMesh_CurbMaterial_0p35_0p15_88")
+
+[node name="VerticalRoad_128" type="StaticBody3D" parent="Roads"]
+position = Vector3(126, 0.05, 44)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roads/VerticalRoad_128"]
+shape = SubResource("BoxShape_4_0p1_88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Roads/VerticalRoad_128"]
+mesh = SubResource("BoxMesh_RoadMaterial_4_0p1_88")
+
+[node name="VerticalSidewalkWest_128" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(122, 0.08, 44)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/VerticalSidewalkWest_128"]
+shape = SubResource("BoxShape_4_0p12_88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/VerticalSidewalkWest_128"]
+mesh = SubResource("BoxMesh_SidewalkMaterial_4_0p12_88")
+
+[node name="VerticalCurbWest_128" type="StaticBody3D" parent="Curbs"]
+position = Vector3(123.825, 0.175, 44)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/VerticalCurbWest_128"]
+shape = SubResource("BoxShape_0p35_0p15_88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/VerticalCurbWest_128"]
+mesh = SubResource("BoxMesh_CurbMaterial_0p35_0p15_88")
+
+[node name="HorizontalRoad_128" type="StaticBody3D" parent="Roads"]
+position = Vector3(64, 0.05, 2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roads/HorizontalRoad_128"]
+shape = SubResource("BoxShape_128_0p1_4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Roads/HorizontalRoad_128"]
+mesh = SubResource("BoxMesh_RoadMaterial_128_0p1_4")
+
+[node name="HorizontalSidewalkSouth_128" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(64, 0.08, 6)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/HorizontalSidewalkSouth_128"]
+shape = SubResource("BoxShape_128_0p12_4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/HorizontalSidewalkSouth_128"]
+mesh = SubResource("BoxMesh_SidewalkMaterial_128_0p12_4")
+
+[node name="HorizontalCurbSouth_128" type="StaticBody3D" parent="Curbs"]
+position = Vector3(64, 0.175, 4.175)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/HorizontalCurbSouth_128"]
+shape = SubResource("BoxShape_128_0p15_0p35")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/HorizontalCurbSouth_128"]
+mesh = SubResource("BoxMesh_CurbMaterial_128_0p15_0p35")
+
+[node name="HorizontalRoad_192" type="StaticBody3D" parent="Roads"]
+position = Vector3(64, 0.05, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roads/HorizontalRoad_192"]
+shape = SubResource("BoxShape_128_0p1_8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Roads/HorizontalRoad_192"]
+mesh = SubResource("BoxMesh_RoadMaterial_128_0p1_8")
+
+[node name="HorizontalSidewalkNorth_192" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(64, 0.08, 58)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/HorizontalSidewalkNorth_192"]
+shape = SubResource("BoxShape_128_0p12_4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/HorizontalSidewalkNorth_192"]
+mesh = SubResource("BoxMesh_SidewalkMaterial_128_0p12_4")
+
+[node name="HorizontalSidewalkSouth_192" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(64, 0.08, 70)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/HorizontalSidewalkSouth_192"]
+shape = SubResource("BoxShape_128_0p12_4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/HorizontalSidewalkSouth_192"]
+mesh = SubResource("BoxMesh_SidewalkMaterial_128_0p12_4")
+
+[node name="HorizontalCurbNorth_192" type="StaticBody3D" parent="Curbs"]
+position = Vector3(64, 0.175, 59.825)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/HorizontalCurbNorth_192"]
+shape = SubResource("BoxShape_128_0p15_0p35")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/HorizontalCurbNorth_192"]
+mesh = SubResource("BoxMesh_CurbMaterial_128_0p15_0p35")
+
+[node name="HorizontalCurbSouth_192" type="StaticBody3D" parent="Curbs"]
+position = Vector3(64, 0.175, 68.175)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/HorizontalCurbSouth_192"]
+shape = SubResource("BoxShape_128_0p15_0p35")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/HorizontalCurbSouth_192"]
+mesh = SubResource("BoxMesh_CurbMaterial_128_0p15_0p35")
+
+[node name="Beach" type="Node3D" parent="."]
+
+[node name="Boardwalk" type="StaticBody3D" parent="Beach"]
+position = Vector3(64, 0.09, 89)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Beach/Boardwalk"]
+shape = SubResource("BoxShape_128_0p12_6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Beach/Boardwalk"]
+mesh = SubResource("BoxMesh_SidewalkMaterial_128_0p12_6")
+
+[node name="UpperSand" type="StaticBody3D" parent="Beach"]
+position = Vector3(64, 0.025, 98)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Beach/UpperSand"]
+shape = SubResource("BoxShape_128_0p09_12")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Beach/UpperSand"]
+mesh = SubResource("BoxMesh_SandMaterial_128_0p09_12")
+
+[node name="MiddleSand" type="StaticBody3D" parent="Beach"]
+position = Vector3(64, -0.025, 110)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Beach/MiddleSand"]
+shape = SubResource("BoxShape_128_0p08_12")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Beach/MiddleSand"]
+mesh = SubResource("BoxMesh_SandMaterial_128_0p08_12")
+
+[node name="WetSand" type="StaticBody3D" parent="Beach"]
+position = Vector3(64, -0.07, 119.75)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Beach/WetSand"]
+shape = SubResource("BoxShape_128_0p06_7p5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Beach/WetSand"]
+mesh = SubResource("BoxMesh_SandMaterial_128_0p06_7p5")
+
+[node name="Water" type="Node3D" parent="."]
+
+[node name="ShallowWaterPlane" type="MeshInstance3D" parent="Water"]
+position = Vector3(64, -0.09, 122)
+mesh = SubResource("BoxMesh_WaterMaterial_128_0p04_12")
+
+[node name="Plaza" type="Node3D" parent="."]
+
+[node name="PlazaPavers" type="StaticBody3D" parent="Plaza"]
+position = Vector3(118, 0.09, 10)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Plaza/PlazaPavers"]
+shape = SubResource("BoxShape_20_0p12_20")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Plaza/PlazaPavers"]
+mesh = SubResource("BoxMesh_PlazaMaterial_20_0p12_20")
+
+[node name="FountainBasin" type="StaticBody3D" parent="Plaza"]
+position = Vector3(124, 0.25, 4)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Plaza/FountainBasin"]
+shape = SubResource("BoxShape_8_0p45_8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Plaza/FountainBasin"]
+mesh = SubResource("BoxMesh_FountainMaterial_8_0p45_8")
+
+[node name="FountainWater" type="StaticBody3D" parent="Plaza"]
+position = Vector3(125, 0.52, 3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Plaza/FountainWater"]
+shape = SubResource("BoxShape_6_0p08_6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Plaza/FountainWater"]
+mesh = SubResource("BoxMesh_WaterMaterial_6_0p08_6")
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="PlazaPlanter_112_144" type="StaticBody3D" parent="Props"]
+position = Vector3(112, 0.35, 16)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/PlazaPlanter_112_144"]
+shape = SubResource("BoxShape_3p2_0p7_3p2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/PlazaPlanter_112_144"]
+mesh = SubResource("BoxMesh_PlanterMaterial_3p2_0p7_3p2")
+
+[node name="PlanterTop" type="MeshInstance3D" parent="Props/PlazaPlanter_112_144"]
+position = Vector3(0, 0.55, 0)
+mesh = SubResource("BoxMesh_PalmCanopyMaterial_2p4_0p35_2p4")
+
+[node name="Buildings" type="Node3D" parent="."]
+
+[node name="ArtDecoBlock_01" type="StaticBody3D" parent="Buildings"]
+position = Vector3(18, 13, 20)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/ArtDecoBlock_01"]
+shape = SubResource("BoxShape_16_26_14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_01"]
+mesh = SubResource("BoxMesh_BuildingFlamingoMaterial_16_26_14")
+
+[node name="FrontWindowBand_1" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_01"]
+position = Vector3(0, -3.12, -7.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_12p48_0p45_0p1")
+
+[node name="EastWindowBand_1" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_01"]
+position = Vector3(8.055, -3.12, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_10p08")
+
+[node name="FrontWindowBand_2" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_01"]
+position = Vector3(0, 2.08, -7.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_12p48_0p45_0p1")
+
+[node name="FrontWindowBand_3" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_01"]
+position = Vector3(0, 7.28, -7.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_12p48_0p45_0p1")
+
+[node name="EastWindowBand_3" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_01"]
+position = Vector3(8.055, 7.28, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_10p08")
+
+[node name="SteppedCrown" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_01"]
+position = Vector3(0, 13.45, 0)
+mesh = SubResource("BoxMesh_BuildingFlamingoMaterial_11p52_0p9_10p08")
+
+[node name="DecoFin" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_01"]
+position = Vector3(0, 3.12, -7.08)
+mesh = SubResource("BoxMesh_WindowBandMaterial_1p92_13p52_0p12")
+
+[node name="ArtDecoBlock_02" type="StaticBody3D" parent="Buildings"]
+position = Vector3(44, 9, 20)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/ArtDecoBlock_02"]
+shape = SubResource("BoxShape_14_18_16")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_02"]
+mesh = SubResource("BoxMesh_BuildingCreamMaterial_14_18_16")
+
+[node name="FrontWindowBand_1_02" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_02"]
+position = Vector3(0, -2.16, -8.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_10p92_0p45_0p1")
+
+[node name="EastWindowBand_1_02" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_02"]
+position = Vector3(7.055, -2.16, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_11p52")
+
+[node name="FrontWindowBand_2_02" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_02"]
+position = Vector3(0, 1.44, -8.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_10p92_0p45_0p1")
+
+[node name="FrontWindowBand_3_02" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_02"]
+position = Vector3(0, 5.04, -8.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_10p92_0p45_0p1")
+
+[node name="EastWindowBand_3_02" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_02"]
+position = Vector3(7.055, 5.04, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_11p52")
+
+[node name="SteppedCrown_02" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_02"]
+position = Vector3(0, 9.45, 0)
+mesh = SubResource("BoxMesh_BuildingCreamMaterial_10p08_0p9_11p52")
+
+[node name="DecoFin_02" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_02"]
+position = Vector3(0, 2.16, -8.08)
+mesh = SubResource("BoxMesh_WindowBandMaterial_1p68_9p36_0p12")
+
+[node name="ArtDecoBlock_03" type="StaticBody3D" parent="Buildings"]
+position = Vector3(18, 16, 46)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/ArtDecoBlock_03"]
+shape = SubResource("BoxShape_18_32_14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_03"]
+mesh = SubResource("BoxMesh_BuildingSkyBlueMaterial_18_32_14")
+
+[node name="FrontWindowBand_1_03" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_03"]
+position = Vector3(0, -3.84, -7.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_14p04_0p45_0p1")
+
+[node name="EastWindowBand_1_03" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_03"]
+position = Vector3(9.055, -3.84, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_10p08")
+
+[node name="FrontWindowBand_2_03" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_03"]
+position = Vector3(0, 2.56, -7.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_14p04_0p45_0p1")
+
+[node name="FrontWindowBand_3_03" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_03"]
+position = Vector3(0, 8.96, -7.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_14p04_0p45_0p1")
+
+[node name="EastWindowBand_3_03" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_03"]
+position = Vector3(9.055, 8.96, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_10p08")
+
+[node name="SteppedCrown_03" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_03"]
+position = Vector3(0, 16.45, 0)
+mesh = SubResource("BoxMesh_BuildingSkyBlueMaterial_12p96_0p9_10p08")
+
+[node name="DecoFin_03" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_03"]
+position = Vector3(0, 3.84, -7.08)
+mesh = SubResource("BoxMesh_WindowBandMaterial_2p16_16p64_0p12")
+
+[node name="ArtDecoBlock_04" type="StaticBody3D" parent="Buildings"]
+position = Vector3(46, 8, 46)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/ArtDecoBlock_04"]
+shape = SubResource("BoxShape_12_16_12")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_04"]
+mesh = SubResource("BoxMesh_BuildingLilacMaterial_12_16_12")
+
+[node name="FrontWindowBand_1_04" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_04"]
+position = Vector3(0, -1.92, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_9p36_0p45_0p1")
+
+[node name="EastWindowBand_1_04" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_04"]
+position = Vector3(6.055, -1.92, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_8p64")
+
+[node name="FrontWindowBand_2_04" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_04"]
+position = Vector3(0, 1.28, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_9p36_0p45_0p1")
+
+[node name="FrontWindowBand_3_04" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_04"]
+position = Vector3(0, 4.48, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_9p36_0p45_0p1")
+
+[node name="EastWindowBand_3_04" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_04"]
+position = Vector3(6.055, 4.48, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_8p64")
+
+[node name="SteppedCrown_04" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_04"]
+position = Vector3(0, 8.45, 0)
+mesh = SubResource("BoxMesh_BuildingLilacMaterial_8p64_0p9_8p64")
+
+[node name="DecoFin_04" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_04"]
+position = Vector3(0, 1.92, -6.08)
+mesh = SubResource("BoxMesh_WindowBandMaterial_1p44_8p32_0p12")
+
+[node name="ArtDecoBlock_05" type="StaticBody3D" parent="Buildings"]
+position = Vector3(86, 22, 20)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/ArtDecoBlock_05"]
+shape = SubResource("BoxShape_18_44_16")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_05"]
+mesh = SubResource("BoxMesh_BuildingCoralMaterial_18_44_16")
+
+[node name="FrontWindowBand_1_05" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_05"]
+position = Vector3(0, -5.28, -8.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_14p04_0p45_0p1")
+
+[node name="EastWindowBand_1_05" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_05"]
+position = Vector3(9.055, -5.28, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_11p52")
+
+[node name="FrontWindowBand_2_05" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_05"]
+position = Vector3(0, 3.52, -8.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_14p04_0p45_0p1")
+
+[node name="FrontWindowBand_3_05" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_05"]
+position = Vector3(0, 12.32, -8.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_14p04_0p45_0p1")
+
+[node name="EastWindowBand_3_05" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_05"]
+position = Vector3(9.055, 12.32, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_11p52")
+
+[node name="SteppedCrown_05" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_05"]
+position = Vector3(0, 22.45, 0)
+mesh = SubResource("BoxMesh_BuildingCoralMaterial_12p96_0p9_11p52")
+
+[node name="DecoFin_05" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_05"]
+position = Vector3(0, 5.28, -8.08)
+mesh = SubResource("BoxMesh_WindowBandMaterial_2p16_22p88_0p12")
+
+[node name="ArtDecoBlock_06" type="StaticBody3D" parent="Buildings"]
+position = Vector3(112, 14, 22)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/ArtDecoBlock_06"]
+shape = SubResource("BoxShape_14_28_14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_06"]
+mesh = SubResource("BoxMesh_BuildingMintMaterial_14_28_14")
+
+[node name="FrontWindowBand_1_06" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_06"]
+position = Vector3(0, -3.36, -7.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_10p92_0p45_0p1")
+
+[node name="EastWindowBand_1_06" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_06"]
+position = Vector3(7.055, -3.36, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_10p08")
+
+[node name="FrontWindowBand_2_06" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_06"]
+position = Vector3(0, 2.24, -7.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_10p92_0p45_0p1")
+
+[node name="FrontWindowBand_3_06" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_06"]
+position = Vector3(0, 7.84, -7.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_10p92_0p45_0p1")
+
+[node name="EastWindowBand_3_06" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_06"]
+position = Vector3(7.055, 7.84, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_10p08")
+
+[node name="SteppedCrown_06" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_06"]
+position = Vector3(0, 14.45, 0)
+mesh = SubResource("BoxMesh_BuildingMintMaterial_10p08_0p9_10p08")
+
+[node name="DecoFin_06" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_06"]
+position = Vector3(0, 3.36, -7.08)
+mesh = SubResource("BoxMesh_WindowBandMaterial_1p68_14p56_0p12")
+
+[node name="ArtDecoBlock_07" type="StaticBody3D" parent="Buildings"]
+position = Vector3(88, 18, 48)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/ArtDecoBlock_07"]
+shape = SubResource("BoxShape_18_36_12")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_07"]
+mesh = SubResource("BoxMesh_BuildingFlamingoMaterial_18_36_12")
+
+[node name="FrontWindowBand_1_07" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_07"]
+position = Vector3(0, -4.32, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_14p04_0p45_0p1")
+
+[node name="EastWindowBand_1_07" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_07"]
+position = Vector3(9.055, -4.32, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_8p64")
+
+[node name="FrontWindowBand_2_07" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_07"]
+position = Vector3(0, 2.88, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_14p04_0p45_0p1")
+
+[node name="FrontWindowBand_3_07" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_07"]
+position = Vector3(0, 10.08, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_14p04_0p45_0p1")
+
+[node name="EastWindowBand_3_07" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_07"]
+position = Vector3(9.055, 10.08, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_8p64")
+
+[node name="SteppedCrown_07" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_07"]
+position = Vector3(0, 18.45, 0)
+mesh = SubResource("BoxMesh_BuildingFlamingoMaterial_12p96_0p9_8p64")
+
+[node name="DecoFin_07" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_07"]
+position = Vector3(0, 4.32, -6.08)
+mesh = SubResource("BoxMesh_WindowBandMaterial_2p16_18p72_0p12")
+
+[node name="ArtDecoBlock_08" type="StaticBody3D" parent="Buildings"]
+position = Vector3(114, 9, 48)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/ArtDecoBlock_08"]
+shape = SubResource("BoxShape_12_18_14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_08"]
+mesh = SubResource("BoxMesh_BuildingCreamMaterial_12_18_14")
+
+[node name="FrontWindowBand_1_08" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_08"]
+position = Vector3(0, -2.16, -7.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_9p36_0p45_0p1")
+
+[node name="EastWindowBand_1_08" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_08"]
+position = Vector3(6.055, -2.16, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_10p08")
+
+[node name="FrontWindowBand_2_08" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_08"]
+position = Vector3(0, 1.44, -7.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_9p36_0p45_0p1")
+
+[node name="FrontWindowBand_3_08" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_08"]
+position = Vector3(0, 5.04, -7.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_9p36_0p45_0p1")
+
+[node name="EastWindowBand_3_08" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_08"]
+position = Vector3(6.055, 5.04, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_10p08")
+
+[node name="SteppedCrown_08" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_08"]
+position = Vector3(0, 9.45, 0)
+mesh = SubResource("BoxMesh_BuildingCreamMaterial_8p64_0p9_10p08")
+
+[node name="DecoFin_08" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_08"]
+position = Vector3(0, 2.16, -7.08)
+mesh = SubResource("BoxMesh_WindowBandMaterial_1p44_9p36_0p12")
+
+[node name="ArtDecoBlock_09" type="StaticBody3D" parent="Buildings"]
+position = Vector3(20, 12, 80)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/ArtDecoBlock_09"]
+shape = SubResource("BoxShape_16_24_12")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_09"]
+mesh = SubResource("BoxMesh_BuildingSkyBlueMaterial_16_24_12")
+
+[node name="FrontWindowBand_1_09" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_09"]
+position = Vector3(0, -2.88, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_12p48_0p45_0p1")
+
+[node name="EastWindowBand_1_09" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_09"]
+position = Vector3(8.055, -2.88, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_8p64")
+
+[node name="FrontWindowBand_2_09" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_09"]
+position = Vector3(0, 1.92, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_12p48_0p45_0p1")
+
+[node name="FrontWindowBand_3_09" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_09"]
+position = Vector3(0, 6.72, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_12p48_0p45_0p1")
+
+[node name="EastWindowBand_3_09" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_09"]
+position = Vector3(8.055, 6.72, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_8p64")
+
+[node name="SteppedCrown_09" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_09"]
+position = Vector3(0, 12.45, 0)
+mesh = SubResource("BoxMesh_BuildingSkyBlueMaterial_11p52_0p9_8p64")
+
+[node name="DecoFin_09" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_09"]
+position = Vector3(0, 2.88, -6.08)
+mesh = SubResource("BoxMesh_WindowBandMaterial_1p92_12p48_0p12")
+
+[node name="ArtDecoBlock_10" type="StaticBody3D" parent="Buildings"]
+position = Vector3(48, 10, 80)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/ArtDecoBlock_10"]
+shape = SubResource("BoxShape_14_20_12")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_10"]
+mesh = SubResource("BoxMesh_BuildingLilacMaterial_14_20_12")
+
+[node name="FrontWindowBand_1_10" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_10"]
+position = Vector3(0, -2.4, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_10p92_0p45_0p1")
+
+[node name="EastWindowBand_1_10" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_10"]
+position = Vector3(7.055, -2.4, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_8p64")
+
+[node name="FrontWindowBand_2_10" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_10"]
+position = Vector3(0, 1.6, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_10p92_0p45_0p1")
+
+[node name="FrontWindowBand_3_10" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_10"]
+position = Vector3(0, 5.6, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_10p92_0p45_0p1")
+
+[node name="EastWindowBand_3_10" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_10"]
+position = Vector3(7.055, 5.6, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_8p64")
+
+[node name="SteppedCrown_10" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_10"]
+position = Vector3(0, 10.45, 0)
+mesh = SubResource("BoxMesh_BuildingLilacMaterial_10p08_0p9_8p64")
+
+[node name="DecoFin_10" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_10"]
+position = Vector3(0, 2.4, -6.08)
+mesh = SubResource("BoxMesh_WindowBandMaterial_1p68_10p4_0p12")
+
+[node name="ArtDecoBlock_11" type="StaticBody3D" parent="Buildings"]
+position = Vector3(86, 15, 80)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/ArtDecoBlock_11"]
+shape = SubResource("BoxShape_18_30_12")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_11"]
+mesh = SubResource("BoxMesh_BuildingCoralMaterial_18_30_12")
+
+[node name="FrontWindowBand_1_11" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_11"]
+position = Vector3(0, -3.6, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_14p04_0p45_0p1")
+
+[node name="EastWindowBand_1_11" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_11"]
+position = Vector3(9.055, -3.6, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_8p64")
+
+[node name="FrontWindowBand_2_11" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_11"]
+position = Vector3(0, 2.4, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_14p04_0p45_0p1")
+
+[node name="FrontWindowBand_3_11" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_11"]
+position = Vector3(0, 8.4, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_14p04_0p45_0p1")
+
+[node name="EastWindowBand_3_11" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_11"]
+position = Vector3(9.055, 8.4, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_8p64")
+
+[node name="SteppedCrown_11" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_11"]
+position = Vector3(0, 15.45, 0)
+mesh = SubResource("BoxMesh_BuildingCoralMaterial_12p96_0p9_8p64")
+
+[node name="DecoFin_11" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_11"]
+position = Vector3(0, 3.6, -6.08)
+mesh = SubResource("BoxMesh_WindowBandMaterial_2p16_15p6_0p12")
+
+[node name="ArtDecoBlock_12" type="StaticBody3D" parent="Buildings"]
+position = Vector3(112, 11, 80)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/ArtDecoBlock_12"]
+shape = SubResource("BoxShape_14_22_12")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_12"]
+mesh = SubResource("BoxMesh_BuildingMintMaterial_14_22_12")
+
+[node name="FrontWindowBand_1_12" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_12"]
+position = Vector3(0, -2.64, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_10p92_0p45_0p1")
+
+[node name="EastWindowBand_1_12" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_12"]
+position = Vector3(7.055, -2.64, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_8p64")
+
+[node name="FrontWindowBand_2_12" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_12"]
+position = Vector3(0, 1.76, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_10p92_0p45_0p1")
+
+[node name="FrontWindowBand_3_12" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_12"]
+position = Vector3(0, 6.16, -6.055)
+mesh = SubResource("BoxMesh_WindowBandMaterial_10p92_0p45_0p1")
+
+[node name="EastWindowBand_3_12" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_12"]
+position = Vector3(7.055, 6.16, 0)
+mesh = SubResource("BoxMesh_WindowBandMaterial_0p1_0p45_8p64")
+
+[node name="SteppedCrown_12" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_12"]
+position = Vector3(0, 11.45, 0)
+mesh = SubResource("BoxMesh_BuildingMintMaterial_10p08_0p9_8p64")
+
+[node name="DecoFin_12" type="MeshInstance3D" parent="Buildings/ArtDecoBlock_12"]
+position = Vector3(0, 2.64, -6.08)
+mesh = SubResource("BoxMesh_WindowBandMaterial_1p68_11p44_0p12")
+
+[node name="Palms" type="Node3D" parent="."]
+
+[node name="Palm_01" type="StaticBody3D" parent="Palms"]
+position = Vector3(12, 0, 94)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_01"]
+position = Vector3(0, 4, 0)
+shape = SubResource("BoxShape_0p7_8_0p7")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="Palms/Palm_01"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_01"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("BoxShape_4p6_4p2_4p6")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="Palms/Palm_01"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="Palm_02" type="StaticBody3D" parent="Palms"]
+position = Vector3(32, 0, 106)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_02"]
+position = Vector3(0, 4, 0)
+shape = SubResource("BoxShape_0p7_8_0p7")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="Palms/Palm_02"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_02"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("BoxShape_4p6_4p2_4p6")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="Palms/Palm_02"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="Palm_03" type="StaticBody3D" parent="Palms"]
+position = Vector3(54, 0, 96)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_03"]
+position = Vector3(0, 4, 0)
+shape = SubResource("BoxShape_0p7_8_0p7")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="Palms/Palm_03"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_03"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("BoxShape_4p6_4p2_4p6")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="Palms/Palm_03"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="Palm_04" type="StaticBody3D" parent="Palms"]
+position = Vector3(78, 0, 108)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_04"]
+position = Vector3(0, 4, 0)
+shape = SubResource("BoxShape_0p7_8_0p7")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="Palms/Palm_04"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_04"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("BoxShape_4p6_4p2_4p6")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="Palms/Palm_04"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="Palm_05" type="StaticBody3D" parent="Palms"]
+position = Vector3(104, 0, 96)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_05"]
+position = Vector3(0, 4, 0)
+shape = SubResource("BoxShape_0p7_8_0p7")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="Palms/Palm_05"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_05"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("BoxShape_4p6_4p2_4p6")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="Palms/Palm_05"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="Palm_06" type="StaticBody3D" parent="Palms"]
+position = Vector3(121, 0, 110)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_06"]
+position = Vector3(0, 4, 0)
+shape = SubResource("BoxShape_0p7_8_0p7")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="Palms/Palm_06"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_06"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("BoxShape_4p6_4p2_4p6")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="Palms/Palm_06"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="Bench_07" type="StaticBody3D" parent="Props"]
+position = Vector3(24, 0.35, 88)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Bench_07"]
+shape = SubResource("BoxShape_4p5_0p5_1p1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/Bench_07"]
+mesh = SubResource("BoxMesh_BenchMaterial_4p5_0p5_1p1")
+
+[node name="Bench_08" type="StaticBody3D" parent="Props"]
+position = Vector3(92, 0.35, 88)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Bench_08"]
+shape = SubResource("BoxShape_4p5_0p5_1p1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/Bench_08"]
+mesh = SubResource("BoxMesh_BenchMaterial_4p5_0p5_1p1")
+
+[node name="Streetlight_09" type="StaticBody3D" parent="Props"]
+position = Vector3(60, 2.5, 30)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Streetlight_09"]
+shape = SubResource("BoxShape_0p35_5_0p35")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/Streetlight_09"]
+mesh = SubResource("BoxMesh_SidewalkMaterial_0p35_5_0p35")
+
+[node name="LampGlow" type="MeshInstance3D" parent="Props/Streetlight_09"]
+position = Vector3(0, 2.85, 0)
+mesh = SubResource("LampMesh")
+
+[node name="Streetlight_10" type="StaticBody3D" parent="Props"]
+position = Vector3(68, 2.5, 78)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Streetlight_10"]
+shape = SubResource("BoxShape_0p35_5_0p35")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/Streetlight_10"]
+mesh = SubResource("BoxMesh_SidewalkMaterial_0p35_5_0p35")
+
+[node name="LampGlow" type="MeshInstance3D" parent="Props/Streetlight_10"]
+position = Vector3(0, 2.85, 0)
+mesh = SubResource("LampMesh")
+
+[node name="Planter_11" type="StaticBody3D" parent="Props"]
+position = Vector3(18, 0.35, 72)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Planter_11"]
+shape = SubResource("BoxShape_3p2_0p7_3p2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/Planter_11"]
+mesh = SubResource("BoxMesh_PlanterMaterial_3p2_0p7_3p2")
+
+[node name="PlanterTop_02" type="MeshInstance3D" parent="Props/Planter_11"]
+position = Vector3(0, 0.55, 0)
+mesh = SubResource("BoxMesh_PalmCanopyMaterial_2p4_0p35_2p4")
+
+[node name="Planter_12" type="StaticBody3D" parent="Props"]
+position = Vector3(104, 0.35, 72)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Planter_12"]
+shape = SubResource("BoxShape_3p2_0p7_3p2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/Planter_12"]
+mesh = SubResource("BoxMesh_PlanterMaterial_3p2_0p7_3p2")
+
+[node name="PlanterTop_03" type="MeshInstance3D" parent="Props/Planter_12"]
+position = Vector3(0, 0.55, 0)
+mesh = SubResource("BoxMesh_PalmCanopyMaterial_2p4_0p35_2p4")

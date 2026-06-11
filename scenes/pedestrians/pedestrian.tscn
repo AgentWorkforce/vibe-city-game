@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/pedestrians/pedestrian_behavior.gd" id="1_behavior"]
+[ext_resource type="Script" path="res://scripts/combat/health.gd" id="2_health"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+height = 1.8
+radius = 0.32
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
+albedo_color = Color(0.95, 0.36, 0.28, 1)
+roughness = 0.72
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_head"]
+albedo_color = Color(0.95, 0.74, 0.55, 1)
+roughness = 0.72
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+material = SubResource("StandardMaterial3D_body")
+radius = 0.32
+height = 1.8
+radial_segments = 20
+rings = 6
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+material = SubResource("StandardMaterial3D_head")
+radius = 0.28
+height = 0.56
+radial_segments = 20
+rings = 10
+
+[node name="Pedestrian" type="CharacterBody3D"]
+script = ExtResource("1_behavior")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_health")
+max_health = 40.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="Visuals" type="Node3D" parent="."]
+
+[node name="BodyMesh" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0, 0.9, 0)
+mesh = SubResource("CapsuleMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0, 1.96, 0)
+mesh = SubResource("SphereMesh_head")

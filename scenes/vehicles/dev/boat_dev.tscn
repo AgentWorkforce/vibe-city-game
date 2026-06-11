@@ -1,0 +1,68 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/vehicles/boat.tscn" id="1_boat"]
+[ext_resource type="Script" path="res://scenes/vehicles/dev/boat_dev_smoke.gd" id="2_smoke"]
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMaterial"]
+sky_top_color = Color(0.52, 0.84, 1, 1)
+sky_horizon_color = Color(1, 0.72, 0.8, 1)
+ground_bottom_color = Color(0.72, 0.9, 0.95, 1)
+ground_horizon_color = Color(0.76, 0.95, 0.94, 1)
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMaterial")
+
+[sub_resource type="Environment" id="Environment"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 2
+ambient_light_energy = 0.9
+
+[sub_resource type="StandardMaterial3D" id="WaterMaterial"]
+transparency = 1
+albedo_color = Color(0.42, 0.86, 1, 0.46)
+roughness = 0.22
+
+[sub_resource type="PlaneMesh" id="WaterMesh"]
+material = SubResource("WaterMaterial")
+size = Vector2(120, 120)
+
+[sub_resource type="StandardMaterial3D" id="GuideMaterial"]
+albedo_color = Color(0.82, 0.88, 0.9, 1)
+roughness = 0.9
+
+[sub_resource type="BoxShape3D" id="SeaFloorShape"]
+size = Vector3(120, 1, 120)
+
+[sub_resource type="BoxMesh" id="SeaFloorMesh"]
+material = SubResource("GuideMaterial")
+size = Vector3(120, 1, 120)
+
+[node name="BoatDev" type="Node3D"]
+script = ExtResource("2_smoke")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.785398, -0.523599, 0)
+light_color = Color(1, 0.9, 0.76, 1)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="WaterPlane" type="MeshInstance3D" parent="."]
+mesh = SubResource("WaterMesh")
+
+[node name="SeaFloor" type="StaticBody3D" parent="."]
+position = Vector3(0, -6.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SeaFloor"]
+shape = SubResource("SeaFloorShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SeaFloor"]
+mesh = SubResource("SeaFloorMesh")
+
+[node name="Boat" parent="." instance=ExtResource("1_boat")]
+position = Vector3(0, 0.22, 0)
+driven = true
+water_level = 0.0

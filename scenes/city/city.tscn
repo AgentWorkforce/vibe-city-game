@@ -1,0 +1,98 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/world_streamer.gd" id="1_streamer"]
+[ext_resource type="Script" path="res://scripts/world/streaming_debug_hud.gd" id="2_hud"]
+
+[sub_resource type="ProceduralSkyMaterial" id="PastelSkyMaterial"]
+sky_top_color = Color(0.58, 0.86, 1, 1)
+sky_horizon_color = Color(1, 0.68, 0.78, 1)
+sky_curve = 0.18
+sky_energy_multiplier = 1.05
+ground_bottom_color = Color(0.75, 0.92, 0.92, 1)
+ground_horizon_color = Color(1, 0.72, 0.67, 1)
+ground_curve = 0.08
+ground_energy_multiplier = 0.85
+sun_angle_max = 24.0
+sun_curve = 0.12
+sun_energy_multiplier = 1.15
+
+[sub_resource type="Sky" id="PastelSky"]
+sky_material = SubResource("PastelSkyMaterial")
+
+[sub_resource type="Environment" id="PastelEnvironment"]
+background_mode = 2
+sky = SubResource("PastelSky")
+ambient_light_source = 2
+ambient_light_sky_contribution = 1.0
+ambient_light_energy = 0.85
+reflected_light_source = 2
+tonemap_mode = 2
+tonemap_white = 8.0
+ssao_enabled = true
+ssao_intensity = 1.5
+glow_enabled = true
+glow_intensity = 0.6
+glow_strength = 1.0
+glow_bloom = 0.05
+glow_blend_mode = 0
+glow_hdr_threshold = 1.1
+fog_enabled = true
+fog_light_color = Color(1, 0.85, 0.83, 1)
+fog_density = 0.0005
+fog_sky_affect = 0.05
+
+[sub_resource type="StyleBoxFlat" id="DebugPanelStyle"]
+bg_color = Color(0.04, 0.08, 0.09, 0.72)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.32, 0.92, 0.9, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="City" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("PastelEnvironment")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.872665, -0.523599, 0)
+light_color = Color(1, 0.86, 0.68, 1)
+light_energy = 2.4
+shadow_enabled = true
+
+[node name="StreamTarget" type="Marker3D" parent="."]
+position = Vector3(64, 1, 64)
+
+[node name="WorldStreamer" type="Node3D" parent="."]
+script = ExtResource("1_streamer")
+target_path = NodePath("../StreamTarget")
+
+[node name="StreamingDebugHUD" type="CanvasLayer" parent="."]
+script = ExtResource("2_hud")
+streamer_path = NodePath("../WorldStreamer")
+
+[node name="Panel" type="PanelContainer" parent="StreamingDebugHUD"]
+visible = false
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 316.0
+offset_bottom = 118.0
+theme_override_styles/panel = SubResource("DebugPanelStyle")
+
+[node name="Margin" type="MarginContainer" parent="StreamingDebugHUD/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="Readout" type="Label" parent="StreamingDebugHUD/Panel/Margin"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.99, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "Streaming
+waiting for streamer..."

@@ -73,31 +73,51 @@ else
 fi
 
 echo "== Integration: drive =="
-if godot --headless -s tools/test_drive.gd 2>&1 | grep -q "DRIVE TEST PASS"; then
+test_drive_out=$(godot --headless -s tools/test_drive.gd 2>&1 || true)
+if printf '%s' "${test_drive_out}" | grep -q "DRIVE TEST PASS"; then
 	echo "Drive test passed."
 else
 	fail "Drive integration test failed."
 fi
 
 echo "== Integration: climb =="
-if godot --headless -s tools/test_climb.gd 2>&1 | grep -q "CLIMB TEST PASS"; then
+test_climb_out=$(godot --headless -s tools/test_climb.gd 2>&1 || true)
+if printf '%s' "${test_climb_out}" | grep -q "CLIMB TEST PASS"; then
 	echo "Climb test passed."
 else
 	fail "Climb integration test failed."
 fi
 
 echo "== Integration: shoot =="
-if godot --headless -s tools/test_shoot.gd 2>&1 | grep -q "SHOOT TEST PASS"; then
+test_shoot_out=$(godot --headless -s tools/test_shoot.gd 2>&1 || true)
+if printf '%s' "${test_shoot_out}" | grep -q "SHOOT TEST PASS"; then
 	echo "Shoot test passed."
 else
 	fail "Shoot integration test failed."
 fi
 
 echo "== Integration: reclaim =="
-if godot --headless -s tools/test_reclaim.gd 2>&1 | grep -q "RECLAIM TEST PASS"; then
+test_reclaim_out=$(godot --headless -s tools/test_reclaim.gd 2>&1 || true)
+if printf '%s' "${test_reclaim_out}" | grep -q "RECLAIM TEST PASS"; then
 	echo "Reclaim test passed."
 else
 	fail "Reclaim integration test failed."
+fi
+
+echo "== Integration: streaming =="
+test_streaming_out=$(godot --headless -s tools/test_streaming.gd 2>&1 || true)
+if printf '%s' "${test_streaming_out}" | grep -q "STREAMING TEST PASS"; then
+	echo "Streaming test passed."
+else
+	fail "Streaming integration test failed."
+fi
+
+echo "== Integration: mission =="
+test_mission_out=$(godot --headless -s tools/test_mission.gd 2>&1 || true)
+if printf '%s' "${test_mission_out}" | grep -q "MISSION TEST PASS"; then
+	echo "Mission test passed."
+else
+	fail "Mission integration test failed."
 fi
 
 if [ "$failures" -eq 0 ]; then

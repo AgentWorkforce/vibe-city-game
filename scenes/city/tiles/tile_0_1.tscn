@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3]
+
+[sub_resource type="StandardMaterial3D" id="GroundMaterial"]
+albedo_color = Color(0.82, 0.88, 0.92, 1)
+roughness = 0.88
+
+[sub_resource type="StandardMaterial3D" id="BlockTealMaterial"]
+albedo_color = Color(0.56, 0.91, 0.84, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="BlockPeachMaterial"]
+albedo_color = Color(1, 0.72, 0.58, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="BlockSkyMaterial"]
+albedo_color = Color(0.58, 0.86, 1, 1)
+roughness = 0.84
+
+[sub_resource type="BoxShape3D" id="GroundShape"]
+size = Vector3(128, 0.5, 128)
+
+[sub_resource type="BoxMesh" id="GroundMesh"]
+material = SubResource("GroundMaterial")
+size = Vector3(128, 0.5, 128)
+
+[sub_resource type="BoxShape3D" id="BlockAShape"]
+size = Vector3(20, 18, 14)
+
+[sub_resource type="BoxMesh" id="BlockAMesh"]
+material = SubResource("BlockTealMaterial")
+size = Vector3(20, 18, 14)
+
+[sub_resource type="BoxShape3D" id="BlockBShape"]
+size = Vector3(16, 26, 16)
+
+[sub_resource type="BoxMesh" id="BlockBMesh"]
+material = SubResource("BlockPeachMaterial")
+size = Vector3(16, 26, 16)
+
+[sub_resource type="BoxMesh" id="BlockCMesh"]
+material = SubResource("BlockSkyMaterial")
+size = Vector3(18, 10, 22)
+
+[node name="Tile_0_1" type="Node3D"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+position = Vector3(64, -0.25, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("GroundShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("GroundMesh")
+
+[node name="BlockA" type="StaticBody3D" parent="."]
+position = Vector3(38, 9, 28)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlockA"]
+shape = SubResource("BlockAShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BlockA"]
+mesh = SubResource("BlockAMesh")
+
+[node name="BlockB" type="StaticBody3D" parent="."]
+position = Vector3(84, 13, 78)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlockB"]
+shape = SubResource("BlockBShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BlockB"]
+mesh = SubResource("BlockBMesh")
+
+[node name="BlockC" type="StaticBody3D" parent="."]
+position = Vector3(42, 5, 104)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlockC"]
+shape = SubResource("BlockAShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BlockC"]
+mesh = SubResource("BlockCMesh")

@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/vehicles/bike.tscn" id="1_bike"]
+[ext_resource type="Script" path="res://scenes/vehicles/dev/bike_dev_smoke.gd" id="2_smoke"]
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMaterial"]
+sky_top_color = Color(0.58, 0.86, 1, 1)
+sky_horizon_color = Color(1, 0.68, 0.78, 1)
+ground_bottom_color = Color(0.78, 0.92, 0.92, 1)
+ground_horizon_color = Color(1, 0.76, 0.68, 1)
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMaterial")
+
+[sub_resource type="Environment" id="Environment"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 2
+ambient_light_energy = 0.85
+
+[sub_resource type="StandardMaterial3D" id="FloorMaterial"]
+albedo_color = Color(0.84, 0.86, 0.9, 1)
+roughness = 0.86
+
+[sub_resource type="BoxShape3D" id="FloorShape"]
+size = Vector3(120, 1, 120)
+
+[sub_resource type="BoxMesh" id="FloorMesh"]
+material = SubResource("FloorMaterial")
+size = Vector3(120, 1, 120)
+
+[node name="BikeDev" type="Node3D"]
+script = ExtResource("2_smoke")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.872665, -0.523599, 0)
+light_color = Color(1, 0.88, 0.72, 1)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("FloorShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("FloorMesh")
+
+[node name="Bike" parent="." instance=ExtResource("1_bike")]
+position = Vector3(0, 1, 0)
+driven = true

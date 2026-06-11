@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/missions/liberate_nw.gd" id="1_liberate"]
+
+[node name="LiberateNW" type="Node"]
+script = ExtResource("1_liberate")

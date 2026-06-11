@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3]
+[gd_scene load_steps=125 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/vehicles/car.tscn" id="2_car"]
@@ -9,6 +9,9 @@
 [ext_resource type="Script" path="res://scripts/systems/police_spawner.gd" id="7_spawner"]
 [ext_resource type="Script" path="res://scripts/systems/deescalation.gd" id="8_deescalation"]
 [ext_resource type="PackedScene" path="res://scenes/ui/minimap.tscn" id="9_minimap"]
+[ext_resource type="PackedScene" path="res://scenes/missions/mission_banner.tscn" id="10_banner"]
+[ext_resource type="PackedScene" path="res://scenes/pedestrians/pedestrian.tscn" id="11_ped"]
+[ext_resource type="PackedScene" path="res://scenes/vehicles/bike.tscn" id="12_bike"]
 
 [sub_resource type="ProceduralSkyMaterial" id="PastelSkyMaterial"]
 sky_top_color = Color(0.58, 0.86, 1, 1)
@@ -1212,6 +1215,37 @@ respawn_marker_path = NodePath("../PlayerSpawn")
 [node name="HUD" parent="." instance=ExtResource("6_hud")]
 
 [node name="Minimap" parent="." instance=ExtResource("9_minimap")]
+
+[node name="MissionBanner" parent="." instance=ExtResource("10_banner")]
+
+[node name="Bike" parent="." instance=ExtResource("12_bike")]
+position = Vector3(60, 0.6, -14)
+
+[node name="Pedestrians" type="Node3D" parent="."]
+
+[node name="Ped1" parent="Pedestrians" instance=ExtResource("11_ped")]
+position = Vector3(4, 0.2, -4)
+
+[node name="Ped2" parent="Pedestrians" instance=ExtResource("11_ped")]
+position = Vector3(-6, 0.2, 6)
+
+[node name="Ped3" parent="Pedestrians" instance=ExtResource("11_ped")]
+position = Vector3(14, 0.2, 8)
+
+[node name="Ped4" parent="Pedestrians" instance=ExtResource("11_ped")]
+position = Vector3(-18, 0.2, 12)
+
+[node name="Ped5" parent="Pedestrians" instance=ExtResource("11_ped")]
+position = Vector3(20, 0.2, -10)
+
+[node name="Ped6" parent="Pedestrians" instance=ExtResource("11_ped")]
+position = Vector3(-2, 0.2, -16)
+
+[node name="Ped7" parent="Pedestrians" instance=ExtResource("11_ped")]
+position = Vector3(34, 0.2, 4)
+
+[node name="Ped8" parent="Pedestrians" instance=ExtResource("11_ped")]
+position = Vector3(-30, 0.2, 2)
 
 [node name="MapSurface" parent="Minimap/Root/Panel/Margin" index="0"]
 conversion_zone_path = NodePath("../../../../../ConversionZone")

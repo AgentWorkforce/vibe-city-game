@@ -65,6 +65,7 @@ func _fire() -> void:
 		_apply_hit_damage(hit.get("collider"))
 		_spawn_impact(hit_point, hit_normal)
 
+	_emit_weapon_impact(hit_point)
 	_spawn_tracer(_get_muzzle_position(), hit_point)
 	_play_shot_audio()
 	_apply_recoil()
@@ -111,7 +112,6 @@ func _spawn_tracer(start: Vector3, end: Vector3) -> void:
 func _spawn_impact(position: Vector3, normal: Vector3) -> void:
 	var impact := MeshInstance3D.new()
 	impact.name = "WeaponImpact"
-	impact.add_to_group("weapon_impact")
 	var mesh := SphereMesh.new()
 	mesh.radius = 0.08
 	mesh.height = 0.16
@@ -124,6 +124,12 @@ func _spawn_impact(position: Vector3, normal: Vector3) -> void:
 	var tween := impact.create_tween()
 	tween.tween_property(impact, "scale", Vector3.ONE * 0.55, impact_lifetime)
 	tween.tween_callback(impact.queue_free)
+
+
+func _emit_weapon_impact(position: Vector3) -> void:
+	var events := get_node_or_null("/root/Events")
+	if events != null and events.has_signal(&"weapon_impact"):
+		events.emit_signal(&"weapon_impact", position)
 
 
 func _add_world_effect(effect: Node3D) -> void:

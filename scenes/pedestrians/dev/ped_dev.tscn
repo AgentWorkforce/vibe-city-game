@@ -1,0 +1,112 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/pedestrians/ped_dev_runner.gd" id="1_dev"]
+[ext_resource type="PackedScene" path="res://scenes/pedestrians/pedestrian.tscn" id="2_pedestrian"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.72, 0.9, 0.82, 1)
+roughness = 0.86
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(28, 0.2, 28)
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+material = SubResource("StandardMaterial3D_floor")
+size = Vector3(28, 0.2, 28)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_emitter"]
+albedo_color = Color(1, 0.28, 0.2, 1)
+emission_enabled = true
+emission = Color(1, 0.28, 0.2, 1)
+emission_energy_multiplier = 1.4
+roughness = 0.55
+
+[sub_resource type="SphereMesh" id="SphereMesh_emitter"]
+material = SubResource("StandardMaterial3D_emitter")
+radius = 0.22
+height = 0.44
+radial_segments = 16
+rings = 8
+
+[node name="PedDev" type="Node3D"]
+script = ExtResource("1_dev")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_floor")
+
+[node name="FakeImpactEmitter" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.22, 0)
+mesh = SubResource("SphereMesh_emitter")
+
+[node name="Pedestrian1" parent="." instance=ExtResource("2_pedestrian")]
+position = Vector3(-4.5, 0, -2)
+stroll_radius = 5.0
+flee_min_duration = 1.1
+flee_max_duration = 1.2
+idle_min_duration = 0.2
+idle_max_duration = 0.3
+resume_duration = 0.25
+debug_state_changes = true
+
+[node name="Pedestrian2" parent="." instance=ExtResource("2_pedestrian")]
+position = Vector3(-2.5, 0, 2.6)
+stroll_radius = 5.0
+flee_min_duration = 1.1
+flee_max_duration = 1.2
+idle_min_duration = 0.2
+idle_max_duration = 0.3
+resume_duration = 0.25
+debug_state_changes = true
+
+[node name="Pedestrian3" parent="." instance=ExtResource("2_pedestrian")]
+position = Vector3(0, 0, -3.4)
+stroll_radius = 5.0
+flee_min_duration = 1.1
+flee_max_duration = 1.2
+idle_min_duration = 0.2
+idle_max_duration = 0.3
+resume_duration = 0.25
+debug_state_changes = true
+
+[node name="Pedestrian4" parent="." instance=ExtResource("2_pedestrian")]
+position = Vector3(2.7, 0, 2.2)
+stroll_radius = 5.0
+flee_min_duration = 1.1
+flee_max_duration = 1.2
+idle_min_duration = 0.2
+idle_max_duration = 0.3
+resume_duration = 0.25
+debug_state_changes = true
+
+[node name="Pedestrian5" parent="." instance=ExtResource("2_pedestrian")]
+position = Vector3(4.3, 0, -1.8)
+stroll_radius = 5.0
+flee_min_duration = 1.1
+flee_max_duration = 1.2
+idle_min_duration = 0.2
+idle_max_duration = 0.3
+resume_duration = 0.25
+debug_state_changes = true
+
+[node name="Pedestrian6" parent="." instance=ExtResource("2_pedestrian")]
+position = Vector3(1.1, 0, 4.4)
+stroll_radius = 5.0
+flee_min_duration = 1.1
+flee_max_duration = 1.2
+idle_min_duration = 0.2
+idle_max_duration = 0.3
+resume_duration = 0.25
+debug_state_changes = true
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.9, 0.6, 0)
+light_energy = 1.35
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.80848, 0.588524, 0, -0.588524, 0.80848, 0, 5.2, 8)
