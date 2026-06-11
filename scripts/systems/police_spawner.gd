@@ -79,6 +79,7 @@ func _spawn_police(player: Node3D) -> bool:
 	parent.add_child(spawned)
 	spawned.global_position = _pick_spawn_position(player)
 	_police.append(spawned)
+	spawned.tree_exiting.connect(Callable(self, "_on_police_tree_exiting").bind(spawned), CONNECT_ONE_SHOT)
 
 	if debug_spawning:
 		print("PoliceSpawner: spawned police at %s for wanted %d" % [
@@ -134,6 +135,10 @@ func _remove_police(police: Node3D) -> void:
 		if debug_spawning:
 			print("PoliceSpawner: despawned police at %s" % police.global_position)
 		police.queue_free()
+
+
+func _on_police_tree_exiting(police: Node3D) -> void:
+	_police.erase(police)
 
 
 func _prune_invalid() -> void:

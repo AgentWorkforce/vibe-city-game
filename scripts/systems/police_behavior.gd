@@ -18,6 +18,7 @@ var _police_state := PoliceState.PATROL
 var _wanted_level := 0
 var _pursuit_start_barked := false
 var _caught_player_ids: Dictionary = {}
+var _ignore_player_until_msec := 0
 
 
 func _ready() -> void:
@@ -55,8 +56,12 @@ func _physics_process(delta: float) -> void:
 			super._physics_process(delta)
 			return
 
-	_life_time += delta
-	_witnessed_crime_timer = maxf(0.0, _witnessed_crime_timer - delta)
+	_tick_reaction_timers(delta)
+	if _derezzing:
+		return
+	if _process_stagger(delta):
+		_update_crime_witnessing()
+		return
 
 	var player := _find_on_foot_player()
 	if player != null and global_position.distance_to(player.global_position) <= catch_distance:
@@ -70,6 +75,22 @@ func _physics_process(delta: float) -> void:
 
 func get_police_state_name() -> String:
 	return _police_state_name(_police_state)
+
+
+func ignore_player_for(seconds: float) -> void:
+	var duration_msec := int(maxf(seconds, 0.0) * 1000.0)
+	_ignore_player_until_msec = max(_ignore_player_until_msec, Time.get_ticks_msec() + duration_msec)
+	_caught_player_ids.clear()
+
+
+func is_ignoring_player() -> bool:
+	return _is_ignoring_player()
+
+
+func _update_crime_witnessing() -> void:
+	if _is_ignoring_player():
+		return
+	super._update_crime_witnessing()
 
 
 func _sync_wanted_level() -> void:
@@ -123,10 +144,14 @@ func _catch_player(player: Node, delta: float) -> void:
 	var events := _events()
 	if events != null:
 		events.emit_signal(&"bark_emitted", self, &"caught", caught_bark)
+		events.emit_signal(&"player_caught", self)
 	player_caught.emit(player)
 
 
 func _find_pursuit_target() -> Node3D:
+	if _is_ignoring_player():
+		return null
+
 	var vehicle := _find_player_vehicle()
 	if vehicle != null:
 		return vehicle
@@ -134,6 +159,8 @@ func _find_pursuit_target() -> Node3D:
 
 
 func _find_on_foot_player() -> CharacterBody3D:
+	if _is_ignoring_player():
+		return null
 	if _find_player_vehicle() != null:
 		return null
 
@@ -143,6 +170,10 @@ func _find_on_foot_player() -> CharacterBody3D:
 			return player
 
 	return null
+
+
+func _is_ignoring_player() -> bool:
+	return Time.get_ticks_msec() < _ignore_player_until_msec
 
 
 func _find_any_player() -> Node3D:

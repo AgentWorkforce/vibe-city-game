@@ -1,6 +1,9 @@
 extends CharacterBody3D
 
 const BarkSystem = preload("res://scripts/agents/bark_system.gd")
+const HealthScript = preload("res://scripts/combat/health.gd")
+const HITSCAN_WEAPON_PATH := "res://scripts/combat/hitscan_weapon.gd"
+const DEREZ_CYAN := Color(0.098, 0.89, 0.89, 1.0)
 
 enum AgentState {
 	WANDER,
@@ -31,6 +34,8 @@ enum AgentState {
 @export var vehicle_ram_distance: float = 2.5
 @export var vehicle_ram_speed_threshold: float = 8.0
 @export var witnessed_crime_cooldown: float = 3.0
+@export var damage_stagger_seconds: float = 0.4
+@export var derez_seconds: float = 0.6
 
 var _state := AgentState.WANDER
 var _spawn_position := Vector3.ZERO
@@ -49,12 +54,17 @@ var _barks := BarkSystem.new()
 var _bark_tween: Tween
 var _witnessed_crime_timer := 0.0
 var _player_vehicle: Node3D
+var _health: Health
+var _stagger_timer := 0.0
+var _derezzing := false
+var _derez_materials: Array[StandardMaterial3D] = []
 
 @onready var _bark_bubble: Label3D = get_node_or_null("BarkBubble") as Label3D
 
 
 func _ready() -> void:
 	add_to_group("agents")
+	_connect_health()
 	_rng.randomize()
 	_gravity = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
 	_spawn_position = global_position
@@ -71,8 +81,12 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	_life_time += delta
-	_witnessed_crime_timer = maxf(0.0, _witnessed_crime_timer - delta)
+	_tick_reaction_timers(delta)
+	if _derezzing:
+		return
+	if _process_stagger(delta):
+		_update_crime_witnessing()
+		return
 
 	match _state:
 		AgentState.WANDER:
@@ -90,6 +104,73 @@ func _physics_process(delta: float) -> void:
 			_enter_wander()
 
 	_update_crime_witnessing()
+
+
+func _tick_reaction_timers(delta: float) -> void:
+	_life_time += delta
+	_witnessed_crime_timer = maxf(0.0, _witnessed_crime_timer - delta)
+
+
+func _process_stagger(delta: float) -> bool:
+	if _stagger_timer <= 0.0:
+		return false
+
+	_stagger_timer = maxf(0.0, _stagger_timer - delta)
+	_stop_horizontal(delta)
+	return true
+
+
+func _connect_health() -> void:
+	_health = get_node_or_null("Health") as Health
+	if _health == null:
+		return
+
+	var damaged_callable := Callable(self, "_on_damaged")
+	if not _health.is_connected(&"damaged", damaged_callable):
+		_health.connect(&"damaged", damaged_callable)
+
+	var died_callable := Callable(self, "_on_died")
+	if not _health.is_connected(&"died", died_callable):
+		_health.connect(&"died", died_callable)
+
+
+func _on_damaged(_amount: float, source: Node) -> void:
+	if _derezzing:
+		return
+
+	_stagger_timer = maxf(_stagger_timer, damage_stagger_seconds)
+	_emit_bark(&"taking_damage")
+	if _is_weapon_damage_source(source):
+		_report_weapon_damage_crime()
+
+
+func _on_died(_source: Node) -> void:
+	if _derezzing:
+		return
+
+	_derezzing = true
+	velocity = Vector3.ZERO
+	_emit_bark(&"taking_damage", "Thank you for the feedback. De-rezzing now.")
+	_disable_collision()
+	_play_derez()
+
+
+func _report_weapon_damage_crime() -> void:
+	if _witnessed_crime_timer > 0.0:
+		return
+
+	_witnessed_crime_timer = witnessed_crime_cooldown
+	var events := _events()
+	if events != null:
+		events.emit_signal(&"crime_committed", 3, global_position)
+
+
+func _is_weapon_damage_source(source: Node) -> bool:
+	if source == null:
+		return false
+
+	var script := source.get_script() as Script
+	return script != null and String(script.resource_path) == HITSCAN_WEAPON_PATH
 
 
 func _update_wander(delta: float) -> void:
@@ -317,14 +398,10 @@ func _witnessed_nearby_vehicle_ram() -> bool:
 
 func _report_witnessed_ram() -> void:
 	_witnessed_crime_timer = witnessed_crime_cooldown
-	var line := _barks.get_bark("taking_damage")
-	_show_bark(line)
+	_emit_bark(&"taking_damage")
 	var events := _events()
-	if events == null:
-		return
-	if not line.is_empty():
-		events.emit_signal(&"bark_emitted", self, &"taking_damage", line)
-	events.emit_signal(&"crime_committed", 2, global_position)
+	if events != null:
+		events.emit_signal(&"crime_committed", 2, global_position)
 
 
 func _is_player_or_driven_vehicle(node: Node) -> bool:
@@ -388,6 +465,19 @@ func _events() -> Node:
 	return get_node_or_null("/root/Events")
 
 
+func _emit_bark(category: StringName, fallback: String = "") -> void:
+	var line := _barks.get_bark(String(category))
+	if line.is_empty():
+		line = fallback
+	if line.is_empty():
+		return
+
+	_show_bark(line)
+	var events := _events()
+	if events != null:
+		events.emit_signal(&"bark_emitted", self, category, line)
+
+
 func _show_bark(line: String) -> void:
 	if _bark_bubble == null or line.is_empty():
 		return
@@ -417,6 +507,65 @@ func _turn_toward(target: Vector3, delta: float) -> void:
 
 func _horizontal_distance(a: Vector3, b: Vector3) -> float:
 	return Vector2(a.x - b.x, a.z - b.z).length()
+
+
+func _disable_collision() -> void:
+	collision_layer = 0
+	collision_mask = 0
+
+	for node in find_children("*", "CollisionShape3D", true, false):
+		var shape := node as CollisionShape3D
+		if shape != null:
+			shape.set_deferred("disabled", true)
+
+
+func _play_derez() -> void:
+	_derez_materials.clear()
+	for node in find_children("*", "MeshInstance3D", true, false):
+		var mesh := node as MeshInstance3D
+		if mesh != null:
+			var material := _make_derez_material()
+			mesh.material_override = material
+			_derez_materials.append(material)
+
+	var flash := OmniLight3D.new()
+	flash.name = "DerezFlash"
+	flash.light_color = DEREZ_CYAN
+	flash.light_energy = 3.0
+	flash.omni_range = 4.0
+	add_child(flash)
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(self, "scale", Vector3(1.12, 0.04, 1.12), derez_seconds).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	tween.tween_property(self, "position:y", position.y - 1.25, derez_seconds).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	tween.tween_method(_set_derez_alpha, 0.92, 0.0, derez_seconds).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	tween.tween_property(flash, "light_energy", 0.0, derez_seconds).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.finished.connect(func() -> void:
+		if is_instance_valid(flash):
+			flash.queue_free()
+		queue_free()
+	)
+
+
+func _make_derez_material() -> StandardMaterial3D:
+	var material := StandardMaterial3D.new()
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.albedo_color = Color(DEREZ_CYAN.r, DEREZ_CYAN.g, DEREZ_CYAN.b, 0.92)
+	material.emission_enabled = true
+	material.emission = DEREZ_CYAN
+	material.emission_energy_multiplier = 4.5
+	material.roughness = 0.18
+	return material
+
+
+func _set_derez_alpha(value: float) -> void:
+	for material in _derez_materials:
+		if material == null:
+			continue
+		var color := material.albedo_color
+		color.a = clampf(value, 0.0, 1.0)
+		material.albedo_color = color
 
 
 func _set_state(next_state: int) -> void:

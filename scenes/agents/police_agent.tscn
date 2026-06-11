@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/systems/police_behavior.gd" id="1_police_behavior"]
+[ext_resource type="Script" path="res://scripts/combat/health.gd" id="2_health"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 height = 1.9
@@ -55,6 +56,10 @@ size = Vector3(0.46, 0.1, 0.2)
 
 [node name="PoliceAgent" type="CharacterBody3D" groups=["agents", "police"]]
 script = ExtResource("1_police_behavior")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_health")
+max_health = 100.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 position = Vector3(0, 0.95, 0)

@@ -17,3 +17,4 @@ signal bark_emitted(speaker: Node, category: StringName, text: String)
 ## Player entered/exited a vehicle.
 signal vehicle_entered(vehicle: Node)
 signal vehicle_exited(vehicle: Node)
+signal player_caught(by: Node)

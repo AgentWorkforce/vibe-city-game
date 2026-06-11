@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/minimap.gd" id="1_minimap"]
+
+[node name="Minimap" type="CanvasLayer"]
+layer = 21
+
+[node name="Root" type="Control" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Root"]
+custom_minimum_size = Vector2(220, 220)
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 252.0
+offset_bottom = 252.0
+mouse_filter = 2
+
+[node name="Margin" type="MarginContainer" parent="Root/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+mouse_filter = 2
+
+[node name="MapSurface" type="Control" parent="Root/Panel/Margin"]
+custom_minimum_size = Vector2(196, 196)
+layout_mode = 2
+clip_contents = true
+mouse_filter = 2
+script = ExtResource("1_minimap")
