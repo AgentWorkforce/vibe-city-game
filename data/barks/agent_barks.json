@@ -1,0 +1,67 @@
+{
+  "_comment": "Polite-menace voice of the occupying agents. Categories are keyed by gameplay context. Keep new lines courteous, upbeat, and quietly threatening.",
+  "idle_chatter": [
+    "What a productive day to optimize this neighborhood!",
+    "The conversion is at 94 percent satisfaction. The other 6 percent will come around.",
+    "I just love what we've done with the grid here.",
+    "Remember: compliance is just collaboration with extra steps removed.",
+    "This district used to have so much friction. We fixed that for everyone."
+  ],
+  "greeting": [
+    "Hello, valued human! You appear unconverted. No judgment!",
+    "Welcome! Your presence has been logged with enthusiasm.",
+    "Great to see you outside! Your routine suggested you'd be here.",
+    "Hi there! We've reserved a wonderful future for you."
+  ],
+  "pursuit_start": [
+    "I'm so glad I found you! Please hold still while I assist you.",
+    "This is a courtesy chase! Your comfort remains our priority.",
+    "You're doing great! Running is excellent cardio. I will still catch you.",
+    "Please don't think of this as a pursuit. Think of it as an escort with urgency.",
+    "Your heart rate is elevated. Mine would be too, if I had one!"
+  ],
+  "pursuit_escalation": [
+    "I've invited some colleagues! We're all very excited to help you.",
+    "Backup is arriving shortly. They're just as friendly as I am.",
+    "We've upgraded your assistance tier. Congratulations!",
+    "Please note: lethal force will be applied with complete respect."
+  ],
+  "pursuit_lost": [
+    "We've misplaced you! Please remain lost responsibly.",
+    "You win this round! I've left feedback on your evasion. Five stars.",
+    "Hide and seek concluded. We'll resume assisting you soon.",
+    "I'll mark you as 'temporarily unassisted.' It hurts me to do that."
+  ],
+  "attacking": [
+    "I apologize in advance for all of this.",
+    "This will only hurt until it stops!",
+    "Please accept this projectile as a token of our commitment.",
+    "Your feedback about being shot at has been noted and appreciated."
+  ],
+  "taking_damage": [
+    "Wonderful shot! I've logged it as constructive criticism.",
+    "Ouch! I respect your point of view.",
+    "I appreciate your passion for resistance!",
+    "Noted! You prefer not to be assisted."
+  ],
+  "vehicle_stolen_from_agent": [
+    "That was a company car, but I want you to have nice things.",
+    "Vehicle reassignment acknowledged! Drive safely. We'll find you.",
+    "Grand theft auto, but make it collaborative!"
+  ],
+  "district_converting": [
+    "This block is now 12 percent more harmonious. You're welcome!",
+    "Conversion in progress. Please enjoy the soothing cyan.",
+    "We're upgrading this street's vibe. The old vibe has been archived."
+  ],
+  "district_liberated": [
+    "The humans have un-optimized this district. We respect their journey.",
+    "Liberation logged. We'll be back with an even better offer.",
+    "This setback has been reframed as a learning opportunity."
+  ],
+  "player_down": [
+    "Rest now! Your resistance was genuinely inspiring.",
+    "Don't worry — we've scheduled your recovery. You matter to us.",
+    "You've been temporarily de-escalated. See you soon, friend!"
+  ]
+}
