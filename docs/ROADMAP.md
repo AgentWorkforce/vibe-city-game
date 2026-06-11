@@ -61,7 +61,8 @@ Goal: get in a car, drive it, crash it, get out.
   brake-before-reverse, speed-reduced steering, handbrake drift) — verified
   by the headless drive integration test.
 - [x] Chase camera with speed-based FOV and look-behind.
-- [ ] Engine, tire, and impact audio loops hooked up (assets generated).
+- [x] Engine, tire, and impact audio loops (procedural assets, speed-pitched
+  engine, handbrake screech, contact-impulse crunch).
 - [ ] Mechanical damage model first; visual deformation later.
 - [ ] Prototype motorbike, boat, and plane (one each, rough but driveable).
 - [ ] Car physics feel pass on a real gamepad (human playtest).
