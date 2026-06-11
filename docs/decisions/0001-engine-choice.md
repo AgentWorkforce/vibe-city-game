@@ -1,8 +1,17 @@
 # ADR 0001 — Engine choice for photorealistic VIBE CITY
 
-Date: 2026-06-10
-Status: Custom engine REJECTED (final). Godot-vs-UE5 staged decision OPEN,
-pending the human driver's call on the UE5 spike.
+Date: 2026-06-10 (decided 2026-06-11)
+Status: DECIDED — staged UE5 migration. Custom engine REJECTED (final).
+The human driver delegated the call to the lead with the mandate "GTA 6
+quality, however best you can get there"; the lead chose the staged UE5
+path per the analysis below. Perf target re-picked: fidelity-first
+(1080p with TSR/DLSS-class upscaling, ~45-60fps on mid hardware) replaces
+the hard 1080p60 lock.
+Execution note: the UE5 spike is blocked on hardware — the dev machine
+has ~13GB free disk vs the 30-60GB UE5 requires. Awaiting a resource
+decision (free disk / second machine / cloud builder). Until unblocked,
+Godot remains the design lab and ALL new code keeps the plain-class
+portability discipline (this file, ARCHITECTURE.md).
 Participants: fable-lead, claude-engine-architecture (debate in the
 `#engine-architecture` relay channel), prompted by the human driver's
 question and the photorealism mandate.
