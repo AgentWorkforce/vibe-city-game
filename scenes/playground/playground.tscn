@@ -1,8 +1,10 @@
-[gd_scene load_steps=115 format=3]
+[gd_scene load_steps=117 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/vehicles/car.tscn" id="2_car"]
 [ext_resource type="Script" path="res://scripts/vehicles/vehicle_coupler.gd" id="3_coupler"]
+[ext_resource type="PackedScene" path="res://scenes/agents/agent.tscn" id="4_agent"]
+[ext_resource type="PackedScene" path="res://scenes/world/conversion_zone.tscn" id="5_zone"]
 
 [sub_resource type="ProceduralSkyMaterial" id="PastelSkyMaterial"]
 sky_top_color = Color(0.58, 0.86, 1, 1)
@@ -1180,6 +1182,20 @@ position = Vector3(65, 0.6, -20)
 script = ExtResource("3_coupler")
 player_root_path = NodePath("../Player")
 car_path = NodePath("../Car")
+
+[node name="ConversionZone" parent="." instance=ExtResource("5_zone")]
+position = Vector3(-42, 0, -32)
+
+[node name="Agents" type="Node3D" parent="."]
+
+[node name="Agent1" parent="Agents" instance=ExtResource("4_agent")]
+position = Vector3(8, 0.2, 2)
+
+[node name="Agent2" parent="Agents" instance=ExtResource("4_agent")]
+position = Vector3(-12, 0.2, -8)
+
+[node name="Agent3" parent="Agents" instance=ExtResource("4_agent")]
+position = Vector3(-42, 0.2, -32)
 
 [node name="Ladders" type="Node3D" parent="."]
 

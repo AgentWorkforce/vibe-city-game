@@ -1,0 +1,139 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/cyan_grid.gdshader" id="1_grid"]
+[ext_resource type="Shader" path="res://assets/shaders/boundary_wall.gdshader" id="2_wall"]
+
+[sub_resource type="ShaderMaterial" id="CyanGridMaterial"]
+shader = ExtResource("1_grid")
+
+[sub_resource type="PlaneMesh" id="GroundOverlayMesh"]
+material = SubResource("CyanGridMaterial")
+size = Vector2(30, 30)
+subdivide_width = 30
+subdivide_depth = 30
+
+[sub_resource type="ShaderMaterial" id="BoundaryWallMaterial"]
+shader = ExtResource("2_wall")
+
+[sub_resource type="PlaneMesh" id="BoundaryWallMesh"]
+material = SubResource("BoundaryWallMaterial")
+size = Vector2(30, 3)
+subdivide_width = 30
+subdivide_depth = 6
+
+[sub_resource type="StandardMaterial3D" id="PylonWhiteMaterial"]
+albedo_color = Color(0.96, 0.98, 1, 1)
+emission_enabled = true
+emission = Color(0.58, 0.66, 0.7, 1)
+emission_energy_multiplier = 0.45
+roughness = 0.62
+
+[sub_resource type="StandardMaterial3D" id="PylonBandMaterial"]
+albedo_color = Color(0.098, 0.89, 0.89, 1)
+emission_enabled = true
+emission = Color(0.098, 0.89, 0.89, 1)
+emission_energy_multiplier = 1.8
+roughness = 0.28
+
+[sub_resource type="BoxShape3D" id="PylonShape"]
+size = Vector3(0.55, 4, 0.55)
+
+[sub_resource type="BoxMesh" id="PylonBodyMesh"]
+material = SubResource("PylonWhiteMaterial")
+size = Vector3(0.55, 4, 0.55)
+
+[sub_resource type="BoxMesh" id="PylonBandMesh"]
+material = SubResource("PylonBandMaterial")
+size = Vector3(0.66, 0.34, 0.66)
+
+[sub_resource type="BoxShape3D" id="ZoneAreaShape"]
+size = Vector3(30, 6, 30)
+
+[node name="ConversionZone" type="Node3D"]
+
+[node name="GroundOverlay" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.07, 0)
+mesh = SubResource("GroundOverlayMesh")
+
+[node name="Boundaries" type="Node3D" parent="."]
+
+[node name="NorthWall" type="MeshInstance3D" parent="Boundaries"]
+position = Vector3(0, 1.5, -15)
+rotation = Vector3(-1.570796, 0, 0)
+mesh = SubResource("BoundaryWallMesh")
+
+[node name="SouthWall" type="MeshInstance3D" parent="Boundaries"]
+position = Vector3(0, 1.5, 15)
+rotation = Vector3(-1.570796, 3.141593, 0)
+mesh = SubResource("BoundaryWallMesh")
+
+[node name="EastWall" type="MeshInstance3D" parent="Boundaries"]
+position = Vector3(15, 1.5, 0)
+rotation = Vector3(-1.570796, 1.570796, 0)
+mesh = SubResource("BoundaryWallMesh")
+
+[node name="WestWall" type="MeshInstance3D" parent="Boundaries"]
+position = Vector3(-15, 1.5, 0)
+rotation = Vector3(-1.570796, -1.570796, 0)
+mesh = SubResource("BoundaryWallMesh")
+
+[node name="Pylons" type="Node3D" parent="."]
+
+[node name="PylonNorthWest" type="StaticBody3D" parent="Pylons"]
+position = Vector3(-9, 2, -9)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pylons/PylonNorthWest"]
+shape = SubResource("PylonShape")
+
+[node name="Body" type="MeshInstance3D" parent="Pylons/PylonNorthWest"]
+mesh = SubResource("PylonBodyMesh")
+
+[node name="CyanBand" type="MeshInstance3D" parent="Pylons/PylonNorthWest"]
+position = Vector3(0, 0.95, 0)
+mesh = SubResource("PylonBandMesh")
+
+[node name="PylonNorthEast" type="StaticBody3D" parent="Pylons"]
+position = Vector3(9, 2, -9)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pylons/PylonNorthEast"]
+shape = SubResource("PylonShape")
+
+[node name="Body" type="MeshInstance3D" parent="Pylons/PylonNorthEast"]
+mesh = SubResource("PylonBodyMesh")
+
+[node name="CyanBand" type="MeshInstance3D" parent="Pylons/PylonNorthEast"]
+position = Vector3(0, 0.95, 0)
+mesh = SubResource("PylonBandMesh")
+
+[node name="PylonSouthWest" type="StaticBody3D" parent="Pylons"]
+position = Vector3(-9, 2, 9)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pylons/PylonSouthWest"]
+shape = SubResource("PylonShape")
+
+[node name="Body" type="MeshInstance3D" parent="Pylons/PylonSouthWest"]
+mesh = SubResource("PylonBodyMesh")
+
+[node name="CyanBand" type="MeshInstance3D" parent="Pylons/PylonSouthWest"]
+position = Vector3(0, 0.95, 0)
+mesh = SubResource("PylonBandMesh")
+
+[node name="PylonSouthEast" type="StaticBody3D" parent="Pylons"]
+position = Vector3(9, 2, 9)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pylons/PylonSouthEast"]
+shape = SubResource("PylonShape")
+
+[node name="Body" type="MeshInstance3D" parent="Pylons/PylonSouthEast"]
+mesh = SubResource("PylonBodyMesh")
+
+[node name="CyanBand" type="MeshInstance3D" parent="Pylons/PylonSouthEast"]
+position = Vector3(0, 0.95, 0)
+mesh = SubResource("PylonBandMesh")
+
+[node name="ZoneArea" type="Area3D" parent="." groups=["conversion_zone"]]
+position = Vector3(0, 3, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneArea"]
+shape = SubResource("ZoneAreaShape")

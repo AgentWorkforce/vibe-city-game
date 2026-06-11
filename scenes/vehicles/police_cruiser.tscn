@@ -1,0 +1,167 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/vehicles/car_controller.gd" id="1_controller"]
+[ext_resource type="Script" path="res://scripts/vehicles/car_audio.gd" id="2_audio"]
+
+[sub_resource type="StandardMaterial3D" id="BodyWhite"]
+albedo_color = Color(0.96, 0.97, 0.98, 1)
+roughness = 0.55
+metallic = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StripeCyan"]
+albedo_color = Color(0.1, 0.89, 0.89, 1)
+emission_enabled = true
+emission = Color(0.1, 0.89, 0.89, 1)
+emission_energy_multiplier = 1.6
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="LightBar"]
+albedo_color = Color(0.75, 0.97, 1, 1)
+emission_enabled = true
+emission = Color(0.3, 0.95, 1, 1)
+emission_energy_multiplier = 2.5
+roughness = 0.3
+
+[sub_resource type="BoxShape3D" id="BodyShape"]
+size = Vector3(2, 1.4, 4.2)
+
+[sub_resource type="BoxMesh" id="BodyMesh"]
+material = SubResource("BodyWhite")
+size = Vector3(2, 1.4, 4.2)
+
+[sub_resource type="BoxMesh" id="StripeMesh"]
+material = SubResource("StripeCyan")
+size = Vector3(2.04, 0.22, 4.24)
+
+[sub_resource type="BoxMesh" id="LightBarMesh"]
+material = SubResource("LightBar")
+size = Vector3(1.1, 0.16, 0.42)
+
+[sub_resource type="StandardMaterial3D" id="WheelDark"]
+albedo_color = Color(0.08, 0.09, 0.11, 1)
+roughness = 0.88
+
+[sub_resource type="CylinderMesh" id="WheelMesh"]
+material = SubResource("WheelDark")
+top_radius = 0.36
+bottom_radius = 0.36
+height = 0.34
+radial_segments = 24
+rings = 2
+
+[sub_resource type="BoxShape3D" id="EnterZoneShape"]
+size = Vector3(6, 3, 7)
+
+[node name="PoliceCruiser" type="VehicleBody3D"]
+mass = 140.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -0.45, -0.22)
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 8
+script = ExtResource("1_controller")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.75, 0)
+shape = SubResource("BodyShape")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.75, 0)
+mesh = SubResource("BodyMesh")
+
+[node name="Stripe" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.78, 0)
+mesh = SubResource("StripeMesh")
+
+[node name="LightBarMesh" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.53, -0.3)
+mesh = SubResource("LightBarMesh")
+
+[node name="WheelFrontLeft" type="VehicleWheel3D" parent="."]
+position = Vector3(-0.9, 0.22, -1.35)
+use_as_steering = true
+wheel_roll_influence = 0.08
+wheel_radius = 0.36
+wheel_rest_length = 0.32
+wheel_friction_slip = 5.0
+suspension_travel = 0.25
+suspension_stiffness = 24.0
+suspension_max_force = 6000.0
+damping_compression = 4.4
+damping_relaxation = 5.6
+
+[node name="Visual" type="MeshInstance3D" parent="WheelFrontLeft"]
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("WheelMesh")
+
+[node name="WheelFrontRight" type="VehicleWheel3D" parent="."]
+position = Vector3(0.9, 0.22, -1.35)
+use_as_steering = true
+wheel_roll_influence = 0.08
+wheel_radius = 0.36
+wheel_rest_length = 0.32
+wheel_friction_slip = 5.0
+suspension_travel = 0.25
+suspension_stiffness = 24.0
+suspension_max_force = 6000.0
+damping_compression = 4.4
+damping_relaxation = 5.6
+
+[node name="Visual" type="MeshInstance3D" parent="WheelFrontRight"]
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("WheelMesh")
+
+[node name="WheelRearLeft" type="VehicleWheel3D" parent="."]
+position = Vector3(-0.9, 0.22, 1.35)
+use_as_traction = true
+wheel_roll_influence = 0.08
+wheel_radius = 0.36
+wheel_rest_length = 0.32
+wheel_friction_slip = 4.6
+suspension_travel = 0.25
+suspension_stiffness = 24.0
+suspension_max_force = 6200.0
+damping_compression = 4.6
+damping_relaxation = 5.8
+
+[node name="Visual" type="MeshInstance3D" parent="WheelRearLeft"]
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("WheelMesh")
+
+[node name="WheelRearRight" type="VehicleWheel3D" parent="."]
+position = Vector3(0.9, 0.22, 1.35)
+use_as_traction = true
+wheel_roll_influence = 0.08
+wheel_radius = 0.36
+wheel_rest_length = 0.32
+wheel_friction_slip = 4.6
+suspension_travel = 0.25
+suspension_stiffness = 24.0
+suspension_max_force = 6200.0
+damping_compression = 4.6
+damping_relaxation = 5.8
+
+[node name="Visual" type="MeshInstance3D" parent="WheelRearRight"]
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("WheelMesh")
+
+[node name="EnterZone" type="Area3D" parent="."]
+position = Vector3(0, 1.2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterZone"]
+shape = SubResource("EnterZoneShape")
+
+[node name="CarAudio" type="Node3D" parent="."]
+script = ExtResource("2_audio")
+
+[node name="CameraRig" type="Node3D" parent="."]
+position = Vector3(0, 0.75, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
+position = Vector3(0, 2.5, 0)
+spring_length = 6.0
+margin = 0.2
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D"]
+current = false
+fov = 70.0

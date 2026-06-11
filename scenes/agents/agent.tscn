@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/agents/agent_behavior.gd" id="1_behavior"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+height = 1.9
+radius = 0.34
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
+albedo_color = Color(1, 1, 1, 1)
+emission_enabled = true
+emission = Color(0.82, 0.97, 1, 1)
+emission_energy_multiplier = 0.18
+roughness = 0.62
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_head"]
+albedo_color = Color(0.96, 1, 1, 1)
+emission_enabled = true
+emission = Color(0.75, 0.95, 1, 1)
+emission_energy_multiplier = 0.12
+roughness = 0.58
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_visor"]
+albedo_color = Color(0.05, 0.95, 1, 1)
+emission_enabled = true
+emission = Color(0.05, 0.95, 1, 1)
+emission_energy_multiplier = 1.65
+roughness = 0.28
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+material = SubResource("StandardMaterial3D_body")
+radius = 0.34
+height = 1.9
+radial_segments = 24
+rings = 8
+
+[sub_resource type="BoxMesh" id="BoxMesh_head"]
+material = SubResource("StandardMaterial3D_head")
+size = Vector3(0.56, 0.44, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_visor"]
+material = SubResource("StandardMaterial3D_visor")
+size = Vector3(0.48, 0.11, 0.04)
+
+[node name="Agent" type="CharacterBody3D"]
+script = ExtResource("1_behavior")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.95, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="BodyMesh" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.95, 0)
+mesh = SubResource("CapsuleMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+position = Vector3(0, 2.03, 0)
+mesh = SubResource("BoxMesh_head")
+
+[node name="Visor" type="MeshInstance3D" parent="."]
+position = Vector3(0, 2.05, -0.27)
+mesh = SubResource("BoxMesh_visor")
+
+[node name="BarkBubble" type="Label3D" parent="."]
+visible = false
+position = Vector3(0, 2.58, 0)
+pixel_size = 0.006
+billboard = 1
+no_depth_test = true
+modulate = Color(1, 1, 1, 0)
+outline_modulate = Color(0.02, 0.04, 0.07, 1)
+text = ""
+font_size = 42
+outline_size = 8
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+width = 520.0
