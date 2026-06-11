@@ -1,11 +1,24 @@
 # VIBE CITY — Roadmap
 
 VIBE CITY is an open-world game about cheerful AI agents politely taking over a
-pastel Miami-like city, district by district. The player is human resistance:
+Miami-inspired city, district by district. The player is human resistance:
 drive, fly, shoot, evade, steal vehicles, trigger wanted levels, and reclaim
 territory while enemies remain relentlessly courteous.
 
+## Visual Direction (updated 2026-06-10 by the human driver)
+
+**Target: photorealistic, GTA VI-level graphics.** The early pastel blockout
+look is placeholder geometry, NOT the art identity. What stays from the canon:
+the Miami-inspired setting (beaches, canals, art deco, neon) and the
+cyan-holographic agent-tech layer as the sci-fi contrast against a
+photoreal world. From loop 8 onward, visual work targets realism: PBR
+materials, physically-based lighting and sky, realistic water, volumetrics,
+and rising asset quality every loop. Fidelity is staged — blockout geometry
+keeps shipping gameplay while the rendering stack and assets climb toward
+photorealism; we do not stall playability for visuals.
+
 Engine: **Godot 4.6** (stock; GDExtension only when profiling proves a need).
+See `docs/decisions/0001-engine-choice.md` for the engine decision record.
 
 Every milestone must ship **playable, on main, passing checks**. Features count
 only when implemented and verified — no placeholder menus, no faked progress.
@@ -82,8 +95,8 @@ Goal: travel several kilometers without a loading screen.
 
 Goal: one district feels inhabited.
 
-- [ ] Coastal pastel district blockout: streets, sidewalks, shoreline,
-  building footprints (art deco proportions, gray blockout + pastel tint).
+- [ ] Coastal district blockout: streets, sidewalks, shoreline, building
+  footprints (art deco proportions; blockout first, photoreal pass follows).
 - [ ] Road graph and basic traffic.
 - [ ] Pedestrians with simple reactions: flee, gawk, idle, resume.
 - [ ] Time of day, streetlights, lit building windows, wet roads, weather.
@@ -105,10 +118,14 @@ Goal: it is a game now.
 
 ## M6 — Trailer-Grade Polish
 
-Goal: a 90-second in-engine trailer from a release build.
+Goal: a 90-second in-engine trailer from a release build, at the
+photorealistic visual target (see Visual Direction).
 
-- Lighting pass (golden hour + neon night are the hero looks).
-- Water: wakes, buoyancy, beaches, shoreline foam.
+- Lighting pass: physically-based exposure, GI (SDFGI/VoxelGI evaluation),
+  volumetric fog; golden hour + neon night are the hero looks.
+- Photoreal material pass: PBR with real albedo/roughness/normal maps
+  across architecture, roads, vehicles, characters.
+- Water: SSR, wakes, buoyancy, beaches, shoreline foam.
 - Crowd and traffic density pass.
 - Cinematic camera tools.
 - **Performance lock: 60 FPS at 1080p on an RTX 3060-class GPU.**
