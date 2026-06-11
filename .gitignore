@@ -17,3 +17,6 @@ exports/
 
 # OS
 .DS_Store
+
+# Agent Relay broker state (contains workspace keys — never commit)
+.agentworkforce/

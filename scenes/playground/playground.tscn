@@ -1,0 +1,419 @@
+[gd_scene load_steps=51 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
+
+[sub_resource type="ProceduralSkyMaterial" id="PastelSkyMaterial"]
+sky_top_color = Color(0.58, 0.86, 1, 1)
+sky_horizon_color = Color(1, 0.68, 0.78, 1)
+sky_curve = 0.18
+sky_energy_multiplier = 1.05
+ground_bottom_color = Color(0.75, 0.92, 0.92, 1)
+ground_horizon_color = Color(1, 0.72, 0.67, 1)
+ground_curve = 0.08
+ground_energy_multiplier = 0.85
+sun_angle_max = 24.0
+sun_curve = 0.12
+sun_energy_multiplier = 1.15
+
+[sub_resource type="Sky" id="PastelSky"]
+sky_material = SubResource("PastelSkyMaterial")
+
+[sub_resource type="Environment" id="PastelEnvironment"]
+background_mode = 2
+sky = SubResource("PastelSky")
+ambient_light_source = 2
+ambient_light_sky_contribution = 1.0
+ambient_light_energy = 0.85
+reflected_light_source = 2
+
+[sub_resource type="StandardMaterial3D" id="GroundMaterial"]
+albedo_color = Color(0.9, 0.84, 0.72, 1)
+roughness = 0.88
+
+[sub_resource type="StandardMaterial3D" id="StairMaterial"]
+albedo_color = Color(1, 0.62, 0.58, 1)
+roughness = 0.82
+
+[sub_resource type="StandardMaterial3D" id="Slope15Material"]
+albedo_color = Color(0.56, 0.91, 0.84, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="Slope30Material"]
+albedo_color = Color(0.7, 0.82, 1, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="Slope45Material"]
+albedo_color = Color(0.98, 0.78, 0.47, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="PlatformMaterial"]
+albedo_color = Color(0.82, 0.7, 1, 1)
+roughness = 0.83
+
+[sub_resource type="StandardMaterial3D" id="Ledge05Material"]
+albedo_color = Color(0.68, 0.95, 0.66, 1)
+roughness = 0.82
+
+[sub_resource type="StandardMaterial3D" id="Ledge10Material"]
+albedo_color = Color(0.54, 0.9, 1, 1)
+roughness = 0.82
+
+[sub_resource type="StandardMaterial3D" id="Ledge20Material"]
+albedo_color = Color(1, 0.82, 0.52, 1)
+roughness = 0.82
+
+[sub_resource type="StandardMaterial3D" id="Ledge30Material"]
+albedo_color = Color(1, 0.62, 0.86, 1)
+roughness = 0.82
+
+[sub_resource type="BoxShape3D" id="GroundShape"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="BoxMesh" id="GroundMesh"]
+material = SubResource("GroundMaterial")
+size = Vector3(200, 1, 200)
+
+[sub_resource type="BoxShape3D" id="Step01Shape"]
+size = Vector3(4, 0.25, 1)
+
+[sub_resource type="BoxMesh" id="Step01Mesh"]
+material = SubResource("StairMaterial")
+size = Vector3(4, 0.25, 1)
+
+[sub_resource type="BoxShape3D" id="Step02Shape"]
+size = Vector3(4, 0.5, 1)
+
+[sub_resource type="BoxMesh" id="Step02Mesh"]
+material = SubResource("StairMaterial")
+size = Vector3(4, 0.5, 1)
+
+[sub_resource type="BoxShape3D" id="Step03Shape"]
+size = Vector3(4, 0.75, 1)
+
+[sub_resource type="BoxMesh" id="Step03Mesh"]
+material = SubResource("StairMaterial")
+size = Vector3(4, 0.75, 1)
+
+[sub_resource type="BoxShape3D" id="Step04Shape"]
+size = Vector3(4, 1, 1)
+
+[sub_resource type="BoxMesh" id="Step04Mesh"]
+material = SubResource("StairMaterial")
+size = Vector3(4, 1, 1)
+
+[sub_resource type="BoxShape3D" id="Step05Shape"]
+size = Vector3(4, 1.25, 1)
+
+[sub_resource type="BoxMesh" id="Step05Mesh"]
+material = SubResource("StairMaterial")
+size = Vector3(4, 1.25, 1)
+
+[sub_resource type="BoxShape3D" id="Step06Shape"]
+size = Vector3(4, 1.5, 1)
+
+[sub_resource type="BoxMesh" id="Step06Mesh"]
+material = SubResource("StairMaterial")
+size = Vector3(4, 1.5, 1)
+
+[sub_resource type="BoxShape3D" id="Step07Shape"]
+size = Vector3(4, 1.75, 1)
+
+[sub_resource type="BoxMesh" id="Step07Mesh"]
+material = SubResource("StairMaterial")
+size = Vector3(4, 1.75, 1)
+
+[sub_resource type="BoxShape3D" id="Step08Shape"]
+size = Vector3(4, 2, 1)
+
+[sub_resource type="BoxMesh" id="Step08Mesh"]
+material = SubResource("StairMaterial")
+size = Vector3(4, 2, 1)
+
+[sub_resource type="BoxShape3D" id="Step09Shape"]
+size = Vector3(4, 2.25, 1)
+
+[sub_resource type="BoxMesh" id="Step09Mesh"]
+material = SubResource("StairMaterial")
+size = Vector3(4, 2.25, 1)
+
+[sub_resource type="BoxShape3D" id="Slope15Shape"]
+size = Vector3(4, 0.4, 8)
+
+[sub_resource type="BoxMesh" id="Slope15Mesh"]
+material = SubResource("Slope15Material")
+size = Vector3(4, 0.4, 8)
+
+[sub_resource type="BoxShape3D" id="Slope30Shape"]
+size = Vector3(4, 0.4, 8)
+
+[sub_resource type="BoxMesh" id="Slope30Mesh"]
+material = SubResource("Slope30Material")
+size = Vector3(4, 0.4, 8)
+
+[sub_resource type="BoxShape3D" id="Slope45Shape"]
+size = Vector3(4, 0.4, 8)
+
+[sub_resource type="BoxMesh" id="Slope45Mesh"]
+material = SubResource("Slope45Material")
+size = Vector3(4, 0.4, 8)
+
+[sub_resource type="BoxShape3D" id="PlatformShape"]
+size = Vector3(4, 0.5, 4)
+
+[sub_resource type="BoxMesh" id="PlatformMesh"]
+material = SubResource("PlatformMaterial")
+size = Vector3(4, 0.5, 4)
+
+[sub_resource type="BoxShape3D" id="Ledge05Shape"]
+size = Vector3(5, 0.5, 0.75)
+
+[sub_resource type="BoxMesh" id="Ledge05Mesh"]
+material = SubResource("Ledge05Material")
+size = Vector3(5, 0.5, 0.75)
+
+[sub_resource type="BoxShape3D" id="Ledge10Shape"]
+size = Vector3(5, 1, 0.75)
+
+[sub_resource type="BoxMesh" id="Ledge10Mesh"]
+material = SubResource("Ledge10Material")
+size = Vector3(5, 1, 0.75)
+
+[sub_resource type="BoxShape3D" id="Ledge20Shape"]
+size = Vector3(5, 2, 0.75)
+
+[sub_resource type="BoxMesh" id="Ledge20Mesh"]
+material = SubResource("Ledge20Material")
+size = Vector3(5, 2, 0.75)
+
+[sub_resource type="BoxShape3D" id="Ledge30Shape"]
+size = Vector3(5, 3, 0.75)
+
+[sub_resource type="BoxMesh" id="Ledge30Mesh"]
+material = SubResource("Ledge30Material")
+size = Vector3(5, 3, 0.75)
+
+[node name="Playground" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("PastelEnvironment")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.872665, -0.523599, 0)
+light_color = Color(1, 0.86, 0.68, 1)
+light_energy = 2.4
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("GroundShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("GroundMesh")
+
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+position = Vector3(0, 1, 10)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector3(0, 1, 10)
+
+[node name="Staircase" type="Node3D" parent="."]
+
+[node name="Step01" type="StaticBody3D" parent="Staircase"]
+position = Vector3(-22, 0.125, -26)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Staircase/Step01"]
+shape = SubResource("Step01Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Staircase/Step01"]
+mesh = SubResource("Step01Mesh")
+
+[node name="Step02" type="StaticBody3D" parent="Staircase"]
+position = Vector3(-22, 0.25, -25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Staircase/Step02"]
+shape = SubResource("Step02Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Staircase/Step02"]
+mesh = SubResource("Step02Mesh")
+
+[node name="Step03" type="StaticBody3D" parent="Staircase"]
+position = Vector3(-22, 0.375, -24)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Staircase/Step03"]
+shape = SubResource("Step03Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Staircase/Step03"]
+mesh = SubResource("Step03Mesh")
+
+[node name="Step04" type="StaticBody3D" parent="Staircase"]
+position = Vector3(-22, 0.5, -23)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Staircase/Step04"]
+shape = SubResource("Step04Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Staircase/Step04"]
+mesh = SubResource("Step04Mesh")
+
+[node name="Step05" type="StaticBody3D" parent="Staircase"]
+position = Vector3(-22, 0.625, -22)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Staircase/Step05"]
+shape = SubResource("Step05Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Staircase/Step05"]
+mesh = SubResource("Step05Mesh")
+
+[node name="Step06" type="StaticBody3D" parent="Staircase"]
+position = Vector3(-22, 0.75, -21)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Staircase/Step06"]
+shape = SubResource("Step06Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Staircase/Step06"]
+mesh = SubResource("Step06Mesh")
+
+[node name="Step07" type="StaticBody3D" parent="Staircase"]
+position = Vector3(-22, 0.875, -20)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Staircase/Step07"]
+shape = SubResource("Step07Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Staircase/Step07"]
+mesh = SubResource("Step07Mesh")
+
+[node name="Step08" type="StaticBody3D" parent="Staircase"]
+position = Vector3(-22, 1, -19)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Staircase/Step08"]
+shape = SubResource("Step08Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Staircase/Step08"]
+mesh = SubResource("Step08Mesh")
+
+[node name="Step09" type="StaticBody3D" parent="Staircase"]
+position = Vector3(-22, 1.125, -18)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Staircase/Step09"]
+shape = SubResource("Step09Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Staircase/Step09"]
+mesh = SubResource("Step09Mesh")
+
+[node name="Slopes" type="Node3D" parent="."]
+
+[node name="Slope15Degrees" type="StaticBody3D" parent="Slopes"]
+position = Vector3(-8, 0.872, -24)
+rotation = Vector3(-0.261799, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Slopes/Slope15Degrees"]
+shape = SubResource("Slope15Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Slopes/Slope15Degrees"]
+mesh = SubResource("Slope15Mesh")
+
+[node name="Slope30Degrees" type="StaticBody3D" parent="Slopes"]
+position = Vector3(0, 1.857, -24)
+rotation = Vector3(-0.523599, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Slopes/Slope30Degrees"]
+shape = SubResource("Slope30Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Slopes/Slope30Degrees"]
+mesh = SubResource("Slope30Mesh")
+
+[node name="Slope45Degrees" type="StaticBody3D" parent="Slopes"]
+position = Vector3(8, 2.717, -24)
+rotation = Vector3(-0.785398, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Slopes/Slope45Degrees"]
+shape = SubResource("Slope45Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Slopes/Slope45Degrees"]
+mesh = SubResource("Slope45Mesh")
+
+[node name="JumpPlatforms" type="Node3D" parent="."]
+
+[node name="PlatformStart" type="StaticBody3D" parent="JumpPlatforms"]
+position = Vector3(-36, 0.75, 18)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JumpPlatforms/PlatformStart"]
+shape = SubResource("PlatformShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="JumpPlatforms/PlatformStart"]
+mesh = SubResource("PlatformMesh")
+
+[node name="PlatformGap2m" type="StaticBody3D" parent="JumpPlatforms"]
+position = Vector3(-30, 0.75, 18)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JumpPlatforms/PlatformGap2m"]
+shape = SubResource("PlatformShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="JumpPlatforms/PlatformGap2m"]
+mesh = SubResource("PlatformMesh")
+
+[node name="PlatformGap3m" type="StaticBody3D" parent="JumpPlatforms"]
+position = Vector3(-23, 0.75, 18)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JumpPlatforms/PlatformGap3m"]
+shape = SubResource("PlatformShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="JumpPlatforms/PlatformGap3m"]
+mesh = SubResource("PlatformMesh")
+
+[node name="PlatformGap4m" type="StaticBody3D" parent="JumpPlatforms"]
+position = Vector3(-15, 0.75, 18)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JumpPlatforms/PlatformGap4m"]
+shape = SubResource("PlatformShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="JumpPlatforms/PlatformGap4m"]
+mesh = SubResource("PlatformMesh")
+
+[node name="PlatformGap5m" type="StaticBody3D" parent="JumpPlatforms"]
+position = Vector3(-6, 0.75, 18)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JumpPlatforms/PlatformGap5m"]
+shape = SubResource("PlatformShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="JumpPlatforms/PlatformGap5m"]
+mesh = SubResource("PlatformMesh")
+
+[node name="ClimbLedges" type="Node3D" parent="."]
+
+[node name="LedgeWall05m" type="StaticBody3D" parent="ClimbLedges"]
+position = Vector3(26, 0.25, -18)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbLedges/LedgeWall05m"]
+shape = SubResource("Ledge05Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ClimbLedges/LedgeWall05m"]
+mesh = SubResource("Ledge05Mesh")
+
+[node name="LedgeWall1m" type="StaticBody3D" parent="ClimbLedges"]
+position = Vector3(26, 0.5, -13)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbLedges/LedgeWall1m"]
+shape = SubResource("Ledge10Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ClimbLedges/LedgeWall1m"]
+mesh = SubResource("Ledge10Mesh")
+
+[node name="LedgeWall2m" type="StaticBody3D" parent="ClimbLedges"]
+position = Vector3(26, 1, -8)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbLedges/LedgeWall2m"]
+shape = SubResource("Ledge20Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ClimbLedges/LedgeWall2m"]
+mesh = SubResource("Ledge20Mesh")
+
+[node name="LedgeWall3m" type="StaticBody3D" parent="ClimbLedges"]
+position = Vector3(26, 1.5, -3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbLedges/LedgeWall3m"]
+shape = SubResource("Ledge30Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ClimbLedges/LedgeWall3m"]
+mesh = SubResource("Ledge30Mesh")
