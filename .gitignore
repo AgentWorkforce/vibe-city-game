@@ -1,0 +1,19 @@
+# Agent Relay runtime state (contains workspace keys — never commit)
+.agent-relay/
+.mcp.json
+
+# Local tooling caches
+.npm-cache/
+node_modules/
+
+# Godot
+.godot/
+*.import
+export_presets.cfg.bak
+
+# Build artifacts
+build/
+exports/
+
+# OS
+.DS_Store
