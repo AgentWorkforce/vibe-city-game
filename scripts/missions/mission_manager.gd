@@ -77,6 +77,41 @@ func is_active_mission_failed() -> bool:
 	return _active_failed
 
 
+func get_save_snapshot() -> Dictionary:
+	var mission := get_active_mission()
+	if mission == null:
+		return {}
+
+	return {
+		"mission_id": String(mission.mission_id),
+		"scene_path": _active_scene_path,
+		"current_objective_index": mission.get_current_objective_index(),
+		"objectives": mission.get_objective_states(),
+	}
+
+
+func restore_save_snapshot(snapshot: Dictionary) -> Mission:
+	_auto_start_fired = true
+	_auto_start_scheduled = false
+
+	var scene_path := str(snapshot.get("scene_path", ""))
+	if scene_path.is_empty():
+		_clear_active_mission()
+		return null
+
+	var mission := start_mission(scene_path)
+	if mission == null:
+		return null
+
+	var objective_states: Array = snapshot.get("objectives", [])
+	mission.restore_objective_states(
+		objective_states,
+		int(snapshot.get("current_objective_index", -1))
+	)
+	_active_failed = false
+	return mission
+
+
 func _schedule_auto_start() -> void:
 	if not is_inside_tree():
 		return

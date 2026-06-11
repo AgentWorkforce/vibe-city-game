@@ -10,8 +10,11 @@ const MAX_REQUESTS_PER_STREAM_TICK := 8
 @export var load_radius_tiles: int = 2
 @export var unload_radius_tiles: int = 3
 @export var target_path: NodePath
+@export var fallback_target_paths: Array[NodePath] = []
 
 var _target: Node3D
+var _target_override: Node3D
+var _fallback_initial_positions: Dictionary = {}
 var _stream_timer := 0.0
 var _last_target_position := Vector3.ZERO
 var _target_velocity := Vector3.ZERO
@@ -25,6 +28,8 @@ var _request_queue: Array[Vector2i] = []
 
 
 func _ready() -> void:
+	_capture_fallback_initial_positions()
+	_connect_vehicle_events()
 	_resolve_target()
 	if is_instance_valid(_target):
 		_last_target_position = _target.global_position
@@ -33,12 +38,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	_resolve_target()
 	_poll_threaded_loads()
 	_instantiate_one_ready_tile()
-
-	if not is_instance_valid(_target):
-		return
 
 	_stream_timer += delta
 	if _stream_timer < STREAM_INTERVAL_SECONDS:
@@ -46,6 +47,10 @@ func _process(delta: float) -> void:
 
 	var elapsed := _stream_timer
 	_stream_timer = 0.0
+	_resolve_target()
+	if not is_instance_valid(_target):
+		return
+
 	var target_position := _target.global_position
 	_target_velocity = (target_position - _last_target_position) / maxf(elapsed, 0.001)
 	_last_target_position = target_position
@@ -87,16 +92,112 @@ func is_tile_resident(coord: Vector2i) -> bool:
 	return _loaded_tiles.has(coord)
 
 
+func is_following_target(target: Node) -> bool:
+	return is_instance_valid(target) and target == _target
+
+
+func set_target(target: Node3D) -> void:
+	_target_override = target
+	_target = null
+	_resolve_target()
+
+
+func clear_target_override(target: Node = null) -> void:
+	if target != null and target != _target_override:
+		return
+
+	_target_override = null
+	_target = null
+	_resolve_target()
+
+
 func has_known_missing_tile(coord: Vector2i) -> bool:
 	return _missing_tiles.has(coord)
 
 
 func _resolve_target() -> void:
+	var next_target := _select_target()
+	if next_target == _target and is_instance_valid(_target):
+		return
+
+	_target = next_target
 	if is_instance_valid(_target):
+		_last_target_position = _target.global_position
+		_current_target_tile = world_to_tile_coord(_last_target_position)
+
+
+func _select_target() -> Node3D:
+	if is_instance_valid(_target_override):
+		return _target_override
+
+	var moved_fallback := _find_moved_fallback_target()
+	if moved_fallback != null:
+		return moved_fallback
+
+	if not target_path.is_empty():
+		var primary := get_node_or_null(target_path) as Node3D
+		if primary != null:
+			return primary
+
+	return _find_first_fallback_target()
+
+
+func _capture_fallback_initial_positions() -> void:
+	for path in fallback_target_paths:
+		var fallback := get_node_or_null(path) as Node3D
+		if fallback == null:
+			continue
+		_fallback_initial_positions[String(path)] = fallback.global_position
+
+
+func _find_moved_fallback_target() -> Node3D:
+	for path in fallback_target_paths:
+		var fallback := get_node_or_null(path) as Node3D
+		if fallback == null:
+			continue
+
+		var key := String(path)
+		if not _fallback_initial_positions.has(key):
+			_fallback_initial_positions[key] = fallback.global_position
+			continue
+
+		var initial_position := _fallback_initial_positions[key] as Vector3
+		if fallback.global_position.distance_squared_to(initial_position) > 0.25:
+			return fallback
+
+	return null
+
+
+func _find_first_fallback_target() -> Node3D:
+	for path in fallback_target_paths:
+		var fallback := get_node_or_null(path) as Node3D
+		if fallback != null:
+			return fallback
+	return null
+
+
+func _connect_vehicle_events() -> void:
+	var events := get_node_or_null("/root/Events")
+	if events == null:
 		return
-	if target_path.is_empty():
-		return
-	_target = get_node_or_null(target_path) as Node3D
+
+	var entered_callable := Callable(self, "_on_vehicle_entered")
+	if events.has_signal(&"vehicle_entered") and not events.is_connected(&"vehicle_entered", entered_callable):
+		events.connect(&"vehicle_entered", entered_callable)
+
+	var exited_callable := Callable(self, "_on_vehicle_exited")
+	if events.has_signal(&"vehicle_exited") and not events.is_connected(&"vehicle_exited", exited_callable):
+		events.connect(&"vehicle_exited", exited_callable)
+
+
+func _on_vehicle_entered(vehicle: Node) -> void:
+	var vehicle_target := vehicle as Node3D
+	if vehicle_target != null:
+		set_target(vehicle_target)
+
+
+func _on_vehicle_exited(vehicle: Node) -> void:
+	clear_target_override(vehicle)
 
 
 func _update_streaming() -> void:

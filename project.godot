@@ -16,6 +16,7 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 Events="*res://scripts/core/events.gd"
 Wanted="*res://scripts/systems/wanted_system.gd"
 Missions="*res://scripts/missions/mission_manager.gd"
+Saves="*res://scripts/core/save_system.gd"
 
 [display]
 

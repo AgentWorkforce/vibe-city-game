@@ -45,6 +45,18 @@ func get_heat() -> float:
 	return _logic.heat
 
 
+func restore_state(heat: float) -> void:
+	_configure_logic()
+	var previous_level := _logic.get_level()
+	_logic.heat = maxf(heat, 0.0)
+	_logic.time_since_crime = 0.0 if _logic.heat > 0.0 else INF
+	_emit_if_level_changed({
+		"previous_level": previous_level,
+		"level": _logic.get_level(),
+		"heat": _logic.heat,
+	})
+
+
 func _configure_logic() -> void:
 	_logic.configure(
 		severity_heat,

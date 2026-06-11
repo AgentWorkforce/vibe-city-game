@@ -16,9 +16,14 @@ const PINK := Color(1.0, 0.38, 0.58, 1.0)
 var _barks := BarkSystem.new()
 var _health_to_pylon: Dictionary = {}
 var _dead_health: Dictionary = {}
+var _pylon_base_positions: Dictionary = {}
+var _pylon_base_scales: Dictionary = {}
+var _pylon_collision_layers: Dictionary = {}
+var _pylon_collision_masks: Dictionary = {}
 var _pylon_health: Array[Health] = []
 var _pylons: Array[Node3D] = []
 var _boundary_walls: Array[MeshInstance3D] = []
+var _boundary_base_positions: Dictionary = {}
 var _total_pylons := 0
 var _alive_pylons := 0
 var _control := 1.0
@@ -30,6 +35,8 @@ var _boundaries_gone := false
 var _grid_material: ShaderMaterial
 var _boundary_material: ShaderMaterial
 var _warm_tint_material: StandardMaterial3D
+var _restore_generation := 0
+var _restore_sensitive_tweens: Array[Tween] = []
 
 @onready var _ground_overlay: MeshInstance3D = $GroundOverlay
 @onready var _boundaries: Node3D = $Boundaries
@@ -45,6 +52,20 @@ func _ready() -> void:
 
 func get_control() -> float:
 	return _control
+
+
+func restore_control(value: float) -> void:
+	_restore_generation += 1
+	_stop_restore_sensitive_tweens()
+	var restored_control := clampf(value, -1.0, 1.0)
+	_restore_pylons_for_control(restored_control)
+	_control = restored_control
+	if restored_control <= -1.0:
+		_apply_liberated_visuals_immediate()
+	else:
+		_apply_occupied_visuals_immediate()
+	_apply_control_visuals()
+	_emit_control_changed()
 
 
 func get_alive_pylon_count() -> int:
@@ -78,10 +99,12 @@ func _prepare_materials() -> void:
 	_set_grid_fade_alpha(1.0)
 
 	_boundary_walls.clear()
+	_boundary_base_positions.clear()
 	for node in _boundaries.find_children("*", "MeshInstance3D", true, false):
 		var wall := node as MeshInstance3D
 		if wall != null:
 			_boundary_walls.append(wall)
+			_boundary_base_positions[wall] = wall.position
 
 	if not _boundary_walls.is_empty():
 		var source_material := _boundary_walls[0].get_active_material(0) as ShaderMaterial
@@ -121,6 +144,10 @@ func _unique_shader_material(mesh: MeshInstance3D) -> ShaderMaterial:
 func _collect_pylons() -> void:
 	_health_to_pylon.clear()
 	_dead_health.clear()
+	_pylon_base_positions.clear()
+	_pylon_base_scales.clear()
+	_pylon_collision_layers.clear()
+	_pylon_collision_masks.clear()
 	_pylon_health.clear()
 	_pylons.clear()
 
@@ -131,6 +158,12 @@ func _collect_pylons() -> void:
 			continue
 
 		_health_to_pylon[health] = pylon
+		_pylon_base_positions[pylon] = pylon.position
+		_pylon_base_scales[pylon] = pylon.scale
+		var collision_object := pylon as CollisionObject3D
+		if collision_object != null:
+			_pylon_collision_layers[pylon] = collision_object.collision_layer
+			_pylon_collision_masks[pylon] = collision_object.collision_mask
 		_pylon_health.append(health)
 		_pylons.append(pylon)
 
@@ -211,12 +244,14 @@ func _play_pylon_collapse(pylon: Node3D) -> void:
 	pylon.add_child(flash)
 
 	var tween := create_tween()
+	var generation := _restore_generation
+	_track_restore_sensitive_tween(tween)
 	tween.set_parallel(true)
 	tween.tween_property(pylon, "scale", Vector3(1.22, 0.04, 1.22), pylon_collapse_seconds).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 	tween.tween_property(pylon, "position:y", pylon.position.y - 2.25, pylon_collapse_seconds).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	tween.tween_property(flash, "light_energy", 0.0, pylon_collapse_seconds).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween.finished.connect(func() -> void:
-		if is_instance_valid(pylon):
+		if is_instance_valid(pylon) and generation == _restore_generation:
 			pylon.visible = false
 		if is_instance_valid(flash):
 			flash.queue_free()
@@ -262,6 +297,7 @@ func _start_liberation_visuals() -> void:
 	_spawn_liberation_sparks()
 
 	var tween := create_tween()
+	_track_restore_sensitive_tween(tween)
 	tween.set_parallel(true)
 	tween.tween_method(_set_grid_fade_alpha, _grid_fade_alpha, 0.0, liberation_fade_seconds).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_method(_set_boundary_fade_alpha, _boundary_fade_alpha, 0.0, liberation_fade_seconds).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
@@ -271,7 +307,7 @@ func _start_liberation_visuals() -> void:
 		if is_instance_valid(wall):
 			tween.tween_property(wall, "position:y", wall.position.y - wall_sink_depth, liberation_fade_seconds).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 
-	tween.finished.connect(_finish_liberation_visuals)
+	tween.finished.connect(Callable(self, "_finish_liberation_visuals").bind(_restore_generation))
 
 
 func _set_grid_fade_alpha(value: float) -> void:
@@ -297,7 +333,10 @@ func _set_warm_tint_alpha(value: float) -> void:
 	_warm_tint_material.albedo_color = color
 
 
-func _finish_liberation_visuals() -> void:
+func _finish_liberation_visuals(generation: int = -1) -> void:
+	if generation >= 0 and generation != _restore_generation:
+		return
+
 	if is_instance_valid(_ground_overlay):
 		_ground_overlay.visible = false
 
@@ -309,6 +348,114 @@ func _finish_liberation_visuals() -> void:
 		_boundaries.visible = false
 
 	_boundaries_gone = true
+
+
+func _track_restore_sensitive_tween(tween: Tween) -> void:
+	_restore_sensitive_tweens.append(tween)
+	tween.finished.connect(func() -> void:
+		_restore_sensitive_tweens.erase(tween)
+	)
+
+
+func _stop_restore_sensitive_tweens() -> void:
+	for tween in _restore_sensitive_tweens:
+		if is_instance_valid(tween):
+			tween.kill()
+	_restore_sensitive_tweens.clear()
+
+
+func _restore_pylons_for_control(value: float) -> void:
+	var target_alive := 0
+	if _total_pylons > 0:
+		target_alive = clampi(int(round(((value + 1.0) * 0.5) * float(_total_pylons))), 0, _total_pylons)
+
+	_alive_pylons = 0
+	for index in range(_pylon_health.size()):
+		var health := _pylon_health[index]
+		var pylon := _health_to_pylon.get(health) as Node3D
+		if not is_instance_valid(health) or not is_instance_valid(pylon):
+			continue
+
+		if index < target_alive:
+			_restore_alive_pylon(health, pylon)
+			_alive_pylons += 1
+		else:
+			_restore_dead_pylon(health, pylon)
+
+
+func _restore_alive_pylon(health: Health, pylon: Node3D) -> void:
+	_dead_health.erase(health)
+	health.current = health.max_health
+	pylon.visible = true
+	pylon.position = _pylon_base_positions.get(pylon, pylon.position)
+	pylon.scale = _pylon_base_scales.get(pylon, Vector3.ONE)
+	_enable_pylon_collision(pylon)
+	_clear_pylon_transient_visuals(pylon)
+
+
+func _restore_dead_pylon(health: Health, pylon: Node3D) -> void:
+	_dead_health[health] = true
+	health.current = 0.0
+	pylon.visible = false
+	_disable_pylon_collision(pylon)
+	_clear_pylon_transient_visuals(pylon)
+
+
+func _enable_pylon_collision(pylon: Node3D) -> void:
+	var collision_object := pylon as CollisionObject3D
+	if collision_object != null:
+		collision_object.collision_layer = int(_pylon_collision_layers.get(pylon, 1))
+		collision_object.collision_mask = int(_pylon_collision_masks.get(pylon, 1))
+
+	for node in pylon.find_children("*", "CollisionShape3D", true, false):
+		var shape := node as CollisionShape3D
+		if shape != null:
+			shape.disabled = false
+
+
+func _clear_pylon_transient_visuals(pylon: Node3D) -> void:
+	for node in pylon.find_children("*", "MeshInstance3D", true, false):
+		var mesh := node as MeshInstance3D
+		if mesh != null:
+			mesh.material_override = null
+	for node in pylon.find_children("CollapseFlash", "OmniLight3D", true, false):
+		if is_instance_valid(node):
+			node.queue_free()
+
+
+func _apply_liberated_visuals_immediate() -> void:
+	_liberated = true
+	_boundaries_gone = true
+	_set_grid_fade_alpha(0.0)
+	_set_boundary_fade_alpha(0.0)
+	_set_warm_tint_alpha(WARM_TINT.a)
+	if is_instance_valid(_ground_overlay):
+		_ground_overlay.visible = false
+	if is_instance_valid(_warm_tint):
+		_warm_tint.visible = true
+	for wall in _boundary_walls:
+		if is_instance_valid(wall):
+			wall.visible = false
+	if is_instance_valid(_boundaries):
+		_boundaries.visible = false
+
+
+func _apply_occupied_visuals_immediate() -> void:
+	_liberated = false
+	_boundaries_gone = false
+	if is_instance_valid(_ground_overlay):
+		_ground_overlay.visible = true
+	if is_instance_valid(_warm_tint):
+		_warm_tint.visible = false
+	if is_instance_valid(_boundaries):
+		_boundaries.visible = true
+	for wall in _boundary_walls:
+		if is_instance_valid(wall):
+			wall.visible = true
+			wall.position = _boundary_base_positions.get(wall, wall.position)
+	_set_grid_fade_alpha(1.0)
+	_set_boundary_fade_alpha(1.0)
+	_set_warm_tint_alpha(0.0)
 
 
 func _spawn_liberation_sparks() -> void:

@@ -112,6 +112,14 @@ else
 	fail "Streaming integration test failed."
 fi
 
+echo "== Integration: city =="
+test_city_out=$(godot --headless -s tools/test_city.gd 2>&1 || true)
+if printf '%s' "${test_city_out}" | grep -q "CITY TEST PASS"; then
+	echo "City test passed."
+else
+	fail "City integration test failed."
+fi
+
 echo "== Integration: mission =="
 test_mission_out=$(godot --headless -s tools/test_mission.gd 2>&1 || true)
 if printf '%s' "${test_mission_out}" | grep -q "MISSION TEST PASS"; then

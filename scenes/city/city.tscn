@@ -1,7 +1,17 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_streamer.gd" id="1_streamer"]
 [ext_resource type="Script" path="res://scripts/world/streaming_debug_hud.gd" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://scenes/vehicles/car.tscn" id="4_car"]
+[ext_resource type="Script" path="res://scripts/vehicles/vehicle_coupler.gd" id="5_coupler"]
+[ext_resource type="PackedScene" path="res://scenes/agents/agent.tscn" id="6_agent"]
+[ext_resource type="PackedScene" path="res://scenes/agents/police_agent.tscn" id="7_police"]
+[ext_resource type="PackedScene" path="res://scenes/pedestrians/pedestrian.tscn" id="8_ped"]
+[ext_resource type="Script" path="res://scripts/systems/deescalation.gd" id="9_deescalation"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="10_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/minimap.tscn" id="11_minimap"]
+[ext_resource type="PackedScene" path="res://scenes/missions/mission_banner.tscn" id="12_banner"]
 
 [sub_resource type="ProceduralSkyMaterial" id="PastelSkyMaterial"]
 sky_top_color = Color(0.58, 0.86, 1, 1)
@@ -64,12 +74,71 @@ light_color = Color(1, 0.86, 0.68, 1)
 light_energy = 2.4
 shadow_enabled = true
 
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+position = Vector3(320, 1, 64)
+
 [node name="StreamTarget" type="Marker3D" parent="."]
-position = Vector3(64, 1, 64)
+position = Vector3(320, 1, 64)
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+position = Vector3(320, 1, 64)
+
+[node name="CarSpawn" type="Marker3D" parent="."]
+position = Vector3(334, 0.8, 64)
+rotation = Vector3(0, -1.5708, 0)
+
+[node name="Car" parent="." instance=ExtResource("4_car")]
+position = Vector3(334, 0.8, 64)
+rotation = Vector3(0, -1.5708, 0)
+
+[node name="VehicleCoupler" type="Node" parent="."]
+script = ExtResource("5_coupler")
+player_root_path = NodePath("../Player")
+car_path = NodePath("../Car")
 
 [node name="WorldStreamer" type="Node3D" parent="."]
 script = ExtResource("1_streamer")
-target_path = NodePath("../StreamTarget")
+target_path = NodePath("../Player/Body")
+fallback_target_paths = [NodePath("../StreamTarget")]
+
+[node name="Deescalation" type="Node" parent="."]
+script = ExtResource("9_deescalation")
+player_root_path = NodePath("../Player")
+respawn_marker_path = NodePath("../PlayerSpawn")
+
+[node name="Agents" type="Node3D" parent="."]
+
+[node name="Agent1" parent="Agents" instance=ExtResource("6_agent")]
+position = Vector3(304, 0.3, 58)
+
+[node name="Agent2" parent="Agents" instance=ExtResource("6_agent")]
+position = Vector3(342, 0.3, 70)
+
+[node name="PoliceAgent" parent="Agents" instance=ExtResource("7_police")]
+position = Vector3(352, 0.3, 58)
+
+[node name="Pedestrians" type="Node3D" parent="."]
+
+[node name="Ped1" parent="Pedestrians" instance=ExtResource("8_ped")]
+position = Vector3(292, 0.3, 58)
+
+[node name="Ped2" parent="Pedestrians" instance=ExtResource("8_ped")]
+position = Vector3(306, 0.3, 70)
+
+[node name="Ped3" parent="Pedestrians" instance=ExtResource("8_ped")]
+position = Vector3(334, 0.3, 58)
+
+[node name="Ped4" parent="Pedestrians" instance=ExtResource("8_ped")]
+position = Vector3(360, 0.3, 70)
+
+[node name="Ped5" parent="Pedestrians" instance=ExtResource("8_ped")]
+position = Vector3(320, 0.3, 82)
+
+[node name="HUD" parent="." instance=ExtResource("10_hud")]
+
+[node name="Minimap" parent="." instance=ExtResource("11_minimap")]
+
+[node name="MissionBanner" parent="." instance=ExtResource("12_banner")]
 
 [node name="StreamingDebugHUD" type="CanvasLayer" parent="."]
 script = ExtResource("2_hud")
@@ -96,3 +165,8 @@ theme_override_colors/font_color = Color(0.94, 0.99, 1, 1)
 theme_override_font_sizes/font_size = 13
 text = "Streaming
 waiting for streamer..."
+
+[node name="MapSurface" parent="Minimap/Root/Panel/Margin" index="0"]
+world_min = Vector2(0, -64)
+world_max = Vector2(512, 256)
+view_size_meters = 220.0

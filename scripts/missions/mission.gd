@@ -91,6 +91,53 @@ func get_objective_done(id: StringName) -> bool:
 	return false
 
 
+func get_current_objective_index() -> int:
+	for index in range(objectives.size()):
+		if not bool(objectives[index].get("done", false)):
+			return index
+	return objectives.size()
+
+
+func get_objective_states() -> Array:
+	var states: Array = []
+	for objective in objectives:
+		states.append({
+			"id": String(objective.get("id", &"")),
+			"text": str(objective.get("text", "")),
+			"done": bool(objective.get("done", false)),
+		})
+	return states
+
+
+func restore_objective_states(states: Array, current_objective_index: int = -1) -> void:
+	var done_by_id := {}
+	for state in states:
+		if typeof(state) != TYPE_DICTIONARY:
+			continue
+		var objective_state: Dictionary = state
+		var objective_id := StringName(str(objective_state.get("id", "")))
+		if objective_id == &"":
+			continue
+		done_by_id[objective_id] = bool(objective_state.get("done", false))
+
+	for index in range(objectives.size()):
+		var objective := objectives[index]
+		var objective_id := StringName(objective.get("id", &""))
+		if done_by_id.has(objective_id):
+			objective["done"] = bool(done_by_id[objective_id])
+		elif current_objective_index >= 0:
+			objective["done"] = index < current_objective_index
+		objectives[index] = objective
+
+	_failed = false
+	_completed = _all_objectives_done()
+	_active = not _completed
+	if _active:
+		_emit_current_objective()
+	elif _completed:
+		mission_completed.emit(self)
+
+
 func is_active() -> bool:
 	return _active
 
