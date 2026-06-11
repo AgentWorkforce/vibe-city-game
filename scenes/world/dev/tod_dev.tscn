@@ -1,0 +1,186 @@
+[gd_scene load_steps=19 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/time_of_day.gd" id="1_tod"]
+
+[sub_resource type="ProceduralSkyMaterial" id="TodSkyMaterial"]
+sky_top_color = Color(0.45, 0.69, 1, 1)
+sky_horizon_color = Color(1, 0.68, 0.46, 1)
+sky_curve = 0.22
+sky_energy_multiplier = 1.0
+ground_bottom_color = Color(0.12, 0.14, 0.16, 1)
+ground_horizon_color = Color(0.62, 0.72, 0.8, 1)
+ground_curve = 0.12
+ground_energy_multiplier = 0.7
+sun_angle_max = 20.0
+sun_curve = 0.08
+sun_energy_multiplier = 1.0
+
+[sub_resource type="Sky" id="TodSky"]
+sky_material = SubResource("TodSkyMaterial")
+
+[sub_resource type="Environment" id="TodEnvironment"]
+background_mode = 2
+sky = SubResource("TodSky")
+ambient_light_source = 2
+ambient_light_sky_contribution = 1.0
+ambient_light_energy = 0.9
+reflected_light_source = 2
+tonemap_mode = 2
+tonemap_white = 7.0
+ssao_enabled = true
+ssao_radius = 3.0
+ssao_intensity = 1.2
+glow_enabled = true
+glow_intensity = 0.5
+glow_strength = 1.1
+glow_bloom = 0.08
+glow_hdr_threshold = 0.95
+fog_enabled = true
+fog_light_color = Color(1, 0.78, 0.58, 1)
+fog_density = 0.0008
+fog_sky_affect = 0.08
+
+[sub_resource type="StandardMaterial3D" id="RoadMaterial"]
+albedo_color = Color(0.035, 0.037, 0.04, 1)
+roughness = 0.38
+metallic_specular = 0.85
+
+[sub_resource type="StandardMaterial3D" id="SidewalkMaterial"]
+albedo_color = Color(0.56, 0.57, 0.54, 1)
+roughness = 0.72
+
+[sub_resource type="StandardMaterial3D" id="BuildingA"]
+albedo_color = Color(0.74, 0.78, 0.77, 1)
+roughness = 0.65
+
+[sub_resource type="StandardMaterial3D" id="BuildingB"]
+albedo_color = Color(0.56, 0.62, 0.66, 1)
+roughness = 0.62
+
+[sub_resource type="StandardMaterial3D" id="BuildingC"]
+albedo_color = Color(0.76, 0.7, 0.64, 1)
+roughness = 0.68
+
+[sub_resource type="StandardMaterial3D" id="WindowWarm"]
+albedo_color = Color(1, 0.68, 0.28, 1)
+emission_enabled = true
+emission = Color(1, 0.52, 0.16, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="RoadMesh"]
+material = SubResource("RoadMaterial")
+size = Vector3(82, 0.08, 18)
+
+[sub_resource type="BoxMesh" id="CrossRoadMesh"]
+material = SubResource("RoadMaterial")
+size = Vector3(18, 0.08, 70)
+
+[sub_resource type="BoxMesh" id="SidewalkMesh"]
+material = SubResource("SidewalkMaterial")
+size = Vector3(82, 0.12, 5)
+
+[sub_resource type="BoxMesh" id="TowerMesh"]
+material = SubResource("BuildingA")
+size = Vector3(13, 28, 15)
+
+[sub_resource type="BoxMesh" id="HotelMesh"]
+material = SubResource("BuildingB")
+size = Vector3(18, 18, 12)
+
+[sub_resource type="BoxMesh" id="LowriseMesh"]
+material = SubResource("BuildingC")
+size = Vector3(16, 12, 16)
+
+[sub_resource type="BoxMesh" id="WindowStripMesh"]
+material = SubResource("WindowWarm")
+size = Vector3(10.5, 0.12, 1.0)
+
+[node name="TodDev" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("TodEnvironment")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.872665, -0.523599, 0)
+light_color = Color(1, 0.86, 0.68, 1)
+light_energy = 2.4
+shadow_enabled = true
+
+[node name="TimeOfDay" type="Node" parent="."]
+script = ExtResource("1_tod")
+start_hour = 7.0
+sun_path = NodePath("../Sun")
+world_environment_path = NodePath("../WorldEnvironment")
+streetlight_segment_points = PackedVector3Array(-34, 0, -12, 34, 0, -12, -34, 0, 12, 34, 0, 12)
+streetlight_spacing_meters = 22.0
+max_streetlights = 8
+streetlight_energy = 1.45
+streetlight_range = 11.0
+
+[node name="MainRoad" type="MeshInstance3D" parent="."]
+mesh = SubResource("RoadMesh")
+
+[node name="CrossRoad" type="MeshInstance3D" parent="."]
+mesh = SubResource("CrossRoadMesh")
+
+[node name="SidewalkNorth" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.03, -14)
+mesh = SubResource("SidewalkMesh")
+
+[node name="SidewalkSouth" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.03, 14)
+mesh = SubResource("SidewalkMesh")
+
+[node name="Tower" type="MeshInstance3D" parent="."]
+position = Vector3(-26, 14, -27)
+mesh = SubResource("TowerMesh")
+
+[node name="TowerWindow01" type="MeshInstance3D" parent="Tower"]
+position = Vector3(0, -7, 7.56)
+mesh = SubResource("WindowStripMesh")
+
+[node name="TowerWindow02" type="MeshInstance3D" parent="Tower"]
+position = Vector3(0, -2, 7.56)
+mesh = SubResource("WindowStripMesh")
+
+[node name="TowerWindow03" type="MeshInstance3D" parent="Tower"]
+position = Vector3(0, 3, 7.56)
+mesh = SubResource("WindowStripMesh")
+
+[node name="TowerWindow04" type="MeshInstance3D" parent="Tower"]
+position = Vector3(0, 8, 7.56)
+mesh = SubResource("WindowStripMesh")
+
+[node name="Hotel" type="MeshInstance3D" parent="."]
+position = Vector3(22, 9, -25)
+mesh = SubResource("HotelMesh")
+
+[node name="HotelWindow01" type="MeshInstance3D" parent="Hotel"]
+position = Vector3(0, -4, 6.06)
+mesh = SubResource("WindowStripMesh")
+
+[node name="HotelWindow02" type="MeshInstance3D" parent="Hotel"]
+position = Vector3(0, 1, 6.06)
+mesh = SubResource("WindowStripMesh")
+
+[node name="HotelWindow03" type="MeshInstance3D" parent="Hotel"]
+position = Vector3(0, 6, 6.06)
+mesh = SubResource("WindowStripMesh")
+
+[node name="Lowrise" type="MeshInstance3D" parent="."]
+position = Vector3(-24, 6, 27)
+mesh = SubResource("LowriseMesh")
+
+[node name="LowriseWindow01" type="MeshInstance3D" parent="Lowrise"]
+position = Vector3(0, -1.5, -8.06)
+mesh = SubResource("WindowStripMesh")
+
+[node name="LowriseWindow02" type="MeshInstance3D" parent="Lowrise"]
+position = Vector3(0, 3.0, -8.06)
+mesh = SubResource("WindowStripMesh")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+position = Vector3(43, 24, 45)
+rotation = Vector3(-0.488692, 0.767945, 0)
+current = true
+fov = 52.0

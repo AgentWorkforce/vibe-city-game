@@ -1,0 +1,92 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/traffic/traffic_car.gd" id="1_car"]
+
+[sub_resource type="BoxShape3D" id="BodyCollisionShape"]
+size = Vector3(2, 0.9, 4.2)
+
+[sub_resource type="StandardMaterial3D" id="BodyMaterial"]
+albedo_color = Color(0.95, 0.22, 0.18, 1)
+roughness = 0.58
+metallic = 0.05
+
+[sub_resource type="BoxMesh" id="BodyMesh"]
+material = SubResource("BodyMaterial")
+size = Vector3(2, 0.8, 4)
+
+[sub_resource type="StandardMaterial3D" id="CabinMaterial"]
+albedo_color = Color(0.62, 0.9, 1, 1)
+roughness = 0.35
+metallic = 0.02
+
+[sub_resource type="BoxMesh" id="CabinMesh"]
+material = SubResource("CabinMaterial")
+size = Vector3(1.45, 0.62, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="WheelMaterial"]
+albedo_color = Color(0.025, 0.025, 0.032, 1)
+roughness = 0.74
+
+[sub_resource type="CylinderMesh" id="WheelMesh"]
+material = SubResource("WheelMaterial")
+top_radius = 0.34
+bottom_radius = 0.34
+height = 0.44
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="LightMaterial"]
+albedo_color = Color(1, 0.92, 0.52, 1)
+emission_enabled = true
+emission = Color(1, 0.72, 0.22, 1)
+emission_energy_multiplier = 0.45
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="LightMesh"]
+material = SubResource("LightMaterial")
+size = Vector3(0.42, 0.18, 0.08)
+
+[node name="TrafficCar" type="CharacterBody3D" groups=["traffic_cars"]]
+script = ExtResource("1_car")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.55, 0)
+shape = SubResource("BodyCollisionShape")
+
+[node name="Visuals" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0, 0.58, 0)
+mesh = SubResource("BodyMesh")
+
+[node name="Cabin" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0, 1.08, -0.25)
+mesh = SubResource("CabinMesh")
+
+[node name="WheelFrontLeft" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-1.12, 0.34, -1.35)
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("WheelMesh")
+
+[node name="WheelFrontRight" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(1.12, 0.34, -1.35)
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("WheelMesh")
+
+[node name="WheelRearLeft" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-1.12, 0.34, 1.35)
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("WheelMesh")
+
+[node name="WheelRearRight" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(1.12, 0.34, 1.35)
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("WheelMesh")
+
+[node name="LeftHeadlight" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.52, 0.68, -2.04)
+mesh = SubResource("LightMesh")
+
+[node name="RightHeadlight" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.52, 0.68, -2.04)
+mesh = SubResource("LightMesh")

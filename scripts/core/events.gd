@@ -14,6 +14,9 @@ signal wanted_changed(level: int)
 ## District control shifted. control -1.0 (human) .. 1.0 (agent).
 signal district_control_changed(district: StringName, control: float)
 
+## Time-of-day clock advanced to a new game minute. hour is wrapped to [0.0, 24.0).
+signal time_tick(hour: float)
+
 ## Mission framework updates.
 signal mission_started(mission: Node)
 signal mission_objective(text: String)

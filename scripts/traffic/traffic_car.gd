@@ -1,0 +1,144 @@
+class_name TrafficCar
+extends CharacterBody3D
+
+@export var cruise_speed: float = 9.0
+@export var acceleration: float = 9.0
+@export var braking: float = 24.0
+@export var obstacle_ray_length: float = 8.0
+@export var obstacle_ray_start: float = 1.2
+@export var turn_rate: float = 8.0
+@export var wheel_radius: float = 0.34
+@export var color_palette: Array[Color] = [
+	Color(0.95, 0.22, 0.18, 1.0),
+	Color(0.1, 0.44, 0.88, 1.0),
+	Color(0.98, 0.82, 0.22, 1.0),
+	Color(0.15, 0.72, 0.42, 1.0),
+	Color(0.9, 0.92, 0.96, 1.0),
+	Color(0.08, 0.09, 0.13, 1.0),
+]
+
+var road_graph: RefCounted
+var loop_index := 0
+var path_distance := 0.0
+
+var _current_speed := 0.0
+var _stopped_for_obstacle := false
+var _rng := RandomNumberGenerator.new()
+var _forward := Vector3.FORWARD
+
+@onready var _body_mesh: MeshInstance3D = get_node_or_null("Visuals/Body") as MeshInstance3D
+@onready var _wheels: Array[Node3D] = [
+	get_node_or_null("Visuals/WheelFrontLeft") as Node3D,
+	get_node_or_null("Visuals/WheelFrontRight") as Node3D,
+	get_node_or_null("Visuals/WheelRearLeft") as Node3D,
+	get_node_or_null("Visuals/WheelRearRight") as Node3D,
+]
+
+
+func _ready() -> void:
+	add_to_group("traffic_cars")
+	_rng.randomize()
+	_apply_random_color()
+	if road_graph != null:
+		_sync_to_graph(true, 0.0)
+
+
+func _physics_process(delta: float) -> void:
+	if road_graph == null or road_graph.get_loop_count() == 0:
+		velocity = Vector3.ZERO
+		return
+
+	_stopped_for_obstacle = _is_forward_blocked()
+	var target_speed := 0.0 if _stopped_for_obstacle else cruise_speed
+	var rate := braking if target_speed < _current_speed else acceleration
+	_current_speed = move_toward(_current_speed, target_speed, rate * delta)
+
+	path_distance = road_graph.wrap_distance(loop_index, path_distance + _current_speed * delta)
+	_sync_to_graph(false, delta)
+	_spin_wheels(delta)
+
+
+func configure(graph: RefCounted, assigned_loop_index: int, initial_distance: float, target_speed: float = -1.0) -> void:
+	road_graph = graph
+	if road_graph == null or road_graph.get_loop_count() == 0:
+		return
+
+	loop_index = clampi(assigned_loop_index, 0, road_graph.get_loop_count() - 1)
+	path_distance = road_graph.wrap_distance(loop_index, initial_distance)
+	if target_speed > 0.0:
+		cruise_speed = target_speed
+	_current_speed = cruise_speed
+	_sync_to_graph(true, 0.0)
+
+
+func get_current_speed() -> float:
+	return _current_speed
+
+
+func is_stopped_for_obstacle() -> bool:
+	return _stopped_for_obstacle and _current_speed <= 0.25
+
+
+func get_forward_direction() -> Vector3:
+	return _forward
+
+
+func _sync_to_graph(snap_rotation: bool, delta: float) -> void:
+	var next_position: Vector3 = road_graph.sample_position(loop_index, path_distance)
+	var next_forward: Vector3 = road_graph.sample_forward(loop_index, path_distance)
+	if next_forward.length_squared() <= 0.001:
+		next_forward = _forward
+
+	_forward = next_forward.normalized()
+	global_position = next_position
+	velocity = _forward * _current_speed
+
+	var desired_basis := Basis.looking_at(_forward, Vector3.UP)
+	if snap_rotation:
+		global_transform = Transform3D(desired_basis, global_position)
+	else:
+		var blend := clampf(turn_rate * delta, 0.0, 1.0)
+		global_transform = Transform3D(global_transform.basis.slerp(desired_basis, blend).orthonormalized(), global_position)
+
+
+func _is_forward_blocked() -> bool:
+	var world := get_world_3d()
+	if world == null:
+		return false
+
+	var ray_from := global_position + Vector3.UP * 0.65 + _forward * obstacle_ray_start
+	var ray_to := ray_from + _forward * obstacle_ray_length
+	var query := PhysicsRayQueryParameters3D.create(ray_from, ray_to)
+	query.collide_with_areas = false
+	query.collide_with_bodies = true
+	query.exclude = [get_rid()]
+
+	return not world.direct_space_state.intersect_ray(query).is_empty()
+
+
+func _spin_wheels(delta: float) -> void:
+	if wheel_radius <= 0.001:
+		return
+
+	var spin := (_current_speed / wheel_radius) * delta
+	for wheel in _wheels:
+		if wheel == null:
+			continue
+		wheel.rotate_y(spin)
+
+
+func _apply_random_color() -> void:
+	if _body_mesh == null:
+		return
+
+	var material := StandardMaterial3D.new()
+	material.albedo_color = _pick_color()
+	material.roughness = 0.58
+	material.metallic = 0.05
+	_body_mesh.material_override = material
+
+
+func _pick_color() -> Color:
+	if color_palette.is_empty():
+		return Color(0.95, 0.22, 0.18, 1.0)
+	return color_palette[_rng.randi_range(0, color_palette.size() - 1)]
