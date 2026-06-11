@@ -138,6 +138,22 @@ else
 	fail "Mission integration test failed."
 fi
 
+echo "== Integration: city missions =="
+test_city_missions_out=$(godot --headless -s tools/test_city_missions.gd 2>&1 || true)
+if printf '%s' "${test_city_missions_out}" | grep -q "CITY MISSIONS TEST PASS"; then
+	echo "City missions test passed."
+else
+	fail "City missions integration test failed."
+fi
+
+echo "== Integration: flight =="
+test_flight_out=$(godot --headless -s tools/test_flight.gd 2>&1 || true)
+if printf '%s' "${test_flight_out}" | grep -q "FLIGHT TEST PASS"; then
+	echo "Flight test passed."
+else
+	fail "Flight integration test failed."
+fi
+
 if [ "$failures" -eq 0 ]; then
 	echo "PASS: project imports, scripts parse, and the main scene loads headlessly."
 else

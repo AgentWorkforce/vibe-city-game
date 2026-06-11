@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3]
+[gd_scene load_steps=21 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_streamer.gd" id="1_streamer"]
 [ext_resource type="Script" path="res://scripts/world/streaming_debug_hud.gd" id="2_hud"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" path="res://scenes/missions/mission_banner.tscn" id="12_banner"]
 [ext_resource type="Script" path="res://scripts/traffic/traffic_manager.gd" id="13_traffic"]
 [ext_resource type="Script" path="res://scripts/world/time_of_day.gd" id="14_tod"]
+[ext_resource type="PackedScene" path="res://scenes/ui/map/full_map.tscn" id="15_full_map"]
 
 [sub_resource type="ProceduralSkyMaterial" id="PastelSkyMaterial"]
 sky_top_color = Color(0.58, 0.86, 1, 1)
@@ -150,6 +151,8 @@ position = Vector3(320, 0.3, 82)
 [node name="HUD" parent="." instance=ExtResource("10_hud")]
 
 [node name="Minimap" parent="." instance=ExtResource("11_minimap")]
+
+[node name="FullMap" parent="." instance=ExtResource("15_full_map")]
 
 [node name="MissionBanner" parent="." instance=ExtResource("12_banner")]
 

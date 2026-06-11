@@ -1,0 +1,153 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/vehicles/plane_controller.gd" id="1_controller"]
+[ext_resource type="Script" path="res://scripts/vehicles/vehicle_audio.gd" id="2_audio"]
+[ext_resource type="Script" path="res://scripts/vehicles/chase_camera.gd" id="3_chase"]
+
+[sub_resource type="StandardMaterial3D" id="CreamPaint"]
+albedo_color = Color(0.96, 0.87, 0.68, 1)
+roughness = 0.56
+
+[sub_resource type="StandardMaterial3D" id="CoralPaint"]
+albedo_color = Color(1, 0.44, 0.5, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="DarkPaint"]
+albedo_color = Color(0.09, 0.075, 0.09, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="GlassPaint"]
+albedo_color = Color(0.46, 0.75, 0.9, 0.72)
+roughness = 0.22
+
+[sub_resource type="BoxShape3D" id="BodyShape"]
+size = Vector3(1.16, 0.76, 4.85)
+
+[sub_resource type="BoxMesh" id="FuselageMesh"]
+material = SubResource("CreamPaint")
+size = Vector3(1.1, 0.72, 4.8)
+
+[sub_resource type="BoxMesh" id="NoseMesh"]
+material = SubResource("CoralPaint")
+size = Vector3(0.86, 0.54, 0.56)
+
+[sub_resource type="BoxMesh" id="WingMesh"]
+material = SubResource("CreamPaint")
+size = Vector3(7.4, 0.16, 1.16)
+
+[sub_resource type="BoxMesh" id="TailWingMesh"]
+material = SubResource("CoralPaint")
+size = Vector3(2.8, 0.13, 0.64)
+
+[sub_resource type="BoxMesh" id="TailFinMesh"]
+material = SubResource("CoralPaint")
+size = Vector3(0.18, 0.95, 0.72)
+
+[sub_resource type="BoxMesh" id="CockpitMesh"]
+material = SubResource("GlassPaint")
+size = Vector3(0.74, 0.42, 0.86)
+
+[sub_resource type="CylinderMesh" id="PropHubMesh"]
+material = SubResource("DarkPaint")
+top_radius = 0.16
+bottom_radius = 0.16
+height = 0.18
+radial_segments = 16
+rings = 1
+
+[sub_resource type="BoxMesh" id="PropBladeMesh"]
+material = SubResource("DarkPaint")
+size = Vector3(0.12, 1.36, 0.045)
+
+[sub_resource type="BoxShape3D" id="EnterZoneShape"]
+size = Vector3(7.2, 3.2, 6.4)
+
+[node name="Plane" type="RigidBody3D"]
+mass = 520.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -0.08, 0.14)
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 8
+script = ExtResource("1_controller")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.42, 0)
+shape = SubResource("BodyShape")
+
+[node name="VisualRoot" type="Node3D" parent="."]
+
+[node name="Fuselage" type="MeshInstance3D" parent="VisualRoot"]
+position = Vector3(0, 0.42, 0)
+mesh = SubResource("FuselageMesh")
+
+[node name="Nose" type="MeshInstance3D" parent="VisualRoot"]
+position = Vector3(0, 0.42, -2.66)
+mesh = SubResource("NoseMesh")
+
+[node name="MainWing" type="MeshInstance3D" parent="VisualRoot"]
+position = Vector3(0, 0.48, -0.26)
+mesh = SubResource("WingMesh")
+
+[node name="TailWing" type="MeshInstance3D" parent="VisualRoot"]
+position = Vector3(0, 0.58, 2.08)
+mesh = SubResource("TailWingMesh")
+
+[node name="TailFin" type="MeshInstance3D" parent="VisualRoot"]
+position = Vector3(0, 1.02, 2.0)
+mesh = SubResource("TailFinMesh")
+
+[node name="Cockpit" type="MeshInstance3D" parent="VisualRoot"]
+position = Vector3(0, 0.92, -0.72)
+mesh = SubResource("CockpitMesh")
+
+[node name="PropellerRoot" type="Node3D" parent="VisualRoot"]
+position = Vector3(0, 0.42, -2.98)
+
+[node name="Hub" type="MeshInstance3D" parent="VisualRoot/PropellerRoot"]
+rotation = Vector3(1.5708, 0, 0)
+mesh = SubResource("PropHubMesh")
+
+[node name="BladeVertical" type="MeshInstance3D" parent="VisualRoot/PropellerRoot"]
+mesh = SubResource("PropBladeMesh")
+
+[node name="BladeHorizontal" type="MeshInstance3D" parent="VisualRoot/PropellerRoot"]
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("PropBladeMesh")
+
+[node name="EnterZone" type="Area3D" parent="."]
+position = Vector3(0, 0.86, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterZone"]
+shape = SubResource("EnterZoneShape")
+
+[node name="VehicleAudio" type="Node3D" parent="."]
+script = ExtResource("2_audio")
+idle_pitch = 0.92
+max_pitch = 2.45
+pitch_full_speed = 50.0
+idle_volume_db = -21.0
+driving_volume_db = -7.0
+speed_volume_db = 5.0
+tire_screech_enabled = false
+max_distance = 90.0
+
+[node name="CameraRig" type="Node3D" parent="."]
+position = Vector3(0, 0.75, 0)
+script = ExtResource("3_chase")
+follow_speed = 7.5
+yaw_lerp_speed = 5.5
+base_fov = 72.0
+fast_fov = 88.0
+fov_lerp_speed = 5.0
+look_height = 1.0
+fov_full_speed = 52.0
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
+position = Vector3(0, 3.2, 0)
+spring_length = 8.2
+margin = 0.3
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D"]
+current = false
+fov = 72.0

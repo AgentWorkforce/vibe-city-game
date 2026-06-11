@@ -1,6 +1,8 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/vehicles/boat_controller.gd" id="1_controller"]
+[ext_resource type="Script" path="res://scripts/vehicles/vehicle_audio.gd" id="2_audio"]
+[ext_resource type="Script" path="res://scripts/vehicles/chase_camera.gd" id="3_chase"]
 
 [sub_resource type="StandardMaterial3D" id="HullCream"]
 albedo_color = Color(0.97, 0.9, 0.72, 1)
@@ -97,8 +99,25 @@ position = Vector3(0, 0.85, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EnterZone"]
 shape = SubResource("EnterZoneShape")
 
+[node name="VehicleAudio" type="Node3D" parent="."]
+script = ExtResource("2_audio")
+idle_pitch = 0.64
+max_pitch = 1.55
+pitch_full_speed = 22.0
+idle_volume_db = -19.0
+driving_volume_db = -8.5
+speed_volume_db = 3.0
+tire_screech_enabled = false
+max_distance = 65.0
+
 [node name="CameraRig" type="Node3D" parent="."]
 position = Vector3(0, 0.75, 0)
+script = ExtResource("3_chase")
+follow_speed = 7.0
+yaw_lerp_speed = 6.0
+fast_fov = 82.0
+fov_lerp_speed = 6.0
+look_height = 0.8
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
 position = Vector3(0, 2.3, 0)

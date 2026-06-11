@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/map/full_map.gd" id="1_full"]
+[ext_resource type="Script" path="res://scripts/ui/map/full_map_surface.gd" id="2_surface"]
+
+[node name="FullMap" type="CanvasLayer"]
+process_mode = 3
+layer = 60
+script = ExtResource("1_full")
+
+[node name="Root" type="Control" parent="."]
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dim" type="ColorRect" parent="Root"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.005, 0.018, 0.022, 0.76)
+
+[node name="Panel" type="PanelContainer" parent="Root"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 48.0
+offset_right = -48.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Margin" type="MarginContainer" parent="Root/Panel"]
+process_mode = 3
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+mouse_filter = 2
+
+[node name="Content" type="VBoxContainer" parent="Root/Panel/Margin"]
+process_mode = 3
+layout_mode = 2
+theme_override_constants/separation = 12
+mouse_filter = 2
+
+[node name="Header" type="HBoxContainer" parent="Root/Panel/Margin/Content"]
+process_mode = 3
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Root/Panel/Margin/Content/Header"]
+process_mode = 3
+layout_mode = 2
+text = "VIBE CITY MAP"
+mouse_filter = 2
+
+[node name="MapFrame" type="PanelContainer" parent="Root/Panel/Margin/Content"]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="MapMargin" type="MarginContainer" parent="Root/Panel/Margin/Content/MapFrame"]
+process_mode = 3
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+mouse_filter = 2
+
+[node name="MapSurface" type="Control" parent="Root/Panel/Margin/Content/MapFrame/MapMargin"]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+clip_contents = true
+mouse_filter = 2
+script = ExtResource("2_surface")

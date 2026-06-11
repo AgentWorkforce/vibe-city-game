@@ -3,12 +3,21 @@ extends Node
 
 @export_file("*.tscn") var initial_mission_scene: String = "res://scenes/missions/liberate_nw.tscn"
 @export var auto_start_delay: float = 5.0
+@export var enable_default_chain := true
+@export_file("*.tscn") var eastward_mission_scene: String = "res://scenes/missions/eastward.tscn"
+@export_file("*.tscn") var block_party_mission_scene: String = "res://scenes/missions/block_party.tscn"
+@export var liberate_nw_chain_delay: float = 10.0
+@export var eastward_chain_delay: float = 0.0
 
 var _active_mission: Mission
 var _active_scene_path := ""
 var _active_failed := false
 var _auto_start_scheduled := false
 var _auto_start_fired := false
+var _queued_missions: Array[Dictionary] = []
+var _queued_start_scheduled := false
+var _queue_token := 0
+var _starting_queued_mission := false
 
 
 func _ready() -> void:
@@ -30,6 +39,9 @@ func start_mission(scene_path: String) -> Mission:
 	if scene_path.is_empty():
 		push_error("MissionManager.start_mission requires a scene path.")
 		return null
+
+	if not _starting_queued_mission:
+		clear_mission_queue()
 
 	var packed := load(scene_path) as PackedScene
 	if packed == null:
@@ -58,9 +70,27 @@ func retry_active_mission() -> bool:
 	if not is_instance_valid(_active_mission) or not _active_failed:
 		return false
 
+	clear_mission_queue()
 	_active_failed = false
 	_active_mission.start()
 	return true
+
+
+func queue_mission(scene_path: String, delay_seconds: float = 0.0) -> void:
+	if scene_path.is_empty():
+		return
+
+	_queued_missions.append({
+		"scene_path": scene_path,
+		"delay": maxf(delay_seconds, 0.0),
+	})
+	_pump_mission_queue()
+
+
+func clear_mission_queue() -> void:
+	_queued_missions.clear()
+	_queued_start_scheduled = false
+	_queue_token += 1
 
 
 func get_active_mission() -> Mission:
@@ -93,6 +123,7 @@ func get_save_snapshot() -> Dictionary:
 func restore_save_snapshot(snapshot: Dictionary) -> Mission:
 	_auto_start_fired = true
 	_auto_start_scheduled = false
+	clear_mission_queue()
 
 	var scene_path := str(snapshot.get("scene_path", ""))
 	if scene_path.is_empty():
@@ -173,6 +204,7 @@ func _on_objective_updated(_mission: Mission, text: String) -> void:
 func _on_mission_completed(mission: Mission) -> void:
 	_active_failed = false
 	_emit_events_signal(&"mission_completed", [mission])
+	_queue_default_chain_for(mission)
 
 
 func _on_mission_failed(mission: Mission, reason: String) -> void:
@@ -192,3 +224,53 @@ func _emit_events_signal(signal_name: StringName, args: Array) -> void:
 
 func _events() -> Node:
 	return get_node_or_null("/root/Events")
+
+
+func _queue_default_chain_for(mission: Mission) -> void:
+	if not enable_default_chain or mission == null:
+		return
+
+	match mission.mission_id:
+		&"liberate_nw":
+			queue_mission(eastward_mission_scene, liberate_nw_chain_delay)
+		&"eastward":
+			queue_mission(block_party_mission_scene, eastward_chain_delay)
+
+
+func _pump_mission_queue() -> void:
+	if _queued_start_scheduled or _queued_missions.is_empty():
+		return
+
+	var current := get_active_mission()
+	if current != null and current.is_active():
+		return
+
+	var entry: Dictionary = _queued_missions.pop_front()
+	var scene_path := str(entry.get("scene_path", ""))
+	if scene_path.is_empty():
+		_pump_mission_queue()
+		return
+
+	_queued_start_scheduled = true
+	_queue_token += 1
+	var token := _queue_token
+	var delay := maxf(float(entry.get("delay", 0.0)), 0.0)
+	var timer := get_tree().create_timer(delay)
+	timer.timeout.connect(Callable(self, "_on_queued_mission_timeout").bind(token, scene_path))
+
+
+func _on_queued_mission_timeout(token: int, scene_path: String) -> void:
+	if token != _queue_token:
+		return
+
+	_queued_start_scheduled = false
+	var current := get_active_mission()
+	if current != null and current.is_active():
+		_queued_missions.push_front({"scene_path": scene_path, "delay": 0.0})
+		_pump_mission_queue()
+		return
+
+	_starting_queued_mission = true
+	start_mission(scene_path)
+	_starting_queued_mission = false
+	_pump_mission_queue()

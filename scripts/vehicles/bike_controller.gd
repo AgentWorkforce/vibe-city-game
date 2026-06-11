@@ -2,7 +2,6 @@ extends VehicleBody3D
 ## Copy-adapted from car_controller.gd for a two-wheel prototype.
 ## The same coupler contract is kept: driven, set_camera_active,
 ## release_controls, and an EnterZone child in the scene.
-## TODO(pre-plane): extract the chase-camera block shared by car/bike/boat.
 
 @export var driven: bool = false
 @export var max_engine_force: float = 1250.0
@@ -25,22 +24,13 @@ extends VehicleBody3D
 @export var visual_lean_max_degrees: float = 25.0
 @export var lean_speed_for_full_tilt_mps: float = 18.0
 @export var lean_lerp_speed: float = 9.0
-@export var camera_follow_speed: float = 9.0
-@export var camera_yaw_lerp_speed: float = 7.0
-@export var camera_base_fov: float = 70.0
-@export var camera_fast_fov: float = 84.0
-@export var camera_fov_lerp_speed: float = 7.0
-@export var camera_look_height: float = 0.9
 
 @onready var _front_wheel: VehicleWheel3D = get_node_or_null("WheelFront") as VehicleWheel3D
 @onready var _rear_wheel: VehicleWheel3D = get_node_or_null("WheelRear") as VehicleWheel3D
 @onready var _visual_root: Node3D = get_node_or_null("VisualRoot") as Node3D
-@onready var _camera_rig: Node3D = get_node_or_null("CameraRig") as Node3D
-@onready var _spring_arm: SpringArm3D = get_node_or_null("CameraRig/SpringArm3D") as SpringArm3D
-@onready var _camera: Camera3D = get_node_or_null("CameraRig/SpringArm3D/Camera3D") as Camera3D
+@onready var _chase_camera: Node = get_node_or_null("CameraRig")
 
 var _current_steering: float = 0.0
-var _camera_yaw: float = 0.0
 var _visual_roll: float = 0.0
 
 
@@ -48,20 +38,6 @@ func _ready() -> void:
 	center_of_mass_mode = RigidBody3D.CENTER_OF_MASS_MODE_CUSTOM
 	center_of_mass = custom_center_of_mass
 	_apply_normal_friction()
-	_camera_yaw = global_rotation.y
-
-	if is_instance_valid(_camera_rig):
-		_camera_rig.top_level = true
-		_camera_rig.global_position = global_position
-		_camera_rig.global_rotation = Vector3(0.0, _camera_yaw, 0.0)
-
-	if is_instance_valid(_spring_arm):
-		_spring_arm.add_excluded_object(get_rid())
-
-	if is_instance_valid(_camera):
-		_camera.fov = camera_base_fov
-		if driven:
-			_camera.make_current()
 
 
 func _physics_process(delta: float) -> void:
@@ -72,17 +48,13 @@ func _physics_process(delta: float) -> void:
 		release_controls(delta)
 
 	_update_visual_lean(delta)
-	_update_chase_camera(delta)
 
 
 func set_camera_active(active: bool) -> void:
-	if not is_instance_valid(_camera):
+	if not is_instance_valid(_chase_camera) or not _chase_camera.has_method("set_camera_active"):
 		return
 
-	if active:
-		_camera.make_current()
-	else:
-		_camera.current = false
+	_chase_camera.call("set_camera_active", active)
 
 
 func release_controls(delta: float = 0.0) -> void:
@@ -182,32 +154,6 @@ func _update_visual_lean(delta: float) -> void:
 	var target_roll := -steering_ratio * speed_ratio * deg_to_rad(visual_lean_max_degrees)
 	_visual_roll = _lerp_scalar(_visual_roll, target_roll, lean_lerp_speed, delta)
 	_visual_root.rotation.z = _visual_roll
-
-
-func _update_chase_camera(delta: float) -> void:
-	if not is_instance_valid(_camera_rig):
-		return
-
-	var follow_blend := clampf(1.0 - exp(-camera_follow_speed * delta), 0.0, 1.0)
-	_camera_rig.global_position = _camera_rig.global_position.lerp(global_position, follow_blend)
-
-	var target_yaw := global_rotation.y
-	if driven and Input.is_action_pressed("look_behind"):
-		target_yaw += PI
-
-	var yaw_blend := clampf(1.0 - exp(-camera_yaw_lerp_speed * delta), 0.0, 1.0)
-	_camera_yaw = lerp_angle(_camera_yaw, target_yaw, yaw_blend)
-	_camera_rig.global_rotation = Vector3(0.0, _camera_yaw, 0.0)
-
-	if is_instance_valid(_camera):
-		var speed_ratio := clampf(linear_velocity.length() / max_forward_speed_mps, 0.0, 1.0)
-		var target_fov := lerpf(camera_base_fov, camera_fast_fov, speed_ratio)
-		var fov_blend := clampf(1.0 - exp(-camera_fov_lerp_speed * delta), 0.0, 1.0)
-		_camera.fov = lerpf(_camera.fov, target_fov, fov_blend)
-		var look_target := global_position + Vector3.UP * camera_look_height
-		var look_direction := look_target - _camera.global_position
-		if look_direction.length_squared() > 0.0001 and absf(look_direction.normalized().dot(Vector3.UP)) < 0.98:
-			_camera.look_at(look_target, Vector3.UP)
 
 
 func _lerp_scalar(from: float, to: float, rate: float, delta: float) -> float:

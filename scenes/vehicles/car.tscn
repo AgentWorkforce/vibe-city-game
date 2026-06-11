@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/vehicles/car_controller.gd" id="1_controller"]
-[ext_resource type="Script" path="res://scripts/vehicles/car_audio.gd" id="2_audio"]
+[ext_resource type="Script" path="res://scripts/vehicles/vehicle_audio.gd" id="2_audio"]
+[ext_resource type="Script" path="res://scripts/vehicles/chase_camera.gd" id="3_chase"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
 albedo_color = Color(0.58, 0.9, 0.92, 1)
@@ -120,11 +121,12 @@ position = Vector3(0, 1.2, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EnterZone"]
 shape = SubResource("BoxShape3D_enter_zone")
 
-[node name="CarAudio" type="Node3D" parent="."]
+[node name="VehicleAudio" type="Node3D" parent="."]
 script = ExtResource("2_audio")
 
 [node name="CameraRig" type="Node3D" parent="."]
 position = Vector3(0, 0.75, 0)
+script = ExtResource("3_chase")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
 position = Vector3(0, 2.5, 0)

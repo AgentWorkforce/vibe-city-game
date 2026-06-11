@@ -84,6 +84,10 @@ func get_current_objective_text() -> String:
 	return ""
 
 
+func get_objective_position():
+	return null
+
+
 func get_objective_done(id: StringName) -> bool:
 	for objective in objectives:
 		if StringName(objective.get("id", &"")) == id:

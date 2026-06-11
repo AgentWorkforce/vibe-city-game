@@ -1,4 +1,4 @@
-[gd_scene load_steps=125 format=3]
+[gd_scene load_steps=126 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/vehicles/car.tscn" id="2_car"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" path="res://scenes/missions/mission_banner.tscn" id="10_banner"]
 [ext_resource type="PackedScene" path="res://scenes/pedestrians/pedestrian.tscn" id="11_ped"]
 [ext_resource type="PackedScene" path="res://scenes/vehicles/bike.tscn" id="12_bike"]
+[ext_resource type="PackedScene" path="res://scenes/ui/map/full_map.tscn" id="13_full_map"]
 
 [sub_resource type="ProceduralSkyMaterial" id="PastelSkyMaterial"]
 sky_top_color = Color(0.58, 0.86, 1, 1)
@@ -1215,6 +1216,8 @@ respawn_marker_path = NodePath("../PlayerSpawn")
 [node name="HUD" parent="." instance=ExtResource("6_hud")]
 
 [node name="Minimap" parent="." instance=ExtResource("9_minimap")]
+
+[node name="FullMap" parent="." instance=ExtResource("13_full_map")]
 
 [node name="MissionBanner" parent="." instance=ExtResource("10_banner")]
 
