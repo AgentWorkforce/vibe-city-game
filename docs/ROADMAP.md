@@ -35,7 +35,8 @@ Goal: every clone runs instantly and the contribution pipeline works end to end.
 - [x] Playable sandbox scene with ground, sky, sun, and player spawn.
 - [x] Local check script (`./check.sh`) — same checks CI runs.
 - [x] README explains how to run, test, and contribute.
-- [ ] CI runs the check script on every push.
+- [x] CI runs the check script on every push.
+- [x] Headless unit-test runner (`tools/run_tests.gd`) wired into `check.sh`.
 - [ ] First release artifacts produced by CI once the project can be exported.
 
 ## M1 — Locomotion and Camera Feel
