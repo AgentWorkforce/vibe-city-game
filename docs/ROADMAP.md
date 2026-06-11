@@ -82,14 +82,14 @@ Goal: travel several kilometers without a loading screen.
 
 Goal: one district feels inhabited.
 
-- Coastal pastel district blockout: streets, sidewalks, shoreline, building
-  footprints (art deco proportions, blocked in gray + pastel tint pass).
-- Road graph and basic traffic.
-- Pedestrians with simple reactions: flee, gawk, idle, resume.
-- Time of day, streetlights, lit building windows, wet roads, weather.
-- First agent-controlled territory boundary with cyan holographic grid
-  conversion shader.
-- First visible human-liberated area (contrast state: warm, messy, alive).
+- [ ] Coastal pastel district blockout: streets, sidewalks, shoreline,
+  building footprints (art deco proportions, gray blockout + pastel tint).
+- [ ] Road graph and basic traffic.
+- [ ] Pedestrians with simple reactions: flee, gawk, idle, resume.
+- [ ] Time of day, streetlights, lit building windows, wet roads, weather.
+- [x] First agent-controlled territory boundary with cyan holographic grid
+  conversion shader (landed early in loop 3 — playground NW quadrant).
+- [ ] First visible human-liberated area (contrast state: warm, messy, alive).
 
 ## M5 — Playable Game Loop
 
