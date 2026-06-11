@@ -36,24 +36,32 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if _sim_lod_ground_snap_requested:
+		_prepare_sim_lod_ground_snap()
+	if _sim_lod_tier != SimLODManagerScript.TIER_NEAR and not _begin_sim_lod_step(delta):
+		return
+
+	if _sim_lod_tier != SimLODManagerScript.TIER_NEAR:
+		delta = _sim_lod_step_delta
+
 	_sync_wanted_level()
 
 	if _wanted_level <= 0:
 		if _police_state != PoliceState.PATROL:
 			_end_pursuit()
-		super._physics_process(delta)
+		_run_agent_physics(delta)
 		return
 
 	var target := _find_pursuit_target()
 	if target == null:
-		super._physics_process(delta)
+		_run_agent_physics(delta)
 		return
 
 	if _police_state == PoliceState.PATROL:
 		if global_position.distance_to(target.global_position) <= activation_radius:
 			_enter_pursuit()
 		else:
-			super._physics_process(delta)
+			_run_agent_physics(delta)
 			return
 
 	_tick_reaction_timers(delta)
@@ -109,6 +117,9 @@ func _read_wanted_level() -> int:
 func _on_wanted_changed(level: int) -> void:
 	var previous_level := _wanted_level
 	_wanted_level = clampi(level, 0, 5)
+
+	if _wanted_level > previous_level:
+		_promote_sim_lod_for_reaction()
 
 	if _wanted_level > previous_level and _police_state == PoliceState.PURSUE:
 		_say_bark(&"pursuit_escalation")

@@ -69,6 +69,7 @@ func _physics_process(_delta: float) -> void:
 	if _measured_frames >= bench_frames:
 		_completed = true
 		_write_reports()
+		_print_sim_lod_diagnostics()
 		_begin_cleanup()
 
 
@@ -603,6 +604,15 @@ func _print_configuration() -> void:
 		seed,
 		DisplayServer.get_name(),
 	])
+
+
+func _print_sim_lod_diagnostics() -> void:
+	var manager := get_tree().get_first_node_in_group(&"sim_lod_manager")
+	if manager == null or not manager.has_method("get_diagnostic_state"):
+		return
+
+	var state := manager.call("get_diagnostic_state") as Dictionary
+	print("SIM_LOD_DIAGNOSTICS=%s" % JSON.stringify(state))
 
 
 func _set_if_property(object: Object, property_name: String, value: Variant) -> void:

@@ -1,0 +1,108 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/settings/input_settings.gd" id="1_settings"]
+
+[node name="InputSettings" type="CanvasLayer"]
+process_mode = 3
+layer = 65
+script = ExtResource("1_settings")
+
+[node name="Root" type="Control" parent="."]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="Root"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.005, 0.018, 0.022, 0.78)
+
+[node name="Panel" type="PanelContainer" parent="Root"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 180.0
+offset_top = 86.0
+offset_right = -180.0
+offset_bottom = -86.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="Root/Panel"]
+process_mode = 3
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="Content" type="VBoxContainer" parent="Root/Panel/Margin"]
+process_mode = 3
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Root/Panel/Margin/Content"]
+process_mode = 3
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Root/Panel/Margin/Content/Header"]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 3
+text = "INPUT SETTINGS"
+vertical_alignment = 1
+
+[node name="ResetAllButton" type="Button" parent="Root/Panel/Margin/Content/Header"]
+process_mode = 3
+custom_minimum_size = Vector2(132, 34)
+layout_mode = 2
+focus_mode = 2
+text = "Reset All"
+
+[node name="CloseButton" type="Button" parent="Root/Panel/Margin/Content/Header"]
+process_mode = 3
+custom_minimum_size = Vector2(92, 34)
+layout_mode = 2
+focus_mode = 2
+text = "Close"
+
+[node name="CaptureBanner" type="PanelContainer" parent="Root/Panel/Margin/Content"]
+process_mode = 3
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="Root/Panel/Margin/Content/CaptureBanner"]
+process_mode = 3
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 7
+
+[node name="CaptureLabel" type="Label" parent="Root/Panel/Margin/Content/CaptureBanner/Margin"]
+process_mode = 3
+layout_mode = 2
+text = "PRESS KEY, MOUSE BUTTON, OR GAMEPAD BUTTON"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="Root/Panel/Margin/Content"]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="Rows" type="VBoxContainer" parent="Root/Panel/Margin/Content/Scroll"]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8

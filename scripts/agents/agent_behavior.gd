@@ -2,6 +2,9 @@ extends CharacterBody3D
 
 const BarkSystem = preload("res://scripts/agents/bark_system.gd")
 const HealthScript = preload("res://scripts/combat/health.gd")
+const SimLODLogicScript = preload("res://scripts/sim_lod/sim_lod_logic.gd")
+const SimLODManagerScript = preload("res://scripts/sim_lod/sim_lod_manager.gd")
+const SIM_LOD_FAR_GROUND_SNAP_INTERVAL := 2.0
 const HITSCAN_WEAPON_PATH := "res://scripts/combat/hitscan_weapon.gd"
 const DEREZ_CYAN := Color(0.098, 0.89, 0.89, 1.0)
 
@@ -58,6 +61,19 @@ var _health: Health
 var _stagger_timer := 0.0
 var _derezzing := false
 var _derez_materials: Array[StandardMaterial3D] = []
+var _sim_lod_manager: Node
+var _sim_lod_tier := SimLODManagerScript.TIER_NEAR
+var _sim_lod_mid_interval := 1
+var _sim_lod_tick_counter := 0
+var _sim_lod_accumulated_delta := 0.0
+var _sim_lod_step_delta := 0.0
+var _sim_lod_far_ground_timer := 0.0
+var _sim_lod_suppress_barks := false
+var _sim_lod_ground_snap_requested := false
+var _sim_lod_step_ground_snap := false
+var _sim_lod_collision_saved := false
+var _sim_lod_collision_layer := 0
+var _sim_lod_collision_mask := 0
 
 @onready var _bark_bubble: Label3D = get_node_or_null("BarkBubble") as Label3D
 
@@ -72,6 +88,7 @@ func _ready() -> void:
 	_pick_wander_target()
 	_connect_vehicle_events()
 	_connect_origin_events()
+	_register_sim_lod()
 
 	if _bark_bubble != null:
 		_bark_bubble.visible = false
@@ -82,6 +99,18 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if _sim_lod_ground_snap_requested:
+		_prepare_sim_lod_ground_snap()
+	if _sim_lod_tier != SimLODManagerScript.TIER_NEAR:
+		if not _begin_sim_lod_step(delta):
+			return
+
+		delta = _sim_lod_step_delta
+
+	_run_agent_physics(delta)
+
+
+func _run_agent_physics(delta: float) -> void:
 	_tick_reaction_timers(delta)
 	if _derezzing:
 		return
@@ -105,6 +134,32 @@ func _physics_process(delta: float) -> void:
 			_enter_wander()
 
 	_update_crime_witnessing()
+
+
+func _exit_tree() -> void:
+	if is_instance_valid(_sim_lod_manager):
+		_sim_lod_manager.unregister_npc(self)
+
+
+func set_sim_tier(tier: int) -> void:
+	set_sim_lod(tier, _sim_lod_mid_interval)
+
+
+func set_sim_lod(tier: int, mid_interval: int = 1) -> void:
+	var previous_tier: int = _sim_lod_tier
+	var previous_interval: int = _sim_lod_mid_interval
+	_sim_lod_tier = tier
+	_sim_lod_mid_interval = maxi(1, mid_interval)
+	_sim_lod_suppress_barks = tier != SimLODManagerScript.TIER_NEAR
+	if tier != previous_tier or _sim_lod_mid_interval != previous_interval:
+		_reset_sim_lod_tick_state()
+	_apply_sim_lod_collision_mode()
+	if tier != SimLODManagerScript.TIER_FAR and previous_tier == SimLODManagerScript.TIER_FAR:
+		_sim_lod_ground_snap_requested = true
+
+
+func get_sim_tier() -> int:
+	return _sim_lod_tier
 
 
 func _tick_reaction_timers(delta: float) -> void:
@@ -139,6 +194,7 @@ func _on_damaged(_amount: float, source: Node) -> void:
 	if _derezzing:
 		return
 
+	_promote_sim_lod_for_reaction()
 	_stagger_timer = maxf(_stagger_timer, damage_stagger_seconds)
 	_emit_bark(&"taking_damage")
 	if _is_weapon_damage_source(source):
@@ -267,6 +323,9 @@ func _pick_wander_target() -> void:
 
 
 func _move_toward(target: Vector3, speed: float, delta: float) -> float:
+	if _is_sim_lod_far():
+		return _far_move_toward(target, speed, delta)
+
 	var before := global_position
 	var direction := target - global_position
 	direction.y = 0.0
@@ -281,15 +340,19 @@ func _move_toward(target: Vector3, speed: float, delta: float) -> float:
 		velocity.z = move_toward(velocity.z, 0.0, stop_acceleration * delta)
 
 	_apply_gravity(delta)
-	move_and_slide()
+	_move_and_slide_with_sim_lod_delta()
 	return _horizontal_distance(before, global_position)
 
 
 func _stop_horizontal(delta: float) -> void:
+	if _is_sim_lod_far():
+		_far_stop_horizontal(delta)
+		return
+
 	velocity.x = move_toward(velocity.x, 0.0, stop_acceleration * delta)
 	velocity.z = move_toward(velocity.z, 0.0, stop_acceleration * delta)
 	_apply_gravity(delta)
-	move_and_slide()
+	_move_and_slide_with_sim_lod_delta()
 
 
 func _apply_gravity(delta: float) -> void:
@@ -298,6 +361,160 @@ func _apply_gravity(delta: float) -> void:
 			velocity.y = -0.1
 	else:
 		velocity.y -= _gravity * delta
+
+
+func _move_and_slide_with_sim_lod_delta() -> void:
+	if _sim_lod_tier != SimLODManagerScript.TIER_MID:
+		move_and_slide()
+		return
+
+	var scale := SimLODLogicScript.motion_delta_scale(_sim_lod_step_delta, get_physics_process_delta_time())
+	if is_equal_approx(scale, 1.0):
+		move_and_slide()
+		return
+
+	velocity.x *= scale
+	velocity.z *= scale
+	move_and_slide()
+	velocity.x /= scale
+	velocity.z /= scale
+
+
+func _register_sim_lod() -> void:
+	_sim_lod_manager = SimLODManagerScript.get_or_create(self)
+	if is_instance_valid(_sim_lod_manager):
+		_sim_lod_manager.register_npc(self, &"agent")
+
+
+func _begin_sim_lod_step(delta: float) -> bool:
+	_sim_lod_step_delta = delta
+	_sim_lod_step_ground_snap = false
+	if _sim_lod_tier == SimLODManagerScript.TIER_MID:
+		_sim_lod_accumulated_delta += delta
+		_sim_lod_tick_counter += 1
+		if _sim_lod_tick_counter % _sim_lod_mid_interval != 0:
+			return false
+
+		_sim_lod_step_delta = _sim_lod_accumulated_delta
+		_sim_lod_accumulated_delta = 0.0
+		return true
+
+	if _sim_lod_tier == SimLODManagerScript.TIER_FAR:
+		_sim_lod_far_ground_timer += delta
+		if _sim_lod_far_ground_timer >= SIM_LOD_FAR_GROUND_SNAP_INTERVAL:
+			_sim_lod_far_ground_timer = 0.0
+			_sim_lod_step_ground_snap = true
+		_sim_lod_accumulated_delta = 0.0
+		return true
+
+	_sim_lod_accumulated_delta = 0.0
+	_sim_lod_far_ground_timer = 0.0
+	return true
+
+
+func _promote_sim_lod_for_reaction() -> void:
+	if is_instance_valid(_sim_lod_manager):
+		_sim_lod_manager.promote_for_reaction(self)
+
+
+func _is_sim_lod_far() -> bool:
+	return _sim_lod_tier == SimLODManagerScript.TIER_FAR
+
+
+func _reset_sim_lod_tick_state() -> void:
+	_sim_lod_tick_counter = 0
+	_sim_lod_accumulated_delta = 0.0
+	_sim_lod_far_ground_timer = 0.0
+
+
+func _prepare_sim_lod_ground_snap() -> void:
+	if _sim_lod_tier == SimLODManagerScript.TIER_FAR or not _sim_lod_ground_snap_requested:
+		return
+
+	_snap_to_ground()
+	_sim_lod_ground_snap_requested = false
+
+
+func _far_move_toward(target: Vector3, speed: float, delta: float) -> float:
+	var before := global_position
+	var direction := target - global_position
+	direction.y = 0.0
+
+	if direction.length_squared() > 0.0001:
+		direction = direction.normalized()
+		velocity.x = direction.x * speed
+		velocity.z = direction.z * speed
+		_turn_toward(global_position + direction, delta)
+	else:
+		velocity.x = move_toward(velocity.x, 0.0, stop_acceleration * delta)
+		velocity.z = move_toward(velocity.z, 0.0, stop_acceleration * delta)
+
+	_far_apply_horizontal_velocity(delta)
+	return _horizontal_distance(before, global_position)
+
+
+func _far_stop_horizontal(delta: float) -> void:
+	velocity.x = move_toward(velocity.x, 0.0, stop_acceleration * delta)
+	velocity.z = move_toward(velocity.z, 0.0, stop_acceleration * delta)
+	_far_apply_horizontal_velocity(delta)
+
+
+func _far_apply_horizontal_velocity(delta: float) -> void:
+	global_position += Vector3(velocity.x, 0.0, velocity.z) * delta
+	velocity.y = 0.0
+	_maybe_snap_sim_lod_ground()
+
+
+func _maybe_snap_sim_lod_ground() -> void:
+	if not (_sim_lod_step_ground_snap or _sim_lod_ground_snap_requested):
+		return
+
+	_snap_to_ground()
+	_sim_lod_step_ground_snap = false
+	_sim_lod_ground_snap_requested = false
+
+
+func _snap_to_ground() -> void:
+	var world := get_world_3d()
+	if world == null:
+		velocity.y = minf(velocity.y, -0.1)
+		return
+
+	var query := PhysicsRayQueryParameters3D.create(
+		global_position + Vector3.UP * 2.0,
+		global_position + Vector3.DOWN * 8.0
+	)
+	query.collide_with_areas = false
+	query.collide_with_bodies = true
+	query.exclude = [get_rid()]
+
+	var hit := world.direct_space_state.intersect_ray(query)
+	if not hit.is_empty():
+		var hit_position := hit["position"] as Vector3
+		global_position.y = hit_position.y + 0.04
+	velocity.y = minf(velocity.y, -0.1)
+
+
+func _apply_sim_lod_collision_mode() -> void:
+	if _derezzing:
+		return
+
+	if _sim_lod_tier == SimLODManagerScript.TIER_FAR:
+		if _sim_lod_collision_saved:
+			return
+		_sim_lod_collision_layer = collision_layer
+		_sim_lod_collision_mask = collision_mask
+		_sim_lod_collision_saved = true
+		collision_layer = 0
+		collision_mask = 0
+		return
+
+	if not _sim_lod_collision_saved:
+		return
+
+	collision_layer = _sim_lod_collision_layer
+	collision_mask = _sim_lod_collision_mask
+	_sim_lod_collision_saved = false
 
 
 func _find_notice_player() -> CharacterBody3D:
@@ -378,6 +595,7 @@ func _on_origin_shifted(offset: Vector3) -> void:
 	# the agent and the rest of the active scene.
 	_spawn_position -= offset
 	_wander_target -= offset
+	_sim_lod_ground_snap_requested = true
 
 
 func _update_crime_witnessing() -> void:
@@ -484,6 +702,9 @@ func _events() -> Node:
 
 
 func _emit_bark(category: StringName, fallback: String = "") -> void:
+	if _sim_lod_suppress_barks:
+		return
+
 	var line := _barks.get_bark(String(category))
 	if line.is_empty():
 		line = fallback
@@ -497,6 +718,8 @@ func _emit_bark(category: StringName, fallback: String = "") -> void:
 
 
 func _show_bark(line: String) -> void:
+	if _sim_lod_suppress_barks:
+		return
 	if _bark_bubble == null or line.is_empty():
 		return
 

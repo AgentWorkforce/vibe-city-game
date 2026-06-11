@@ -1,4 +1,4 @@
-[gd_scene load_steps=127 format=3]
+[gd_scene load_steps=128 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/vehicles/car.tscn" id="2_car"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" path="res://scenes/vehicles/bike.tscn" id="12_bike"]
 [ext_resource type="PackedScene" path="res://scenes/ui/map/full_map.tscn" id="13_full_map"]
 [ext_resource type="Script" path="res://scripts/world/floating_origin.gd" id="14_origin"]
+[ext_resource type="PackedScene" path="res://scenes/ui/settings/input_settings.tscn" id="15_input_settings"]
 
 [sub_resource type="ProceduralSkyMaterial" id="PastelSkyMaterial"]
 sky_top_color = Color(0.58, 0.86, 1, 1)
@@ -1338,3 +1339,5 @@ position = Vector3(-36, 0.7, 15.725)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ladders/PlatformStartNorthLadder/ClimbArea"]
 shape = SubResource("PlatformStartLadderAreaShape")
+
+[node name="InputSettings" parent="." instance=ExtResource("15_input_settings")]

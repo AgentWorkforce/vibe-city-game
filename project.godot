@@ -17,6 +17,7 @@ Events="*res://scripts/core/events.gd"
 Wanted="*res://scripts/systems/wanted_system.gd"
 Missions="*res://scripts/missions/mission_manager.gd"
 Saves="*res://scripts/core/save_system.gd"
+InputBindings="*res://scripts/core/input_bindings.gd"
 
 [display]
 

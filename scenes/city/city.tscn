@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_streamer.gd" id="1_streamer"]
 [ext_resource type="Script" path="res://scripts/world/streaming_debug_hud.gd" id="2_hud"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/world/time_of_day.gd" id="14_tod"]
 [ext_resource type="PackedScene" path="res://scenes/ui/map/full_map.tscn" id="15_full_map"]
 [ext_resource type="Script" path="res://scripts/world/floating_origin.gd" id="16_origin"]
+[ext_resource type="PackedScene" path="res://scenes/ui/settings/input_settings.tscn" id="17_input_settings"]
 
 [sub_resource type="ProceduralSkyMaterial" id="PastelSkyMaterial"]
 sky_top_color = Color(0.58, 0.86, 1, 1)
@@ -194,3 +195,5 @@ waiting for streamer..."
 world_min = Vector2(0, -64)
 world_max = Vector2(512, 256)
 view_size_meters = 220.0
+
+[node name="InputSettings" parent="." instance=ExtResource("17_input_settings")]

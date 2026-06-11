@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/settings/input_settings_dev.gd" id="1_dev"]
+[ext_resource type="PackedScene" path="res://scenes/ui/settings/input_settings.tscn" id="2_settings"]
+
+[node name="InputSettingsDev" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dev")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.094, 0.18, 0.20, 1)
+
+[node name="Horizon" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.72, 0.92, 0.90, 1)
+
+[node name="Runway" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -260.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.055, 0.075, 0.08, 1)
+
+[node name="InputSettings" parent="." instance=ExtResource("2_settings")]
