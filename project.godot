@@ -11,6 +11,10 @@ config/description="Open-world game about cheerful AI agents politely taking ove
 run/main_scene="res://scenes/playground/playground.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
+[autoload]
+
+Events="*res://scripts/core/events.gd"
+
 [display]
 
 window/size/viewport_width=1920
