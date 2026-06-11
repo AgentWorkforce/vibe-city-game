@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/city/city.tscn" id="1_city"]
+[ext_resource type="Script" path="res://scripts/demo/demo_city_director.gd" id="2_director"]
+
+[node name="DemoCityScene" type="Node3D"]
+
+[node name="City" parent="." instance=ExtResource("1_city")]
+
+[node name="DemoCityDirector" type="Node" parent="."]
+script = ExtResource("2_director")

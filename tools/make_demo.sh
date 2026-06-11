@@ -9,11 +9,17 @@ WIDTH=1920
 HEIGHT=1080
 FPS=60
 MAX_BYTES=$((30 * 1024 * 1024))
-SCENE="res://scenes/demo/demo_scene.tscn"
 OUT="$REPO_ROOT/demo.mp4"
 TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/vibe-city-demo.XXXXXX")
-RAW="$TMP_DIR/demo.avi"
-LOG="$TMP_DIR/godot-movie.log"
+COMBINED_RAW="$TMP_DIR/demo-combined.avi"
+CONCAT_LIST="$TMP_DIR/concat-list.txt"
+
+SEGMENT_LABELS=("city" "playground")
+SEGMENT_SCENES=(
+	"res://scenes/demo/demo_city_scene.tscn"
+	"res://scenes/demo/demo_scene.tscn"
+)
+SEGMENT_QUIT_FRAMES=(3000 1500)
 
 cleanup() {
 	rm -rf "$TMP_DIR"
@@ -39,55 +45,89 @@ stream_count() {
 	ffprobe -v error -select_streams "$1" -show_entries stream=index -of csv=p=0 "$2" | wc -l | tr -d '[:space:]'
 }
 
+render_segment() {
+	local label="$1"
+	local scene="$2"
+	local quit_frames="$3"
+	local raw="$TMP_DIR/${label}.avi"
+	local log="$TMP_DIR/${label}-godot-movie.log"
+
+	echo "Recording $label demo segment from $scene..."
+	set +e
+	godot \
+		--path "$REPO_ROOT" \
+		--write-movie "$raw" \
+		--fixed-fps "$FPS" \
+		--resolution "${WIDTH}x${HEIGHT}" \
+		--windowed \
+		--single-window \
+		--audio-driver CoreAudio \
+		--scene "$scene" \
+		--quit-after "$quit_frames" \
+		>"$log" 2>&1
+	godot_status=$?
+	set -e
+	cat "$log"
+
+	if [ "$godot_status" -ne 0 ]; then
+		echo "Godot movie recording failed for $label with status $godot_status" >&2
+		exit "$godot_status"
+	fi
+
+	if [ ! -s "$raw" ]; then
+		echo "Godot did not produce a movie at $raw" >&2
+		exit 1
+	fi
+
+	local raw_dims
+	raw_dims=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "$raw")
+	if [ "$raw_dims" != "${WIDTH}x${HEIGHT}" ]; then
+		echo "$label movie resolution mismatch: got $raw_dims, expected ${WIDTH}x${HEIGHT}" >&2
+		exit 1
+	fi
+
+	local raw_duration
+	raw_duration=$(duration_for "$raw")
+	local raw_audio_streams
+	raw_audio_streams=$(stream_count a "$raw")
+	echo "$label segment:"
+	echo "  raw=$raw"
+	echo "  duration_seconds=$raw_duration"
+	echo "  resolution=$raw_dims"
+	echo "  audio_streams=$raw_audio_streams"
+
+	printf "file '%s'\n" "$raw" >>"$CONCAT_LIST"
+}
+
 need_tool godot
 need_tool ffmpeg
 need_tool ffprobe
 
-echo "Recording demo scene with Godot Movie Maker..."
-set +e
-godot \
-	--path "$REPO_ROOT" \
-	--write-movie "$RAW" \
-	--fixed-fps "$FPS" \
-	--resolution "${WIDTH}x${HEIGHT}" \
-	--windowed \
-	--single-window \
-	--audio-driver CoreAudio \
-	--scene "$SCENE" \
-	--quit-after 3300 \
-	>"$LOG" 2>&1
-godot_status=$?
-set -e
-cat "$LOG"
+for i in "${!SEGMENT_LABELS[@]}"; do
+	render_segment "${SEGMENT_LABELS[$i]}" "${SEGMENT_SCENES[$i]}" "${SEGMENT_QUIT_FRAMES[$i]}"
+done
 
-if [ "$godot_status" -ne 0 ]; then
-	echo "Godot movie recording failed with status $godot_status" >&2
-	exit "$godot_status"
-fi
+echo "Concatenating raw demo segments..."
+ffmpeg -y -f concat -safe 0 -i "$CONCAT_LIST" -c copy "$COMBINED_RAW"
 
-if [ ! -s "$RAW" ]; then
-	echo "Godot did not produce a movie at $RAW" >&2
+combined_dims=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "$COMBINED_RAW")
+if [ "$combined_dims" != "${WIDTH}x${HEIGHT}" ]; then
+	echo "Combined movie resolution mismatch: got $combined_dims, expected ${WIDTH}x${HEIGHT}" >&2
 	exit 1
 fi
 
-raw_dims=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "$RAW")
-if [ "$raw_dims" != "${WIDTH}x${HEIGHT}" ]; then
-	echo "Movie resolution mismatch: got $raw_dims, expected ${WIDTH}x${HEIGHT}" >&2
-	exit 1
-fi
-
-raw_audio_streams=$(stream_count a "$RAW")
-if [ "$raw_audio_streams" -gt 0 ]; then
-	echo "Raw movie audio streams: $raw_audio_streams"
+combined_audio_streams=$(stream_count a "$COMBINED_RAW")
+if [ "$combined_audio_streams" -gt 0 ]; then
+	echo "Combined raw movie audio streams: $combined_audio_streams"
 else
-	echo "Raw movie audio streams: 0 (shipping silent demo if this platform did not capture Movie Maker audio)"
+	echo "Combined raw movie audio streams: 0 (shipping silent demo if this platform did not capture Movie Maker audio)"
 fi
 
 rm -f "$OUT"
 crf=23
 while true; do
 	echo "Encoding demo.mp4 with CRF $crf..."
-	ffmpeg -y -i "$RAW" \
+	ffmpeg -y -i "$COMBINED_RAW" \
 		-map 0:v:0 -map 0:a? \
 		-c:v libx264 -preset medium -crf "$crf" -pix_fmt yuv420p \
 		-c:a aac -b:a 128k \

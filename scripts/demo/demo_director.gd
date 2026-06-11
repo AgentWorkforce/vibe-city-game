@@ -4,12 +4,9 @@ const MOVIE_WIDTH := 1920
 const MOVIE_HEIGHT := 1080
 const FADE_SECONDS := 0.35
 const BEATS := [
-	{"name": "establish", "duration": 5.5},
-	{"name": "jump", "duration": 7.0},
-	{"name": "greet", "duration": 6.0},
-	{"name": "drive", "duration": 15.5},
-	{"name": "shoot", "duration": 10.5},
-	{"name": "closing", "duration": 5.5},
+	{"name": "greet", "duration": 5.5},
+	{"name": "shoot", "duration": 8.2},
+	{"name": "closing", "duration": 3.8},
 ]
 const ACTIONS := [
 	"move_forward",
