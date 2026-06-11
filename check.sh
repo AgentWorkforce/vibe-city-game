@@ -58,6 +58,13 @@ else
 	fi
 fi
 
+echo "== Unit tests =="
+if godot --headless -s tools/run_tests.gd; then
+	echo "Unit tests passed."
+else
+	fail "Unit tests failed."
+fi
+
 echo "== Smoke main scene =="
 if godot --headless --quit-after 60; then
 	echo "Main scene loaded and exited."
