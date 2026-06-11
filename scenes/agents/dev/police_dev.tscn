@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scenes/agents/dev/police_dev.gd" id="1_dev"]
+[ext_resource type="PackedScene" path="res://scenes/agents/police_agent.tscn" id="2_police"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.72, 0.92, 0.9, 1)
+roughness = 0.85
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(30, 0.2, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+material = SubResource("StandardMaterial3D_floor")
+size = Vector3(30, 0.2, 30)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dummy"]
+height = 1.8
+radius = 0.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dummy"]
+albedo_color = Color(1, 0.63, 0.78, 1)
+roughness = 0.72
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dummy"]
+material = SubResource("StandardMaterial3D_dummy")
+radius = 0.35
+height = 1.8
+radial_segments = 16
+rings = 6
+
+[node name="PoliceDev" type="Node3D"]
+script = ExtResource("1_dev")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_floor")
+
+[node name="DummyPlayer" type="CharacterBody3D" parent="." groups=["player"]]
+position = Vector3(0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DummyPlayer"]
+position = Vector3(0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_dummy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DummyPlayer"]
+position = Vector3(0, 0.9, 0)
+mesh = SubResource("CapsuleMesh_dummy")
+
+[node name="PoliceAgent" parent="." instance=ExtResource("2_police")]
+position = Vector3(8, 0, 0)
+activation_radius = 30.0
+idle_chatter_min_interval = 999.0
+idle_chatter_max_interval = 999.0
+debug_state_changes = true
+debug_police_state_changes = true
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.9, 0.6, 0)
+light_energy = 1.4
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.820533, 0.5716, 0, -0.5716, 0.820533, 0, 5, 8)

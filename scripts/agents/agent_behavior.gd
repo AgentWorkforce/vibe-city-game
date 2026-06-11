@@ -27,6 +27,10 @@ enum AgentState {
 @export var turn_speed: float = 8.0
 @export var stop_acceleration: float = 16.0
 @export var debug_state_changes: bool = false
+@export var ram_collision_speed_threshold: float = 4.0
+@export var vehicle_ram_distance: float = 2.5
+@export var vehicle_ram_speed_threshold: float = 8.0
+@export var witnessed_crime_cooldown: float = 3.0
 
 var _state := AgentState.WANDER
 var _spawn_position := Vector3.ZERO
@@ -43,16 +47,20 @@ var _last_greet_times: Dictionary = {}
 var _rng := RandomNumberGenerator.new()
 var _barks := BarkSystem.new()
 var _bark_tween: Tween
+var _witnessed_crime_timer := 0.0
+var _player_vehicle: Node3D
 
 @onready var _bark_bubble: Label3D = get_node_or_null("BarkBubble") as Label3D
 
 
 func _ready() -> void:
+	add_to_group("agents")
 	_rng.randomize()
 	_gravity = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
 	_spawn_position = global_position
 	_schedule_idle_chatter()
 	_pick_wander_target()
+	_connect_vehicle_events()
 
 	if _bark_bubble != null:
 		_bark_bubble.visible = false
@@ -64,6 +72,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_life_time += delta
+	_witnessed_crime_timer = maxf(0.0, _witnessed_crime_timer - delta)
 
 	match _state:
 		AgentState.WANDER:
@@ -79,6 +88,8 @@ func _physics_process(delta: float) -> void:
 			_update_greet(delta)
 		AgentState.RESUME:
 			_enter_wander()
+
+	_update_crime_witnessing()
 
 
 func _update_wander(delta: float) -> void:
@@ -245,6 +256,136 @@ func _update_idle_chatter(delta: float) -> void:
 
 func _schedule_idle_chatter() -> void:
 	_idle_chatter_timer = _rng.randf_range(idle_chatter_min_interval, idle_chatter_max_interval)
+
+
+func _connect_vehicle_events() -> void:
+	var events := _events()
+	if events == null:
+		return
+
+	var entered_callable := Callable(self, "_on_player_vehicle_entered")
+	if not events.is_connected(&"vehicle_entered", entered_callable):
+		events.connect(&"vehicle_entered", entered_callable)
+
+	var exited_callable := Callable(self, "_on_player_vehicle_exited")
+	if not events.is_connected(&"vehicle_exited", exited_callable):
+		events.connect(&"vehicle_exited", exited_callable)
+
+
+func _on_player_vehicle_entered(vehicle: Node) -> void:
+	_player_vehicle = vehicle as Node3D
+
+
+func _on_player_vehicle_exited(vehicle: Node) -> void:
+	if vehicle == _player_vehicle:
+		_player_vehicle = null
+
+
+func _update_crime_witnessing() -> void:
+	if _witnessed_crime_timer > 0.0:
+		return
+
+	if _witnessed_fast_collision() or _witnessed_nearby_vehicle_ram():
+		_report_witnessed_ram()
+
+
+func _witnessed_fast_collision() -> bool:
+	for i in get_slide_collision_count():
+		var collision := get_slide_collision(i)
+		if collision == null:
+			continue
+
+		var collider := collision.get_collider() as Node
+		if collider == null:
+			continue
+		if not _is_player_or_driven_vehicle(collider):
+			continue
+		if _get_body_speed(collider) > ram_collision_speed_threshold:
+			return true
+
+	return false
+
+
+func _witnessed_nearby_vehicle_ram() -> bool:
+	var vehicle := _find_player_vehicle()
+	if vehicle == null:
+		return false
+	if global_position.distance_to(vehicle.global_position) > vehicle_ram_distance:
+		return false
+	return _get_body_speed(vehicle) > vehicle_ram_speed_threshold
+
+
+func _report_witnessed_ram() -> void:
+	_witnessed_crime_timer = witnessed_crime_cooldown
+	var line := _barks.get_bark("taking_damage")
+	_show_bark(line)
+	var events := _events()
+	if events == null:
+		return
+	if not line.is_empty():
+		events.emit_signal(&"bark_emitted", self, &"taking_damage", line)
+	events.emit_signal(&"crime_committed", 2, global_position)
+
+
+func _is_player_or_driven_vehicle(node: Node) -> bool:
+	if node.is_in_group("player"):
+		return true
+	if node == _player_vehicle:
+		return true
+	return node is VehicleBody3D and _is_driven_vehicle(node)
+
+
+func _find_player_vehicle() -> VehicleBody3D:
+	if is_instance_valid(_player_vehicle) and _is_driven_vehicle(_player_vehicle):
+		return _player_vehicle as VehicleBody3D
+
+	var scene := get_tree().current_scene
+	if scene == null:
+		return null
+	return _find_driven_vehicle_under(scene)
+
+
+func _find_driven_vehicle_under(node: Node) -> VehicleBody3D:
+	var vehicle := node as VehicleBody3D
+	if vehicle != null and _is_driven_vehicle(vehicle):
+		return vehicle
+
+	for child in node.get_children():
+		var found := _find_driven_vehicle_under(child)
+		if found != null:
+			return found
+
+	return null
+
+
+func _is_driven_vehicle(node: Node) -> bool:
+	if node == null:
+		return false
+	return bool(node.get("driven"))
+
+
+func _get_body_speed(node: Object) -> float:
+	var rigid_body := node as RigidBody3D
+	if rigid_body != null:
+		return rigid_body.linear_velocity.length()
+
+	var character_body := node as CharacterBody3D
+	if character_body != null:
+		return character_body.velocity.length()
+
+	var linear_velocity: Variant = node.get("linear_velocity")
+	if typeof(linear_velocity) == TYPE_VECTOR3:
+		return (linear_velocity as Vector3).length()
+
+	var velocity_value: Variant = node.get("velocity")
+	if typeof(velocity_value) == TYPE_VECTOR3:
+		return (velocity_value as Vector3).length()
+
+	return 0.0
+
+
+func _events() -> Node:
+	return get_node_or_null("/root/Events")
 
 
 func _show_bark(line: String) -> void:

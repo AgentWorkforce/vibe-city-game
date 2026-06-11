@@ -70,6 +70,10 @@ func _enter_vehicle() -> void:
 	if _car.has_method("set_camera_active"):
 		_car.call("set_camera_active", true)
 
+	var events := get_node_or_null("/root/Events")
+	if events != null:
+		events.emit_signal(&"vehicle_entered", _car)
+
 
 func _exit_vehicle() -> void:
 	_driving = false
@@ -85,6 +89,10 @@ func _exit_vehicle() -> void:
 
 	if _player_root.has_method("set_active"):
 		_player_root.call("set_active", true)
+
+	var events := get_node_or_null("/root/Events")
+	if events != null:
+		events.emit_signal(&"vehicle_exited", _car)
 
 
 func _get_exit_position() -> Vector3:

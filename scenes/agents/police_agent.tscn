@@ -1,0 +1,93 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/systems/police_behavior.gd" id="1_police_behavior"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+height = 1.9
+radius = 0.34
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
+albedo_color = Color(0.98, 1, 1, 1)
+emission_enabled = true
+emission = Color(0.82, 0.97, 1, 1)
+emission_energy_multiplier = 0.16
+roughness = 0.62
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_head"]
+albedo_color = Color(0.96, 1, 1, 1)
+emission_enabled = true
+emission = Color(0.75, 0.95, 1, 1)
+emission_energy_multiplier = 0.12
+roughness = 0.58
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_chest_band"]
+albedo_color = Color(0.1, 0.89, 0.89, 1)
+emission_enabled = true
+emission = Color(0.1, 0.89, 0.89, 1)
+emission_energy_multiplier = 1.6
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_light_bar"]
+albedo_color = Color(0.75, 0.97, 1, 1)
+emission_enabled = true
+emission = Color(0.3, 0.95, 1, 1)
+emission_energy_multiplier = 2.5
+roughness = 0.3
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+material = SubResource("StandardMaterial3D_body")
+radius = 0.34
+height = 1.9
+radial_segments = 24
+rings = 8
+
+[sub_resource type="BoxMesh" id="BoxMesh_head"]
+material = SubResource("StandardMaterial3D_head")
+size = Vector3(0.56, 0.44, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_chest_band"]
+material = SubResource("StandardMaterial3D_chest_band")
+size = Vector3(0.68, 0.24, 0.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_light_bar"]
+material = SubResource("StandardMaterial3D_light_bar")
+size = Vector3(0.46, 0.1, 0.2)
+
+[node name="PoliceAgent" type="CharacterBody3D" groups=["agents", "police"]]
+script = ExtResource("1_police_behavior")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.95, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="BodyMesh" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.95, 0)
+mesh = SubResource("CapsuleMesh_body")
+
+[node name="ChestBand" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.16, -0.32)
+mesh = SubResource("BoxMesh_chest_band")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+position = Vector3(0, 2.03, 0)
+mesh = SubResource("BoxMesh_head")
+
+[node name="LightBar" type="MeshInstance3D" parent="."]
+position = Vector3(0, 2.3, -0.02)
+mesh = SubResource("BoxMesh_light_bar")
+
+[node name="BarkBubble" type="Label3D" parent="."]
+visible = false
+position = Vector3(0, 2.66, 0)
+pixel_size = 0.006
+billboard = 1
+no_depth_test = true
+modulate = Color(1, 1, 1, 0)
+outline_modulate = Color(0.02, 0.04, 0.07, 1)
+text = ""
+font_size = 42
+outline_size = 8
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+width = 520.0
