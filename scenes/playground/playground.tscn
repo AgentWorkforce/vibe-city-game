@@ -1,6 +1,8 @@
-[gd_scene load_steps=107 format=3]
+[gd_scene load_steps=115 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/vehicles/car.tscn" id="2_car"]
+[ext_resource type="Script" path="res://scripts/vehicles/vehicle_coupler.gd" id="3_coupler"]
 
 [sub_resource type="ProceduralSkyMaterial" id="PastelSkyMaterial"]
 sky_top_color = Color(0.58, 0.86, 1, 1)
@@ -399,6 +401,28 @@ radius = 2.4
 height = 4.8
 radial_segments = 16
 rings = 8
+
+[sub_resource type="StandardMaterial3D" id="LadderMaterial"]
+albedo_color = Color(0.92, 0.97, 1, 1)
+roughness = 0.78
+
+[sub_resource type="BoxMesh" id="LadderTallRailMesh"]
+material = SubResource("LadderMaterial")
+size = Vector3(0.12, 3.35, 0.12)
+
+[sub_resource type="BoxMesh" id="LadderShortRailMesh"]
+material = SubResource("LadderMaterial")
+size = Vector3(0.12, 1.35, 0.12)
+
+[sub_resource type="BoxMesh" id="LadderRungMesh"]
+material = SubResource("LadderMaterial")
+size = Vector3(0.86, 0.1, 0.1)
+
+[sub_resource type="BoxShape3D" id="LedgeWall3mLadderAreaShape"]
+size = Vector3(1, 3.4, 0.55)
+
+[sub_resource type="BoxShape3D" id="PlatformStartLadderAreaShape"]
+size = Vector3(1, 1.4, 0.55)
 
 [node name="Playground" type="Node3D"]
 
@@ -1134,3 +1158,89 @@ mesh = SubResource("PalmCanopyMesh")
 
 [node name="CarSpawn" type="Marker3D" parent="."]
 position = Vector3(65, 0.6, -20)
+
+[node name="Car" parent="." instance=ExtResource("2_car")]
+position = Vector3(65, 0.6, -20)
+
+[node name="VehicleCoupler" type="Node" parent="."]
+script = ExtResource("3_coupler")
+player_root_path = NodePath("../Player")
+car_path = NodePath("../Car")
+
+[node name="Ladders" type="Node3D" parent="."]
+
+[node name="LedgeWall3mNorthLadder" type="Node3D" parent="Ladders"]
+
+[node name="LeftRail" type="MeshInstance3D" parent="Ladders/LedgeWall3mNorthLadder"]
+position = Vector3(25.65, 1.675, -3.46)
+mesh = SubResource("LadderTallRailMesh")
+
+[node name="RightRail" type="MeshInstance3D" parent="Ladders/LedgeWall3mNorthLadder"]
+position = Vector3(26.35, 1.675, -3.46)
+mesh = SubResource("LadderTallRailMesh")
+
+[node name="Rung01" type="MeshInstance3D" parent="Ladders/LedgeWall3mNorthLadder"]
+position = Vector3(26, 0.4, -3.52)
+mesh = SubResource("LadderRungMesh")
+
+[node name="Rung02" type="MeshInstance3D" parent="Ladders/LedgeWall3mNorthLadder"]
+position = Vector3(26, 0.85, -3.52)
+mesh = SubResource("LadderRungMesh")
+
+[node name="Rung03" type="MeshInstance3D" parent="Ladders/LedgeWall3mNorthLadder"]
+position = Vector3(26, 1.3, -3.52)
+mesh = SubResource("LadderRungMesh")
+
+[node name="Rung04" type="MeshInstance3D" parent="Ladders/LedgeWall3mNorthLadder"]
+position = Vector3(26, 1.75, -3.52)
+mesh = SubResource("LadderRungMesh")
+
+[node name="Rung05" type="MeshInstance3D" parent="Ladders/LedgeWall3mNorthLadder"]
+position = Vector3(26, 2.2, -3.52)
+mesh = SubResource("LadderRungMesh")
+
+[node name="Rung06" type="MeshInstance3D" parent="Ladders/LedgeWall3mNorthLadder"]
+position = Vector3(26, 2.65, -3.52)
+mesh = SubResource("LadderRungMesh")
+
+[node name="Rung07" type="MeshInstance3D" parent="Ladders/LedgeWall3mNorthLadder"]
+position = Vector3(26, 3.1, -3.52)
+mesh = SubResource("LadderRungMesh")
+
+[node name="ClimbArea" type="Area3D" parent="Ladders/LedgeWall3mNorthLadder" groups=["ladder"]]
+position = Vector3(26, 1.7, -3.65)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladders/LedgeWall3mNorthLadder/ClimbArea"]
+shape = SubResource("LedgeWall3mLadderAreaShape")
+
+[node name="PlatformStartNorthLadder" type="Node3D" parent="Ladders"]
+
+[node name="LeftRail" type="MeshInstance3D" parent="Ladders/PlatformStartNorthLadder"]
+position = Vector3(-36.35, 0.675, 15.92)
+mesh = SubResource("LadderShortRailMesh")
+
+[node name="RightRail" type="MeshInstance3D" parent="Ladders/PlatformStartNorthLadder"]
+position = Vector3(-35.65, 0.675, 15.92)
+mesh = SubResource("LadderShortRailMesh")
+
+[node name="Rung01" type="MeshInstance3D" parent="Ladders/PlatformStartNorthLadder"]
+position = Vector3(-36, 0.3, 15.86)
+mesh = SubResource("LadderRungMesh")
+
+[node name="Rung02" type="MeshInstance3D" parent="Ladders/PlatformStartNorthLadder"]
+position = Vector3(-36, 0.65, 15.86)
+mesh = SubResource("LadderRungMesh")
+
+[node name="Rung03" type="MeshInstance3D" parent="Ladders/PlatformStartNorthLadder"]
+position = Vector3(-36, 1, 15.86)
+mesh = SubResource("LadderRungMesh")
+
+[node name="Rung04" type="MeshInstance3D" parent="Ladders/PlatformStartNorthLadder"]
+position = Vector3(-36, 1.3, 15.86)
+mesh = SubResource("LadderRungMesh")
+
+[node name="ClimbArea" type="Area3D" parent="Ladders/PlatformStartNorthLadder" groups=["ladder"]]
+position = Vector3(-36, 0.7, 15.725)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladders/PlatformStartNorthLadder/ClimbArea"]
+shape = SubResource("PlatformStartLadderAreaShape")

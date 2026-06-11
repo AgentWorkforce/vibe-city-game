@@ -72,6 +72,20 @@ else
 	fail "Main scene smoke run failed."
 fi
 
+echo "== Integration: drive =="
+if godot --headless -s tools/test_drive.gd 2>&1 | grep -q "DRIVE TEST PASS"; then
+	echo "Drive test passed."
+else
+	fail "Drive integration test failed."
+fi
+
+echo "== Integration: climb =="
+if godot --headless -s tools/test_climb.gd 2>&1 | grep -q "CLIMB TEST PASS"; then
+	echo "Climb test passed."
+else
+	fail "Climb integration test failed."
+fi
+
 if [ "$failures" -eq 0 ]; then
 	echo "PASS: project imports, scripts parse, and the main scene loads headlessly."
 else

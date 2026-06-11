@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player_root.gd" id="1_root"]
 [ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="2_movement"]
@@ -8,6 +8,9 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 height = 1.8
 radius = 0.35
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ladder_sensor"]
+size = Vector3(0.7, 1.6, 0.7)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
 albedo_color = Color(1, 0.63, 0.78, 1)
@@ -36,6 +39,13 @@ mesh = SubResource("CapsuleMesh_body")
 
 [node name="Footsteps" type="AudioStreamPlayer3D" parent="Body"]
 script = ExtResource("4_footsteps")
+
+[node name="LadderSensor" type="Area3D" parent="Body"]
+position = Vector3(0, 0.9, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/LadderSensor"]
+shape = SubResource("BoxShape3D_ladder_sensor")
 
 [node name="CameraRig" type="Node3D" parent="."]
 script = ExtResource("3_camera")

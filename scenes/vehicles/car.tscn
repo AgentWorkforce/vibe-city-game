@@ -1,0 +1,132 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/vehicles/car_controller.gd" id="1_controller"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
+albedo_color = Color(0.58, 0.9, 0.92, 1)
+roughness = 0.78
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_body"]
+size = Vector3(2, 1.4, 4.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+material = SubResource("StandardMaterial3D_body")
+size = Vector3(2, 1.4, 4.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wheel"]
+albedo_color = Color(0.08, 0.09, 0.11, 1)
+roughness = 0.88
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wheel"]
+material = SubResource("StandardMaterial3D_wheel")
+top_radius = 0.36
+bottom_radius = 0.36
+height = 0.34
+radial_segments = 24
+rings = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_enter_zone"]
+size = Vector3(6, 3, 7)
+
+[node name="Car" type="VehicleBody3D"]
+mass = 140.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -0.45, -0.22)
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 8
+script = ExtResource("1_controller")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.75, 0)
+shape = SubResource("BoxShape3D_body")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.75, 0)
+mesh = SubResource("BoxMesh_body")
+
+[node name="WheelFrontLeft" type="VehicleWheel3D" parent="."]
+position = Vector3(-0.9, 0.22, -1.35)
+use_as_steering = true
+wheel_roll_influence = 0.08
+wheel_radius = 0.36
+wheel_rest_length = 0.32
+wheel_friction_slip = 5.0
+suspension_travel = 0.25
+suspension_stiffness = 24.0
+suspension_max_force = 6000.0
+damping_compression = 4.4
+damping_relaxation = 5.6
+
+[node name="Visual" type="MeshInstance3D" parent="WheelFrontLeft"]
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("CylinderMesh_wheel")
+
+[node name="WheelFrontRight" type="VehicleWheel3D" parent="."]
+position = Vector3(0.9, 0.22, -1.35)
+use_as_steering = true
+wheel_roll_influence = 0.08
+wheel_radius = 0.36
+wheel_rest_length = 0.32
+wheel_friction_slip = 5.0
+suspension_travel = 0.25
+suspension_stiffness = 24.0
+suspension_max_force = 6000.0
+damping_compression = 4.4
+damping_relaxation = 5.6
+
+[node name="Visual" type="MeshInstance3D" parent="WheelFrontRight"]
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("CylinderMesh_wheel")
+
+[node name="WheelRearLeft" type="VehicleWheel3D" parent="."]
+position = Vector3(-0.9, 0.22, 1.35)
+use_as_traction = true
+wheel_roll_influence = 0.08
+wheel_radius = 0.36
+wheel_rest_length = 0.32
+wheel_friction_slip = 4.6
+suspension_travel = 0.25
+suspension_stiffness = 24.0
+suspension_max_force = 6200.0
+damping_compression = 4.6
+damping_relaxation = 5.8
+
+[node name="Visual" type="MeshInstance3D" parent="WheelRearLeft"]
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("CylinderMesh_wheel")
+
+[node name="WheelRearRight" type="VehicleWheel3D" parent="."]
+position = Vector3(0.9, 0.22, 1.35)
+use_as_traction = true
+wheel_roll_influence = 0.08
+wheel_radius = 0.36
+wheel_rest_length = 0.32
+wheel_friction_slip = 4.6
+suspension_travel = 0.25
+suspension_stiffness = 24.0
+suspension_max_force = 6200.0
+damping_compression = 4.6
+damping_relaxation = 5.8
+
+[node name="Visual" type="MeshInstance3D" parent="WheelRearRight"]
+rotation = Vector3(0, 0, 1.5708)
+mesh = SubResource("CylinderMesh_wheel")
+
+[node name="EnterZone" type="Area3D" parent="."]
+position = Vector3(0, 1.2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterZone"]
+shape = SubResource("BoxShape3D_enter_zone")
+
+[node name="CameraRig" type="Node3D" parent="."]
+position = Vector3(0, 0.75, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
+position = Vector3(0, 2.5, 0)
+spring_length = 6.0
+margin = 0.2
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D"]
+current = false
+fov = 70.0

@@ -22,6 +22,10 @@ godot
 | Look | Mouse look | Right stick |
 | Jump | Space | A |
 | Sprint | Shift | L3 |
+| Enter / exit vehicle | E | Y |
+| Throttle / brake (in car) | W / S | Left stick |
+| Handbrake (in car) | Space | B |
+| Look behind (in car) | C | R3 |
 | Release mouse | Esc | - |
 
 ## How to Check

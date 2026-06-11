@@ -47,8 +47,8 @@ Goal: moving around is fun before there is anything else to do.
 - [x] Acceleration/deceleration curves, coyote time, jump buffering.
 - [x] Camera collision, shoulder offset, sprint FOV kick.
 - [x] Movement playground: stairs, slopes, gaps, ledges.
-- [ ] Ladders.
-- [ ] Footstep audio hooked to surface type.
+- [x] Ladders (grab by pushing into the wall, climb, mantle at top).
+- [x] Footstep audio hooked to surface type (concrete/sand + landing thud).
 - [x] Gamepad support (movement/camera/jump/sprint on stick + buttons).
 - [ ] Rebindable input UI.
 
@@ -56,13 +56,15 @@ Goal: moving around is fun before there is anything else to do.
 
 Goal: get in a car, drive it, crash it, get out.
 
-- Seamless enter/exit interaction (one button, no cutscene).
-- Tuned arcade-leaning car physics (`VehicleBody3D` first; custom raycast
-  suspension only if feel demands it).
-- Chase camera with speed-based FOV and look-behind.
-- Engine, tire, and impact audio loops.
-- Mechanical damage model first; visual deformation later.
-- Prototype motorbike, boat, and plane (one each, rough but driveable).
+- [x] Seamless enter/exit interaction (one button, no cutscene).
+- [x] Arcade-leaning car physics v1 (`VehicleBody3D`, speed-tapered engine,
+  brake-before-reverse, speed-reduced steering, handbrake drift) — verified
+  by the headless drive integration test.
+- [x] Chase camera with speed-based FOV and look-behind.
+- [ ] Engine, tire, and impact audio loops hooked up (assets generated).
+- [ ] Mechanical damage model first; visual deformation later.
+- [ ] Prototype motorbike, boat, and plane (one each, rough but driveable).
+- [ ] Car physics feel pass on a real gamepad (human playtest).
 
 ## M3 — Streaming World Foundation
 

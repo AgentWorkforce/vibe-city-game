@@ -1,5 +1,6 @@
 # Dev tool: render the main scene for a few frames and save a screenshot.
-# Usage: godot -s tools/screenshot.gd [-- <output_path> <frames>]
+# Usage: godot -s tools/screenshot.gd [-- <output_path> <frames> [camx camy camz lookx looky lookz]]
+# With the 6 extra args, a free camera is placed instead of the scene camera.
 extends SceneTree
 
 var _frames := 0
@@ -15,6 +16,12 @@ func _initialize() -> void:
 		_target_frames = int(args[1])
 	var scene: PackedScene = load(ProjectSettings.get_setting("application/run/main_scene"))
 	root.add_child(scene.instantiate())
+	if args.size() >= 8:
+		var cam := Camera3D.new()
+		cam.position = Vector3(float(args[2]), float(args[3]), float(args[4]))
+		root.add_child(cam)
+		cam.look_at(Vector3(float(args[5]), float(args[6]), float(args[7])), Vector3.UP)
+		cam.make_current()
 
 
 func _process(_delta: float) -> bool:
