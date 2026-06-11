@@ -204,7 +204,7 @@ func _draw_agents(map_rect: Rect2) -> void:
 		if not is_instance_valid(agent):
 			continue
 
-		var point := _world_to_map(_xz(agent.global_position), map_rect)
+		var point := _world_to_map(_true_xz(agent.global_position), map_rect)
 		if not map_rect.has_point(point):
 			continue
 
@@ -221,7 +221,7 @@ func _draw_vehicles(map_rect: Rect2) -> void:
 		if not is_instance_valid(vehicle):
 			continue
 
-		var point := _world_to_map(_xz(vehicle.global_position), map_rect)
+		var point := _world_to_map(_true_xz(vehicle.global_position), map_rect)
 		if not map_rect.has_point(point):
 			continue
 
@@ -235,7 +235,7 @@ func _draw_player(map_rect: Rect2) -> void:
 	if not is_instance_valid(_player):
 		return
 
-	var point := _world_to_map(_xz(_player.global_position), map_rect)
+	var point := _world_to_map(_true_xz(_player.global_position), map_rect)
 	if not map_rect.has_point(point):
 		return
 
@@ -329,7 +329,7 @@ func _zone_footprint_rect(zone: Node3D) -> Rect2:
 	if plane_rect.size.x > 0.0 and plane_rect.size.y > 0.0:
 		return plane_rect
 
-	var center := _xz(zone.global_position)
+	var center := _true_xz(zone.global_position)
 	return Rect2(center - DEFAULT_ZONE_SIZE * 0.5, DEFAULT_ZONE_SIZE)
 
 
@@ -350,7 +350,7 @@ func _box_shape_footprint(root: Node) -> Rect2:
 
 		var scale := shape_node.global_transform.basis.get_scale()
 		var footprint := Vector2(absf(box.size.x * scale.x), absf(box.size.z * scale.z))
-		var rect := Rect2(_xz(shape_node.global_position) - footprint * 0.5, footprint)
+		var rect := Rect2(_true_xz(shape_node.global_position) - footprint * 0.5, footprint)
 		var score := footprint.x * footprint.y
 		if shape_node.get_parent() != null and shape_node.get_parent().is_in_group(&"conversion_zone"):
 			score += 1000000.0
@@ -377,7 +377,7 @@ func _plane_mesh_footprint(root: Node) -> Rect2:
 
 		var scale := mesh_node.global_transform.basis.get_scale()
 		var footprint := Vector2(absf(plane.size.x * scale.x), absf(plane.size.y * scale.z))
-		return Rect2(_xz(mesh_node.global_position) - footprint * 0.5, footprint)
+		return Rect2(_true_xz(mesh_node.global_position) - footprint * 0.5, footprint)
 
 	return Rect2()
 
@@ -443,6 +443,23 @@ func _forward_xz(node: Node3D) -> Vector2:
 
 func _xz(position: Vector3) -> Vector2:
 	return Vector2(position.x, position.z)
+
+
+func _true_xz(local_world_position: Vector3) -> Vector2:
+	return _xz(_to_true_world_position(local_world_position))
+
+
+func _to_true_world_position(local_world_position: Vector3) -> Vector3:
+	var origin := _floating_origin()
+	if origin != null and origin.has_method("to_world"):
+		return origin.call("to_world", local_world_position) as Vector3
+	return local_world_position
+
+
+func _floating_origin() -> Node:
+	if not is_inside_tree():
+		return null
+	return get_tree().get_first_node_in_group(&"floating_origin")
 
 
 func _make_car_style() -> StyleBoxFlat:

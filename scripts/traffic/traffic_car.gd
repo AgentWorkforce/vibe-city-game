@@ -84,7 +84,9 @@ func get_forward_direction() -> Vector3:
 
 
 func _sync_to_graph(snap_rotation: bool, delta: float) -> void:
-	var next_position: Vector3 = road_graph.sample_position(loop_index, path_distance)
+	# RoadGraph waypoints remain in true world coordinates. Traffic cars are
+	# shifted with the scene, so graph samples are converted back to local world.
+	var next_position: Vector3 = _to_local_world_position(road_graph.sample_position(loop_index, path_distance))
 	var next_forward: Vector3 = road_graph.sample_forward(loop_index, path_distance)
 	if next_forward.length_squared() <= 0.001:
 		next_forward = _forward
@@ -142,3 +144,16 @@ func _pick_color() -> Color:
 	if color_palette.is_empty():
 		return Color(0.95, 0.22, 0.18, 1.0)
 	return color_palette[_rng.randi_range(0, color_palette.size() - 1)]
+
+
+func _to_local_world_position(true_world_position: Vector3) -> Vector3:
+	var origin := _floating_origin()
+	if origin != null and origin.has_method("to_local_world"):
+		return origin.call("to_local_world", true_world_position) as Vector3
+	return true_world_position
+
+
+func _floating_origin() -> Node:
+	if not is_inside_tree():
+		return null
+	return get_tree().get_first_node_in_group(&"floating_origin")

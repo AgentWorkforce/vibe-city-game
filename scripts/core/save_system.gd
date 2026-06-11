@@ -92,7 +92,9 @@ func _gather_player_state() -> Dictionary:
 		return {}
 
 	return {
-		"global_position": body.global_position,
+		# Floating-origin scenes keep physics local; saves persist true world
+		# coordinates so load files are independent of the current origin.
+		"global_position": _to_true_world_position(body.global_position),
 		"velocity": body.velocity,
 		"rotation": body.global_rotation,
 	}
@@ -104,7 +106,8 @@ func _apply_player_state(player_state: Dictionary) -> void:
 		push_warning("SaveSystem could not restore player state because no player body was found.")
 		return
 
-	body.global_position = SaveSnapshot.vector3_from_data(player_state.get("global_position", Vector3.ZERO))
+	var true_position := SaveSnapshot.vector3_from_data(player_state.get("global_position", Vector3.ZERO))
+	body.global_position = _to_local_world_position(true_position)
 	body.velocity = SaveSnapshot.vector3_from_data(player_state.get("velocity", Vector3.ZERO))
 	body.global_rotation = SaveSnapshot.vector3_from_data(player_state.get("rotation", Vector3.ZERO))
 	if body.has_method("reset_physics_interpolation"):
@@ -239,3 +242,23 @@ func _district_name_for(node: Node) -> StringName:
 	if value == null:
 		return &""
 	return StringName(str(value))
+
+
+func _to_true_world_position(local_world_position: Vector3) -> Vector3:
+	var origin := _floating_origin()
+	if origin != null and origin.has_method("to_world"):
+		return origin.call("to_world", local_world_position) as Vector3
+	return local_world_position
+
+
+func _to_local_world_position(true_world_position: Vector3) -> Vector3:
+	var origin := _floating_origin()
+	if origin != null and origin.has_method("to_local_world"):
+		return origin.call("to_local_world", true_world_position) as Vector3
+	return true_world_position
+
+
+func _floating_origin() -> Node:
+	if not is_inside_tree():
+		return null
+	return get_tree().get_first_node_in_group(&"floating_origin")

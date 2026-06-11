@@ -37,6 +37,7 @@ var _boundary_material: ShaderMaterial
 var _warm_tint_material: StandardMaterial3D
 var _restore_generation := 0
 var _restore_sensitive_tweens: Array[Tween] = []
+var _world_origin_offset := Vector3.ZERO
 
 @onready var _ground_overlay: MeshInstance3D = $GroundOverlay
 @onready var _boundaries: Node3D = $Boundaries
@@ -44,6 +45,8 @@ var _restore_sensitive_tweens: Array[Tween] = []
 
 
 func _ready() -> void:
+	_connect_origin_events()
+	_refresh_world_origin_offset()
 	_prepare_materials()
 	_collect_pylons()
 	_refresh_control()
@@ -97,6 +100,7 @@ func get_distress() -> float:
 func _prepare_materials() -> void:
 	_grid_material = _unique_shader_material(_ground_overlay)
 	_set_grid_fade_alpha(1.0)
+	_set_grid_world_origin_offset()
 
 	_boundary_walls.clear()
 	_boundary_base_positions.clear()
@@ -318,6 +322,11 @@ func _set_grid_fade_alpha(value: float) -> void:
 		_ground_overlay.visible = false
 
 
+func _set_grid_world_origin_offset() -> void:
+	if _grid_material != null:
+		_grid_material.set_shader_parameter("world_origin_offset", _world_origin_offset)
+
+
 func _set_boundary_fade_alpha(value: float) -> void:
 	_boundary_fade_alpha = clampf(value, 0.0, 1.0)
 	if _boundary_material != null:
@@ -506,3 +515,30 @@ func _make_spark_material(color: Color) -> StandardMaterial3D:
 
 func _events() -> Node:
 	return get_node_or_null("/root/Events")
+
+
+func _connect_origin_events() -> void:
+	var events := _events()
+	if events == null:
+		return
+
+	var shifted_callable := Callable(self, "_on_origin_shifted")
+	if events.has_signal(&"origin_shifted") and not events.is_connected(&"origin_shifted", shifted_callable):
+		events.connect(&"origin_shifted", shifted_callable)
+
+
+func _on_origin_shifted(offset: Vector3) -> void:
+	_world_origin_offset += offset
+	_set_grid_world_origin_offset()
+
+
+func _refresh_world_origin_offset() -> void:
+	var origin := _floating_origin()
+	if origin != null and origin.has_method("get_world_offset"):
+		_world_origin_offset = origin.call("get_world_offset") as Vector3
+
+
+func _floating_origin() -> Node:
+	if not is_inside_tree():
+		return null
+	return get_tree().get_first_node_in_group(&"floating_origin")

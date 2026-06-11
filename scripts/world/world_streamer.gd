@@ -30,10 +30,11 @@ var _request_queue: Array[Vector2i] = []
 func _ready() -> void:
 	_capture_fallback_initial_positions()
 	_connect_vehicle_events()
+	_connect_origin_events()
 	_resolve_target()
 	if is_instance_valid(_target):
-		_last_target_position = _target.global_position
-		_current_target_tile = world_to_tile_coord(_last_target_position)
+		_last_target_position = _target_true_world_position()
+		_current_target_tile = true_world_to_tile_coord(_last_target_position)
 	_update_streaming()
 
 
@@ -51,17 +52,23 @@ func _process(delta: float) -> void:
 	if not is_instance_valid(_target):
 		return
 
-	var target_position := _target.global_position
+	var target_position := _target_true_world_position()
 	_target_velocity = (target_position - _last_target_position) / maxf(elapsed, 0.001)
 	_last_target_position = target_position
-	_current_target_tile = world_to_tile_coord(target_position)
+	_current_target_tile = true_world_to_tile_coord(target_position)
 	_update_streaming()
 
 
 func world_to_tile_coord(world_position: Vector3) -> Vector2i:
-	# TODO(M3 floating origin): account for origin shifts here and adjust
-	# _last_target_position so shifts do not create phantom velocity spikes.
-	return Vector2i(floori(world_position.x / tile_size), floori(world_position.z / tile_size))
+	return true_world_to_tile_coord(_to_true_world_position(world_position))
+
+
+func true_world_to_tile_coord(true_world_position: Vector3) -> Vector2i:
+	return Vector2i(floori(true_world_position.x / tile_size), floori(true_world_position.z / tile_size))
+
+
+func get_current_target() -> Node3D:
+	return _target
 
 
 func get_resident_tile_count() -> int:
@@ -122,8 +129,8 @@ func _resolve_target() -> void:
 
 	_target = next_target
 	if is_instance_valid(_target):
-		_last_target_position = _target.global_position
-		_current_target_tile = world_to_tile_coord(_last_target_position)
+		_last_target_position = _target_true_world_position()
+		_current_target_tile = true_world_to_tile_coord(_last_target_position)
 
 
 func _select_target() -> Node3D:
@@ -190,6 +197,16 @@ func _connect_vehicle_events() -> void:
 		events.connect(&"vehicle_exited", exited_callable)
 
 
+func _connect_origin_events() -> void:
+	var events := get_node_or_null("/root/Events")
+	if events == null:
+		return
+
+	var shifted_callable := Callable(self, "_on_origin_shifted")
+	if events.has_signal(&"origin_shifted") and not events.is_connected(&"origin_shifted", shifted_callable):
+		events.connect(&"origin_shifted", shifted_callable)
+
+
 func _on_vehicle_entered(vehicle: Node) -> void:
 	var vehicle_target := vehicle as Node3D
 	if vehicle_target != null:
@@ -198,6 +215,22 @@ func _on_vehicle_entered(vehicle: Node) -> void:
 
 func _on_vehicle_exited(vehicle: Node) -> void:
 	clear_target_override(vehicle)
+
+
+func _on_origin_shifted(offset: Vector3) -> void:
+	# Fallback target baselines are local scene positions, so shift them with
+	# the world to avoid mistaking a floating-origin snap for player movement.
+	for key in _fallback_initial_positions.keys():
+		var initial_position := _fallback_initial_positions[key] as Vector3
+		_fallback_initial_positions[key] = initial_position - offset
+
+	# Streaming priority works in true world space; refreshing this cache keeps
+	# a shift from appearing as a one-frame velocity spike.
+	_target_velocity = Vector3.ZERO
+	if is_instance_valid(_target):
+		_last_target_position = _target_true_world_position()
+		_current_target_tile = true_world_to_tile_coord(_last_target_position)
+	_sort_request_queue()
 
 
 func _update_streaming() -> void:
@@ -304,6 +337,9 @@ func _instantiate_one_ready_tile() -> void:
 		_missing_tiles[coord] = true
 		return
 
+	# Tile transforms remain authored in true world meters. When the streamer
+	# node itself is shifted by FloatingOrigin, global tile placement becomes
+	# true_world_position - cumulative_origin_offset.
 	tile.position = Vector3(coord.x * tile_size, 0.0, coord.y * tile_size)
 	add_child(tile)
 	_loaded_tiles[coord] = tile
@@ -368,3 +404,22 @@ func _compare_coords(a: Vector2i, b: Vector2i) -> bool:
 	if a.x == b.x:
 		return a.y < b.y
 	return a.x < b.x
+
+
+func _target_true_world_position() -> Vector3:
+	if not is_instance_valid(_target):
+		return Vector3.ZERO
+	return _to_true_world_position(_target.global_position)
+
+
+func _to_true_world_position(local_world_position: Vector3) -> Vector3:
+	var origin := _floating_origin()
+	if origin != null and origin.has_method("to_world"):
+		return origin.call("to_world", local_world_position) as Vector3
+	return local_world_position
+
+
+func _floating_origin() -> Node:
+	if not is_inside_tree():
+		return null
+	return get_tree().get_first_node_in_group(&"floating_origin")

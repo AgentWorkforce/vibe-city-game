@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=22 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_streamer.gd" id="1_streamer"]
 [ext_resource type="Script" path="res://scripts/world/streaming_debug_hud.gd" id="2_hud"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://scripts/traffic/traffic_manager.gd" id="13_traffic"]
 [ext_resource type="Script" path="res://scripts/world/time_of_day.gd" id="14_tod"]
 [ext_resource type="PackedScene" path="res://scenes/ui/map/full_map.tscn" id="15_full_map"]
+[ext_resource type="Script" path="res://scripts/world/floating_origin.gd" id="16_origin"]
 
 [sub_resource type="ProceduralSkyMaterial" id="PastelSkyMaterial"]
 sky_top_color = Color(0.58, 0.86, 1, 1)
@@ -103,6 +104,13 @@ car_path = NodePath("../Car")
 script = ExtResource("1_streamer")
 target_path = NodePath("../Player/Body")
 fallback_target_paths = [NodePath("../StreamTarget")]
+
+[node name="FloatingOrigin" type="Node3D" parent="."]
+script = ExtResource("16_origin")
+threshold_meters = 8192.0
+streamer_path = NodePath("../WorldStreamer")
+target_path = NodePath("../Player/Body")
+world_root_path = NodePath("..")
 
 [node name="Deescalation" type="Node" parent="."]
 script = ExtResource("9_deescalation")

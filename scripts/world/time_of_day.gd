@@ -61,6 +61,7 @@ func _ready() -> void:
 		_cache_environment_defaults()
 	_ensure_moon_light()
 	_ensure_streetlights()
+	_connect_origin_events()
 	_apply_time(true)
 
 
@@ -386,3 +387,20 @@ func _spawn_streetlight(base_position: Vector3) -> void:
 	light.visible = false
 	_streetlight_root.add_child(light)
 	_streetlights.append(light)
+
+
+func _connect_origin_events() -> void:
+	var events := get_node_or_null("/root/Events")
+	if events == null:
+		return
+
+	var shifted_callable := Callable(self, "_on_origin_shifted")
+	if events.has_signal(&"origin_shifted") and not events.is_connected(&"origin_shifted", shifted_callable):
+		events.connect(&"origin_shifted", shifted_callable)
+
+
+func _on_origin_shifted(offset: Vector3) -> void:
+	# Streetlight source positions are authored in true world space, but this
+	# runtime root is not one of the shifted city Node3D roots.
+	if is_instance_valid(_streetlight_root):
+		_streetlight_root.global_position -= offset

@@ -75,6 +75,7 @@ func _spawn_car(slot_index: int, near_position: Vector3 = Vector3(INF, INF, INF)
 	var loop_index: int = slot_index % road_graph.get_loop_count()
 	var distance: float = _distance_for_slot(slot_index, loop_index)
 	if near_position.x != INF:
+		# RoadGraph nearest-loop queries are authored in true world coordinates.
 		var nearest: Dictionary = road_graph.find_nearest_loop_distance(near_position)
 		if int(nearest["loop_index"]) >= 0:
 			loop_index = int(nearest["loop_index"])
@@ -122,7 +123,7 @@ func _respawn_far_cars() -> void:
 		if _is_near_any_player(car.global_position, players):
 			continue
 
-		var nearest_player := _nearest_player_position(car.global_position, players)
+		var nearest_player := _to_true_world_position(_nearest_player_position(car.global_position, players))
 		_cars.remove_at(index)
 		car.queue_free()
 		_spawn_car(index, nearest_player)
@@ -161,3 +162,16 @@ func _prune_invalid_cars() -> void:
 		var car := _cars[index]
 		if car == null or not is_instance_valid(car):
 			_cars.remove_at(index)
+
+
+func _to_true_world_position(local_world_position: Vector3) -> Vector3:
+	var origin := _floating_origin()
+	if origin != null and origin.has_method("to_world"):
+		return origin.call("to_world", local_world_position) as Vector3
+	return local_world_position
+
+
+func _floating_origin() -> Node:
+	if not is_inside_tree():
+		return null
+	return get_tree().get_first_node_in_group(&"floating_origin")

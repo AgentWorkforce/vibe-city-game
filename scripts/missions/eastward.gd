@@ -32,7 +32,7 @@ func start() -> void:
 func get_objective_position():
 	var zone := _zone_root_from_area(_zone_area)
 	if zone != null:
-		return zone.global_position
+		return _to_true_world_position(zone.global_position)
 	return fallback_objective_position
 
 
@@ -136,3 +136,16 @@ func _on_vehicle_entered(vehicle: Node) -> void:
 func _on_vehicle_exited(vehicle: Node) -> void:
 	if vehicle == _current_vehicle:
 		_current_vehicle = null
+
+
+func _to_true_world_position(local_world_position: Vector3) -> Vector3:
+	var origin := _floating_origin()
+	if origin != null and origin.has_method("to_world"):
+		return origin.call("to_world", local_world_position) as Vector3
+	return local_world_position
+
+
+func _floating_origin() -> Node:
+	if not is_inside_tree():
+		return null
+	return get_tree().get_first_node_in_group(&"floating_origin")

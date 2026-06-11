@@ -154,6 +154,14 @@ else
 	fail "Flight integration test failed."
 fi
 
+echo "== Integration: floating origin =="
+test_floating_origin_out=$(godot --headless -s tools/test_floating_origin.gd 2>&1 || true)
+if printf '%s' "${test_floating_origin_out}" | grep -q "FLOATING ORIGIN TEST PASS"; then
+	echo "Floating origin test passed."
+else
+	fail "Floating origin integration test failed."
+fi
+
 if [ "$failures" -eq 0 ]; then
 	echo "PASS: project imports, scripts parse, and the main scene loads headlessly."
 else

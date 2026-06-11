@@ -71,6 +71,7 @@ func _ready() -> void:
 	_schedule_idle_chatter()
 	_pick_wander_target()
 	_connect_vehicle_events()
+	_connect_origin_events()
 
 	if _bark_bubble != null:
 		_bark_bubble.visible = false
@@ -353,6 +354,16 @@ func _connect_vehicle_events() -> void:
 		events.connect(&"vehicle_exited", exited_callable)
 
 
+func _connect_origin_events() -> void:
+	var events := _events()
+	if events == null:
+		return
+
+	var shifted_callable := Callable(self, "_on_origin_shifted")
+	if events.has_signal(&"origin_shifted") and not events.is_connected(&"origin_shifted", shifted_callable):
+		events.connect(&"origin_shifted", shifted_callable)
+
+
 func _on_player_vehicle_entered(vehicle: Node) -> void:
 	_player_vehicle = vehicle as Node3D
 
@@ -360,6 +371,13 @@ func _on_player_vehicle_entered(vehicle: Node) -> void:
 func _on_player_vehicle_exited(vehicle: Node) -> void:
 	if vehicle == _player_vehicle:
 		_player_vehicle = null
+
+
+func _on_origin_shifted(offset: Vector3) -> void:
+	# Wander anchors are cached local world-space positions, so they shift with
+	# the agent and the rest of the active scene.
+	_spawn_position -= offset
+	_wander_target -= offset
 
 
 func _update_crime_witnessing() -> void:

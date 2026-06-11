@@ -147,6 +147,10 @@ func _connect_events() -> void:
 	if events.has_signal(&"district_control_changed") and not events.is_connected(&"district_control_changed", district_callable):
 		events.connect(&"district_control_changed", district_callable)
 
+	var shifted_callable := Callable(self, "_on_origin_shifted")
+	if events.has_signal(&"origin_shifted") and not events.is_connected(&"origin_shifted", shifted_callable):
+		events.connect(&"origin_shifted", shifted_callable)
+
 
 func _apply_random_appearance() -> void:
 	var varied_scale := _rng.randf_range(scale_min, scale_max)
@@ -404,6 +408,14 @@ func _on_district_control_changed(district: StringName, control: float) -> void:
 		return
 
 	_start_celebration()
+
+
+func _on_origin_shifted(offset: Vector3) -> void:
+	# Stroll/flee anchors are local world-space caches and must move with the
+	# shifted scene to preserve behavior after a floating-origin snap.
+	_spawn_position -= offset
+	_stroll_target -= offset
+	_flee_source -= offset
 
 
 func _is_in_liberated_district(district: StringName) -> bool:

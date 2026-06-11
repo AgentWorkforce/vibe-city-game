@@ -24,6 +24,7 @@ var _camera_yaw: float = 0.0
 
 func _ready() -> void:
 	_resolve_nodes()
+	_connect_origin_events()
 	if not is_instance_valid(_target):
 		return
 
@@ -82,6 +83,23 @@ func set_camera_active(active: bool) -> void:
 		_camera.make_current()
 	else:
 		_camera.current = false
+
+
+func _connect_origin_events() -> void:
+	var events := get_node_or_null("/root/Events")
+	if events == null:
+		return
+
+	var shifted_callable := Callable(self, "_on_origin_shifted")
+	if events.has_signal(&"origin_shifted") and not events.is_connected(&"origin_shifted", shifted_callable):
+		events.connect(&"origin_shifted", shifted_callable)
+
+
+func _on_origin_shifted(offset: Vector3) -> void:
+	# This rig is top_level=true, so parent vehicle shifts do not move it.
+	global_position -= offset
+	if has_method("reset_physics_interpolation"):
+		reset_physics_interpolation()
 
 
 func _resolve_nodes() -> void:

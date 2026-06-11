@@ -17,6 +17,12 @@ signal district_control_changed(district: StringName, control: float)
 ## Time-of-day clock advanced to a new game minute. hour is wrapped to [0.0, 24.0).
 signal time_tick(hour: float)
 
+## Floating origin shifted world-space scene nodes by -offset.
+## Consumers with cached local world-space positions should subtract offset;
+## consumers that persist/display authored coordinates should use the active
+## FloatingOrigin.to_world()/to_local_world() helpers.
+signal origin_shifted(offset: Vector3)
+
 ## Mission framework updates.
 signal mission_started(mission: Node)
 signal mission_objective(text: String)
