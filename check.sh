@@ -86,6 +86,20 @@ else
 	fail "Climb integration test failed."
 fi
 
+echo "== Integration: shoot =="
+if godot --headless -s tools/test_shoot.gd 2>&1 | grep -q "SHOOT TEST PASS"; then
+	echo "Shoot test passed."
+else
+	fail "Shoot integration test failed."
+fi
+
+echo "== Integration: reclaim =="
+if godot --headless -s tools/test_reclaim.gd 2>&1 | grep -q "RECLAIM TEST PASS"; then
+	echo "Reclaim test passed."
+else
+	fail "Reclaim integration test failed."
+fi
+
 if [ "$failures" -eq 0 ]; then
 	echo "PASS: project imports, scripts parse, and the main scene loads headlessly."
 else

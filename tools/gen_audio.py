@@ -124,6 +124,25 @@ def impact_crunch(rng):
     return [a + 0.5 * b + c for a, b, c in zip(thump, crunch, ring)]
 
 
+def blaster_shot(rng):
+    n = int(SR * 0.22)
+    sparkle = highpass(noise(n, rng), 0.18)
+    out = []
+    phase = 0.0
+    for i in range(n):
+        t = i / SR
+        u = i / max(1, n - 1)
+        freq = 1420.0 - 760.0 * math.pow(u, 0.55)
+        phase += 2 * math.pi * freq / SR
+        attack = min(1.0, t / 0.004)
+        body_env = attack * math.exp(-t / 0.075)
+        glint_env = math.exp(-t / 0.026)
+        body = math.sin(phase) * 0.42 + math.sin(phase * 2.01) * 0.11
+        glint = sparkle[i] * glint_env * 0.08
+        out.append(body * body_env + glint)
+    return lowpass(out, 0.38)
+
+
 def main():
     rng = random.Random(42)
     for i in range(1, 5):
@@ -136,6 +155,7 @@ def main():
     write_wav("engine_loop.wav", engine_loop())
     write_wav("tire_screech_loop.wav", tire_screech_loop())
     write_wav("impact_crunch.wav", impact_crunch(rng))
+    write_wav("blaster_shot.wav", blaster_shot(rng))
 
 
 if __name__ == "__main__":

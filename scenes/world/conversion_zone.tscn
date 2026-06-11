@@ -1,7 +1,9 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Shader" path="res://assets/shaders/cyan_grid.gdshader" id="1_grid"]
 [ext_resource type="Shader" path="res://assets/shaders/boundary_wall.gdshader" id="2_wall"]
+[ext_resource type="Script" path="res://scripts/systems/district_control.gd" id="3_district"]
+[ext_resource type="Script" path="res://scripts/combat/health.gd" id="4_health"]
 
 [sub_resource type="ShaderMaterial" id="CyanGridMaterial"]
 shader = ExtResource("1_grid")
@@ -11,6 +13,9 @@ material = SubResource("CyanGridMaterial")
 size = Vector2(30, 30)
 subdivide_width = 30
 subdivide_depth = 30
+
+[sub_resource type="PlaneMesh" id="WarmTintMesh"]
+size = Vector2(30, 30)
 
 [sub_resource type="ShaderMaterial" id="BoundaryWallMaterial"]
 shader = ExtResource("2_wall")
@@ -50,10 +55,16 @@ size = Vector3(0.66, 0.34, 0.66)
 size = Vector3(30, 6, 30)
 
 [node name="ConversionZone" type="Node3D"]
+script = ExtResource("3_district")
 
 [node name="GroundOverlay" type="MeshInstance3D" parent="."]
 position = Vector3(0, 0.07, 0)
 mesh = SubResource("GroundOverlayMesh")
+
+[node name="WarmTint" type="MeshInstance3D" parent="."]
+visible = false
+position = Vector3(0, 0.055, 0)
+mesh = SubResource("WarmTintMesh")
 
 [node name="Boundaries" type="Node3D" parent="."]
 
@@ -92,6 +103,11 @@ mesh = SubResource("PylonBodyMesh")
 position = Vector3(0, 0.95, 0)
 mesh = SubResource("PylonBandMesh")
 
+[node name="Health" type="Node" parent="Pylons/PylonNorthWest"]
+script = ExtResource("4_health")
+max_health = 75.0
+destructible = true
+
 [node name="PylonNorthEast" type="StaticBody3D" parent="Pylons"]
 position = Vector3(9, 2, -9)
 
@@ -104,6 +120,11 @@ mesh = SubResource("PylonBodyMesh")
 [node name="CyanBand" type="MeshInstance3D" parent="Pylons/PylonNorthEast"]
 position = Vector3(0, 0.95, 0)
 mesh = SubResource("PylonBandMesh")
+
+[node name="Health" type="Node" parent="Pylons/PylonNorthEast"]
+script = ExtResource("4_health")
+max_health = 75.0
+destructible = true
 
 [node name="PylonSouthWest" type="StaticBody3D" parent="Pylons"]
 position = Vector3(-9, 2, 9)
@@ -118,6 +139,11 @@ mesh = SubResource("PylonBodyMesh")
 position = Vector3(0, 0.95, 0)
 mesh = SubResource("PylonBandMesh")
 
+[node name="Health" type="Node" parent="Pylons/PylonSouthWest"]
+script = ExtResource("4_health")
+max_health = 75.0
+destructible = true
+
 [node name="PylonSouthEast" type="StaticBody3D" parent="Pylons"]
 position = Vector3(9, 2, 9)
 
@@ -130,6 +156,11 @@ mesh = SubResource("PylonBodyMesh")
 [node name="CyanBand" type="MeshInstance3D" parent="Pylons/PylonSouthEast"]
 position = Vector3(0, 0.95, 0)
 mesh = SubResource("PylonBandMesh")
+
+[node name="Health" type="Node" parent="Pylons/PylonSouthEast"]
+script = ExtResource("4_health")
+max_health = 75.0
+destructible = true
 
 [node name="ZoneArea" type="Area3D" parent="." groups=["conversion_zone"]]
 position = Vector3(0, 3, 0)
