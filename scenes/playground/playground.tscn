@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3]
+[gd_scene load_steps=107 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
 
@@ -191,6 +191,214 @@ size = Vector3(5, 3, 0.75)
 [sub_resource type="BoxMesh" id="Ledge30Mesh"]
 material = SubResource("Ledge30Material")
 size = Vector3(5, 3, 0.75)
+
+[sub_resource type="StandardMaterial3D" id="RoadAsphaltMaterial"]
+albedo_color = Color(0.43, 0.42, 0.5, 1)
+roughness = 0.92
+
+[sub_resource type="StandardMaterial3D" id="CurbPinkMaterial"]
+albedo_color = Color(1, 0.64, 0.77, 1)
+roughness = 0.82
+
+[sub_resource type="StandardMaterial3D" id="RampMaterial"]
+albedo_color = Color(0.74, 0.72, 0.88, 1)
+roughness = 0.86
+
+[sub_resource type="StandardMaterial3D" id="BuildingMintMaterial"]
+albedo_color = Color(0.64, 0.96, 0.8, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="BuildingFlamingoMaterial"]
+albedo_color = Color(1, 0.5, 0.69, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="BuildingCreamMaterial"]
+albedo_color = Color(1, 0.9, 0.68, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="BuildingSkyBlueMaterial"]
+albedo_color = Color(0.55, 0.84, 1, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="BuildingLilacMaterial"]
+albedo_color = Color(0.78, 0.68, 1, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="PalmTrunkMaterial"]
+albedo_color = Color(0.74, 0.54, 0.34, 1)
+roughness = 0.78
+
+[sub_resource type="StandardMaterial3D" id="PalmCanopyMaterial"]
+albedo_color = Color(0.34, 0.76, 0.45, 1)
+roughness = 0.82
+
+[sub_resource type="BoxShape3D" id="RoadStraightHorizontalShape"]
+size = Vector3(120, 0.1, 10)
+
+[sub_resource type="BoxMesh" id="RoadStraightHorizontalMesh"]
+material = SubResource("RoadAsphaltMaterial")
+size = Vector3(120, 0.1, 10)
+
+[sub_resource type="BoxShape3D" id="RoadStraightVerticalShape"]
+size = Vector3(10, 0.1, 90)
+
+[sub_resource type="BoxMesh" id="RoadStraightVerticalMesh"]
+material = SubResource("RoadAsphaltMaterial")
+size = Vector3(10, 0.1, 90)
+
+[sub_resource type="BoxShape3D" id="RoadCornerShape"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="BoxMesh" id="RoadCornerMesh"]
+material = SubResource("RoadAsphaltMaterial")
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="BoxShape3D" id="CurbHorizontalOuterShape"]
+size = Vector3(62, 0.15, 0.4)
+
+[sub_resource type="BoxMesh" id="CurbHorizontalOuterMesh"]
+material = SubResource("CurbPinkMaterial")
+size = Vector3(62, 0.15, 0.4)
+
+[sub_resource type="BoxShape3D" id="CurbHorizontalInnerShape"]
+size = Vector3(52, 0.15, 0.4)
+
+[sub_resource type="BoxMesh" id="CurbHorizontalInnerMesh"]
+material = SubResource("CurbPinkMaterial")
+size = Vector3(52, 0.15, 0.4)
+
+[sub_resource type="BoxShape3D" id="CurbVerticalOuterShape"]
+size = Vector3(0.4, 0.15, 47)
+
+[sub_resource type="BoxMesh" id="CurbVerticalOuterMesh"]
+material = SubResource("CurbPinkMaterial")
+size = Vector3(0.4, 0.15, 47)
+
+[sub_resource type="BoxShape3D" id="CurbVerticalInnerShape"]
+size = Vector3(0.4, 0.15, 37)
+
+[sub_resource type="BoxMesh" id="CurbVerticalInnerMesh"]
+material = SubResource("CurbPinkMaterial")
+size = Vector3(0.4, 0.15, 37)
+
+[sub_resource type="BoxShape3D" id="RampHorizontalShape"]
+size = Vector3(10, 0.5, 6)
+
+[sub_resource type="BoxMesh" id="RampHorizontalMesh"]
+material = SubResource("RampMaterial")
+size = Vector3(10, 0.5, 6)
+
+[sub_resource type="BoxShape3D" id="RampVerticalShape"]
+size = Vector3(6, 0.5, 10)
+
+[sub_resource type="BoxMesh" id="RampVerticalMesh"]
+material = SubResource("RampMaterial")
+size = Vector3(6, 0.5, 10)
+
+[sub_resource type="BoxShape3D" id="Building01Shape"]
+size = Vector3(18, 28, 12)
+
+[sub_resource type="BoxMesh" id="Building01Mesh"]
+material = SubResource("BuildingMintMaterial")
+size = Vector3(18, 28, 12)
+
+[sub_resource type="BoxShape3D" id="Building02Shape"]
+size = Vector3(12, 18, 10)
+
+[sub_resource type="BoxMesh" id="Building02Mesh"]
+material = SubResource("BuildingFlamingoMaterial")
+size = Vector3(12, 18, 10)
+
+[sub_resource type="BoxShape3D" id="Building03Shape"]
+size = Vector3(20, 35, 14)
+
+[sub_resource type="BoxMesh" id="Building03Mesh"]
+material = SubResource("BuildingCreamMaterial")
+size = Vector3(20, 35, 14)
+
+[sub_resource type="BoxShape3D" id="Building04Shape"]
+size = Vector3(14, 24, 12)
+
+[sub_resource type="BoxMesh" id="Building04Mesh"]
+material = SubResource("BuildingSkyBlueMaterial")
+size = Vector3(14, 24, 12)
+
+[sub_resource type="BoxShape3D" id="Building05Shape"]
+size = Vector3(16, 30, 10)
+
+[sub_resource type="BoxMesh" id="Building05Mesh"]
+material = SubResource("BuildingLilacMaterial")
+size = Vector3(16, 30, 10)
+
+[sub_resource type="BoxShape3D" id="Building06Shape"]
+size = Vector3(10, 16, 12)
+
+[sub_resource type="BoxMesh" id="Building06Mesh"]
+material = SubResource("BuildingSkyBlueMaterial")
+size = Vector3(10, 16, 12)
+
+[sub_resource type="BoxShape3D" id="Building07Shape"]
+size = Vector3(18, 32, 16)
+
+[sub_resource type="BoxMesh" id="Building07Mesh"]
+material = SubResource("BuildingFlamingoMaterial")
+size = Vector3(18, 32, 16)
+
+[sub_resource type="BoxShape3D" id="Building08Shape"]
+size = Vector3(14, 22, 14)
+
+[sub_resource type="BoxMesh" id="Building08Mesh"]
+material = SubResource("BuildingMintMaterial")
+size = Vector3(14, 22, 14)
+
+[sub_resource type="BoxShape3D" id="Building09Shape"]
+size = Vector3(12, 26, 18)
+
+[sub_resource type="BoxMesh" id="Building09Mesh"]
+material = SubResource("BuildingCreamMaterial")
+size = Vector3(12, 26, 18)
+
+[sub_resource type="BoxShape3D" id="Building10Shape"]
+size = Vector3(20, 20, 12)
+
+[sub_resource type="BoxMesh" id="Building10Mesh"]
+material = SubResource("BuildingLilacMaterial")
+size = Vector3(20, 20, 12)
+
+[sub_resource type="BoxShape3D" id="Building11Shape"]
+size = Vector3(16, 34, 16)
+
+[sub_resource type="BoxMesh" id="Building11Mesh"]
+material = SubResource("BuildingSkyBlueMaterial")
+size = Vector3(16, 34, 16)
+
+[sub_resource type="BoxShape3D" id="Building12Shape"]
+size = Vector3(12, 14, 10)
+
+[sub_resource type="BoxMesh" id="Building12Mesh"]
+material = SubResource("BuildingMintMaterial")
+size = Vector3(12, 14, 10)
+
+[sub_resource type="CylinderShape3D" id="PalmTrunkShape"]
+height = 8.0
+radius = 0.28
+
+[sub_resource type="CylinderMesh" id="PalmTrunkMesh"]
+material = SubResource("PalmTrunkMaterial")
+top_radius = 0.24
+bottom_radius = 0.34
+height = 8.0
+radial_segments = 12
+
+[sub_resource type="SphereShape3D" id="PalmCanopyShape"]
+radius = 2.4
+
+[sub_resource type="SphereMesh" id="PalmCanopyMesh"]
+material = SubResource("PalmCanopyMaterial")
+radius = 2.4
+height = 4.8
+radial_segments = 16
+rings = 8
 
 [node name="Playground" type="Node3D"]
 
@@ -417,3 +625,512 @@ shape = SubResource("Ledge30Shape")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ClimbLedges/LedgeWall3m"]
 mesh = SubResource("Ledge30Mesh")
+
+[node name="RoadCircuit" type="Node3D" parent="."]
+
+[node name="NorthStraight" type="StaticBody3D" parent="RoadCircuit"]
+position = Vector3(0, 0.05, -50)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCircuit/NorthStraight"]
+shape = SubResource("RoadStraightHorizontalShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCircuit/NorthStraight"]
+mesh = SubResource("RoadStraightHorizontalMesh")
+
+[node name="SouthStraight" type="StaticBody3D" parent="RoadCircuit"]
+position = Vector3(0, 0.05, 50)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCircuit/SouthStraight"]
+shape = SubResource("RoadStraightHorizontalShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCircuit/SouthStraight"]
+mesh = SubResource("RoadStraightHorizontalMesh")
+
+[node name="EastStraight" type="StaticBody3D" parent="RoadCircuit"]
+position = Vector3(65, 0.05, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCircuit/EastStraight"]
+shape = SubResource("RoadStraightVerticalShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCircuit/EastStraight"]
+mesh = SubResource("RoadStraightVerticalMesh")
+
+[node name="WestStraight" type="StaticBody3D" parent="RoadCircuit"]
+position = Vector3(-65, 0.05, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCircuit/WestStraight"]
+shape = SubResource("RoadStraightVerticalShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCircuit/WestStraight"]
+mesh = SubResource("RoadStraightVerticalMesh")
+
+[node name="NorthEastCorner" type="StaticBody3D" parent="RoadCircuit"]
+position = Vector3(65, 0.05, -50)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCircuit/NorthEastCorner"]
+shape = SubResource("RoadCornerShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCircuit/NorthEastCorner"]
+mesh = SubResource("RoadCornerMesh")
+
+[node name="NorthWestCorner" type="StaticBody3D" parent="RoadCircuit"]
+position = Vector3(-65, 0.05, -50)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCircuit/NorthWestCorner"]
+shape = SubResource("RoadCornerShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCircuit/NorthWestCorner"]
+mesh = SubResource("RoadCornerMesh")
+
+[node name="SouthEastCorner" type="StaticBody3D" parent="RoadCircuit"]
+position = Vector3(65, 0.05, 50)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCircuit/SouthEastCorner"]
+shape = SubResource("RoadCornerShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCircuit/SouthEastCorner"]
+mesh = SubResource("RoadCornerMesh")
+
+[node name="SouthWestCorner" type="StaticBody3D" parent="RoadCircuit"]
+position = Vector3(-65, 0.05, 50)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCircuit/SouthWestCorner"]
+shape = SubResource("RoadCornerShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCircuit/SouthWestCorner"]
+mesh = SubResource("RoadCornerMesh")
+
+[node name="RoadCurbs" type="Node3D" parent="."]
+
+[node name="OuterNorthCurbWest" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(-39, 0.175, -54.8)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/OuterNorthCurbWest"]
+shape = SubResource("CurbHorizontalOuterShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/OuterNorthCurbWest"]
+mesh = SubResource("CurbHorizontalOuterMesh")
+
+[node name="OuterNorthCurbEast" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(39, 0.175, -54.8)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/OuterNorthCurbEast"]
+shape = SubResource("CurbHorizontalOuterShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/OuterNorthCurbEast"]
+mesh = SubResource("CurbHorizontalOuterMesh")
+
+[node name="InnerNorthCurbWest" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(-34, 0.175, -45.2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/InnerNorthCurbWest"]
+shape = SubResource("CurbHorizontalInnerShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/InnerNorthCurbWest"]
+mesh = SubResource("CurbHorizontalInnerMesh")
+
+[node name="InnerNorthCurbEast" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(34, 0.175, -45.2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/InnerNorthCurbEast"]
+shape = SubResource("CurbHorizontalInnerShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/InnerNorthCurbEast"]
+mesh = SubResource("CurbHorizontalInnerMesh")
+
+[node name="OuterSouthCurbWest" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(-39, 0.175, 54.8)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/OuterSouthCurbWest"]
+shape = SubResource("CurbHorizontalOuterShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/OuterSouthCurbWest"]
+mesh = SubResource("CurbHorizontalOuterMesh")
+
+[node name="OuterSouthCurbEast" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(39, 0.175, 54.8)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/OuterSouthCurbEast"]
+shape = SubResource("CurbHorizontalOuterShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/OuterSouthCurbEast"]
+mesh = SubResource("CurbHorizontalOuterMesh")
+
+[node name="InnerSouthCurbWest" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(-34, 0.175, 45.2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/InnerSouthCurbWest"]
+shape = SubResource("CurbHorizontalInnerShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/InnerSouthCurbWest"]
+mesh = SubResource("CurbHorizontalInnerMesh")
+
+[node name="InnerSouthCurbEast" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(34, 0.175, 45.2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/InnerSouthCurbEast"]
+shape = SubResource("CurbHorizontalInnerShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/InnerSouthCurbEast"]
+mesh = SubResource("CurbHorizontalInnerMesh")
+
+[node name="OuterEastCurbNorth" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(69.8, 0.175, -31.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/OuterEastCurbNorth"]
+shape = SubResource("CurbVerticalOuterShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/OuterEastCurbNorth"]
+mesh = SubResource("CurbVerticalOuterMesh")
+
+[node name="OuterEastCurbSouth" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(69.8, 0.175, 31.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/OuterEastCurbSouth"]
+shape = SubResource("CurbVerticalOuterShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/OuterEastCurbSouth"]
+mesh = SubResource("CurbVerticalOuterMesh")
+
+[node name="InnerEastCurbNorth" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(60.2, 0.175, -26.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/InnerEastCurbNorth"]
+shape = SubResource("CurbVerticalInnerShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/InnerEastCurbNorth"]
+mesh = SubResource("CurbVerticalInnerMesh")
+
+[node name="InnerEastCurbSouth" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(60.2, 0.175, 26.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/InnerEastCurbSouth"]
+shape = SubResource("CurbVerticalInnerShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/InnerEastCurbSouth"]
+mesh = SubResource("CurbVerticalInnerMesh")
+
+[node name="OuterWestCurbNorth" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(-69.8, 0.175, -31.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/OuterWestCurbNorth"]
+shape = SubResource("CurbVerticalOuterShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/OuterWestCurbNorth"]
+mesh = SubResource("CurbVerticalOuterMesh")
+
+[node name="OuterWestCurbSouth" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(-69.8, 0.175, 31.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/OuterWestCurbSouth"]
+shape = SubResource("CurbVerticalOuterShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/OuterWestCurbSouth"]
+mesh = SubResource("CurbVerticalOuterMesh")
+
+[node name="InnerWestCurbNorth" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(-60.2, 0.175, -26.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/InnerWestCurbNorth"]
+shape = SubResource("CurbVerticalInnerShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/InnerWestCurbNorth"]
+mesh = SubResource("CurbVerticalInnerMesh")
+
+[node name="InnerWestCurbSouth" type="StaticBody3D" parent="RoadCurbs"]
+position = Vector3(-60.2, 0.175, 26.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadCurbs/InnerWestCurbSouth"]
+shape = SubResource("CurbVerticalInnerShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadCurbs/InnerWestCurbSouth"]
+mesh = SubResource("CurbVerticalInnerMesh")
+
+[node name="RoadRamps" type="Node3D" parent="."]
+
+[node name="NorthStraightRamp" type="StaticBody3D" parent="RoadRamps"]
+position = Vector3(-28, 1.38, -50)
+rotation = Vector3(0, 0, -0.20944)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadRamps/NorthStraightRamp"]
+shape = SubResource("RampHorizontalShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadRamps/NorthStraightRamp"]
+mesh = SubResource("RampHorizontalMesh")
+
+[node name="EastStraightRamp" type="StaticBody3D" parent="RoadRamps"]
+position = Vector3(65, 1.38, 24)
+rotation = Vector3(0.20944, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadRamps/EastStraightRamp"]
+shape = SubResource("RampVerticalShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadRamps/EastStraightRamp"]
+mesh = SubResource("RampVerticalMesh")
+
+[node name="VibeSkyline" type="Node3D" parent="."]
+
+[node name="CityBlockNorthWest" type="StaticBody3D" parent="VibeSkyline"]
+position = Vector3(-52, 14, -75)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VibeSkyline/CityBlockNorthWest"]
+shape = SubResource("Building01Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VibeSkyline/CityBlockNorthWest"]
+mesh = SubResource("Building01Mesh")
+
+[node name="CityBlockNorthMidWest" type="StaticBody3D" parent="VibeSkyline"]
+position = Vector3(-27, 9, -73)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VibeSkyline/CityBlockNorthMidWest"]
+shape = SubResource("Building02Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VibeSkyline/CityBlockNorthMidWest"]
+mesh = SubResource("Building02Mesh")
+
+[node name="CityBlockNorthCenter" type="StaticBody3D" parent="VibeSkyline"]
+position = Vector3(0, 17.5, -78)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VibeSkyline/CityBlockNorthCenter"]
+shape = SubResource("Building03Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VibeSkyline/CityBlockNorthCenter"]
+mesh = SubResource("Building03Mesh")
+
+[node name="CityBlockNorthMidEast" type="StaticBody3D" parent="VibeSkyline"]
+position = Vector3(28, 12, -74)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VibeSkyline/CityBlockNorthMidEast"]
+shape = SubResource("Building04Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VibeSkyline/CityBlockNorthMidEast"]
+mesh = SubResource("Building04Mesh")
+
+[node name="CityBlockNorthEast" type="StaticBody3D" parent="VibeSkyline"]
+position = Vector3(53, 15, -76)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VibeSkyline/CityBlockNorthEast"]
+shape = SubResource("Building05Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VibeSkyline/CityBlockNorthEast"]
+mesh = SubResource("Building05Mesh")
+
+[node name="CityBlockSouthWest" type="StaticBody3D" parent="VibeSkyline"]
+position = Vector3(-50, 8, 76)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VibeSkyline/CityBlockSouthWest"]
+shape = SubResource("Building06Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VibeSkyline/CityBlockSouthWest"]
+mesh = SubResource("Building06Mesh")
+
+[node name="CityBlockSouthMidWest" type="StaticBody3D" parent="VibeSkyline"]
+position = Vector3(-24, 16, 78)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VibeSkyline/CityBlockSouthMidWest"]
+shape = SubResource("Building07Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VibeSkyline/CityBlockSouthMidWest"]
+mesh = SubResource("Building07Mesh")
+
+[node name="CityBlockSouthCenter" type="StaticBody3D" parent="VibeSkyline"]
+position = Vector3(5, 11, 74)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VibeSkyline/CityBlockSouthCenter"]
+shape = SubResource("Building08Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VibeSkyline/CityBlockSouthCenter"]
+mesh = SubResource("Building08Mesh")
+
+[node name="CityBlockSouthMidEast" type="StaticBody3D" parent="VibeSkyline"]
+position = Vector3(34, 13, 78)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VibeSkyline/CityBlockSouthMidEast"]
+shape = SubResource("Building09Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VibeSkyline/CityBlockSouthMidEast"]
+mesh = SubResource("Building09Mesh")
+
+[node name="CityBlockSouthEast" type="StaticBody3D" parent="VibeSkyline"]
+position = Vector3(58, 10, 73)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VibeSkyline/CityBlockSouthEast"]
+shape = SubResource("Building10Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VibeSkyline/CityBlockSouthEast"]
+mesh = SubResource("Building10Mesh")
+
+[node name="CityBlockEastTower" type="StaticBody3D" parent="VibeSkyline"]
+position = Vector3(88, 17, -18)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VibeSkyline/CityBlockEastTower"]
+shape = SubResource("Building11Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VibeSkyline/CityBlockEastTower"]
+mesh = SubResource("Building11Mesh")
+
+[node name="CityBlockWestTower" type="StaticBody3D" parent="VibeSkyline"]
+position = Vector3(-88, 7, 22)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VibeSkyline/CityBlockWestTower"]
+shape = SubResource("Building12Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VibeSkyline/CityBlockWestTower"]
+mesh = SubResource("Building12Mesh")
+
+[node name="PalmPlaceholders" type="Node3D" parent="."]
+
+[node name="PalmNorthWestCorner" type="StaticBody3D" parent="PalmPlaceholders"]
+position = Vector3(-76, 0, -60)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmNorthWestCorner"]
+position = Vector3(0, 4, 0)
+shape = SubResource("PalmTrunkShape")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmNorthWestCorner"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmNorthWestCorner"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("PalmCanopyShape")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmNorthWestCorner"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="PalmNorthEastCorner" type="StaticBody3D" parent="PalmPlaceholders"]
+position = Vector3(76, 0, -60)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmNorthEastCorner"]
+position = Vector3(0, 4, 0)
+shape = SubResource("PalmTrunkShape")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmNorthEastCorner"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmNorthEastCorner"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("PalmCanopyShape")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmNorthEastCorner"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="PalmSouthWestCorner" type="StaticBody3D" parent="PalmPlaceholders"]
+position = Vector3(-76, 0, 60)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmSouthWestCorner"]
+position = Vector3(0, 4, 0)
+shape = SubResource("PalmTrunkShape")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmSouthWestCorner"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmSouthWestCorner"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("PalmCanopyShape")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmSouthWestCorner"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="PalmSouthEastCorner" type="StaticBody3D" parent="PalmPlaceholders"]
+position = Vector3(76, 0, 60)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmSouthEastCorner"]
+position = Vector3(0, 4, 0)
+shape = SubResource("PalmTrunkShape")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmSouthEastCorner"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmSouthEastCorner"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("PalmCanopyShape")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmSouthEastCorner"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="PalmBeachWest" type="StaticBody3D" parent="PalmPlaceholders"]
+position = Vector3(-42, 0, 63)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmBeachWest"]
+position = Vector3(0, 4, 0)
+shape = SubResource("PalmTrunkShape")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmBeachWest"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmBeachWest"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("PalmCanopyShape")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmBeachWest"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="PalmBeachMidWest" type="StaticBody3D" parent="PalmPlaceholders"]
+position = Vector3(-18, 0, 63)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmBeachMidWest"]
+position = Vector3(0, 4, 0)
+shape = SubResource("PalmTrunkShape")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmBeachMidWest"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmBeachMidWest"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("PalmCanopyShape")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmBeachMidWest"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="PalmBeachMidEast" type="StaticBody3D" parent="PalmPlaceholders"]
+position = Vector3(20, 0, 63)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmBeachMidEast"]
+position = Vector3(0, 4, 0)
+shape = SubResource("PalmTrunkShape")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmBeachMidEast"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmBeachMidEast"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("PalmCanopyShape")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmBeachMidEast"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="PalmBeachEast" type="StaticBody3D" parent="PalmPlaceholders"]
+position = Vector3(46, 0, 63)
+
+[node name="TrunkCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmBeachEast"]
+position = Vector3(0, 4, 0)
+shape = SubResource("PalmTrunkShape")
+
+[node name="TrunkMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmBeachEast"]
+position = Vector3(0, 4, 0)
+mesh = SubResource("PalmTrunkMesh")
+
+[node name="CanopyCollisionShape3D" type="CollisionShape3D" parent="PalmPlaceholders/PalmBeachEast"]
+position = Vector3(0, 8.4, 0)
+shape = SubResource("PalmCanopyShape")
+
+[node name="CanopyMesh" type="MeshInstance3D" parent="PalmPlaceholders/PalmBeachEast"]
+position = Vector3(0, 8.4, 0)
+mesh = SubResource("PalmCanopyMesh")
+
+[node name="CarSpawn" type="Marker3D" parent="."]
+position = Vector3(65, 0.6, -20)
