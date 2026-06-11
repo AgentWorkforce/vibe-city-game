@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_streamer.gd" id="1_streamer"]
 [ext_resource type="Script" path="res://scripts/world/streaming_debug_hud.gd" id="2_hud"]
@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="10_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/minimap.tscn" id="11_minimap"]
 [ext_resource type="PackedScene" path="res://scenes/missions/mission_banner.tscn" id="12_banner"]
+[ext_resource type="Script" path="res://scripts/traffic/traffic_manager.gd" id="13_traffic"]
+[ext_resource type="Script" path="res://scripts/world/time_of_day.gd" id="14_tod"]
 
 [sub_resource type="ProceduralSkyMaterial" id="PastelSkyMaterial"]
 sky_top_color = Color(0.58, 0.86, 1, 1)
@@ -105,6 +107,17 @@ fallback_target_paths = [NodePath("../StreamTarget")]
 script = ExtResource("9_deescalation")
 player_root_path = NodePath("../Player")
 respawn_marker_path = NodePath("../PlayerSpawn")
+
+[node name="TrafficManager" type="Node" parent="."]
+script = ExtResource("13_traffic")
+graph_name = &"district_grid"
+max_cars = 5
+
+[node name="TimeOfDay" type="Node" parent="."]
+script = ExtResource("14_tod")
+sun_path = NodePath("../Sun")
+world_environment_path = NodePath("../WorldEnvironment")
+streetlight_segment_points = PackedVector3Array(264, 0, 64, 504, 0, 64, 320, 0, 8, 320, 0, 120, 448, 0, 8, 448, 0, 120)
 
 [node name="Agents" type="Node3D" parent="."]
 

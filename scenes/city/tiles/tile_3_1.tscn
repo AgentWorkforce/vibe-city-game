@@ -550,6 +550,33 @@ shape = SubResource("BoxShape_0p35_0p15_88")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/VerticalCurbEast_192"]
 mesh = SubResource("BoxMesh_CurbMaterial_0p35_0p15_88")
 
+[node name="VerticalRoad_256" type="StaticBody3D" parent="Roads"]
+position = Vector3(126, 0.05, 44)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roads/VerticalRoad_256"]
+shape = SubResource("BoxShape_4_0p1_88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Roads/VerticalRoad_256"]
+mesh = SubResource("BoxMesh_RoadMaterial_4_0p1_88")
+
+[node name="VerticalSidewalkWest_256" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(122, 0.08, 44)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/VerticalSidewalkWest_256"]
+shape = SubResource("BoxShape_4_0p12_88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/VerticalSidewalkWest_256"]
+mesh = SubResource("BoxMesh_SidewalkMaterial_4_0p12_88")
+
+[node name="VerticalCurbWest_256" type="StaticBody3D" parent="Curbs"]
+position = Vector3(123.825, 0.175, 44)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/VerticalCurbWest_256"]
+shape = SubResource("BoxShape_0p35_0p15_88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/VerticalCurbWest_256"]
+mesh = SubResource("BoxMesh_CurbMaterial_0p35_0p15_88")
+
 [node name="HorizontalRoad_128" type="StaticBody3D" parent="Roads"]
 position = Vector3(64, 0.05, 2)
 

@@ -5,7 +5,9 @@ SCRIPT_DIR=$(CDPATH= cd "$(dirname "$0")" && pwd)
 cd "$SCRIPT_DIR"
 
 failures=0
-import_log=$(mktemp "${TMPDIR:-/tmp}/vibe-city-import.XXXXXX.log")
+# No suffix after the X's: BSD mktemp only substitutes a trailing X-run,
+# so a suffix collides across concurrent runs (multiple agents, one tree).
+import_log=$(mktemp "${TMPDIR:-/tmp}/vibe-city-import.XXXXXX")
 
 cleanup() {
 	rm -f "$import_log"
@@ -118,6 +120,14 @@ if printf '%s' "${test_city_out}" | grep -q "CITY TEST PASS"; then
 	echo "City test passed."
 else
 	fail "City integration test failed."
+fi
+
+echo "== Integration: traffic =="
+test_traffic_out=$(godot --headless -s tools/test_traffic.gd 2>&1 || true)
+if printf '%s' "${test_traffic_out}" | grep -q "TRAFFIC TEST PASS"; then
+	echo "Traffic test passed."
+else
+	fail "Traffic integration test failed."
 fi
 
 echo "== Integration: mission =="

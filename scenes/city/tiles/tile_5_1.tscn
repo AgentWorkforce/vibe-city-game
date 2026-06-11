@@ -1,0 +1,1147 @@
+[gd_scene load_steps=90 format=3]
+
+[sub_resource type="StandardMaterial3D" id="GroundMaterial"]
+albedo_color = Color(0.78, 0.73, 0.64, 1)
+roughness = 0.92
+
+[sub_resource type="StandardMaterial3D" id="RoadMaterial"]
+albedo_color = Color(0.3, 0.29, 0.27, 1)
+roughness = 0.94
+
+[sub_resource type="StandardMaterial3D" id="SidewalkMaterial"]
+albedo_color = Color(0.82, 0.78, 0.68, 1)
+roughness = 0.88
+
+[sub_resource type="StandardMaterial3D" id="CurbMaterial"]
+albedo_color = Color(0.72, 0.48, 0.38, 1)
+roughness = 0.82
+
+[sub_resource type="StandardMaterial3D" id="BrickMaterial"]
+albedo_color = Color(0.58, 0.18, 0.13, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="OchreMaterial"]
+albedo_color = Color(0.86, 0.52, 0.22, 1)
+roughness = 0.86
+
+[sub_resource type="StandardMaterial3D" id="PastelPeachMaterial"]
+albedo_color = Color(0.95, 0.55, 0.44, 1)
+roughness = 0.88
+
+[sub_resource type="StandardMaterial3D" id="FadedTealMaterial"]
+albedo_color = Color(0.28, 0.62, 0.57, 1)
+roughness = 0.88
+
+[sub_resource type="StandardMaterial3D" id="WornBlueMaterial"]
+albedo_color = Color(0.36, 0.5, 0.78, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="WarmCreamMaterial"]
+albedo_color = Color(0.92, 0.8, 0.55, 1)
+roughness = 0.86
+
+[sub_resource type="StandardMaterial3D" id="WarmWindowMaterial"]
+albedo_color = Color(1, 0.72, 0.38, 1)
+emission_enabled = true
+emission = Color(1, 0.55, 0.2, 1)
+emission_energy_multiplier = 0.9
+roughness = 0.36
+
+[sub_resource type="StandardMaterial3D" id="RoofTarMaterial"]
+albedo_color = Color(0.13, 0.12, 0.11, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="WoodMaterial"]
+albedo_color = Color(0.58, 0.34, 0.18, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="CanvasRedMaterial"]
+albedo_color = Color(0.86, 0.16, 0.12, 1)
+roughness = 0.74
+
+[sub_resource type="StandardMaterial3D" id="CanvasBlueMaterial"]
+albedo_color = Color(0.1, 0.38, 0.78, 1)
+roughness = 0.76
+
+[sub_resource type="StandardMaterial3D" id="CanvasYellowMaterial"]
+albedo_color = Color(1, 0.72, 0.22, 1)
+roughness = 0.74
+
+[sub_resource type="StandardMaterial3D" id="CrateMaterial"]
+albedo_color = Color(0.48, 0.29, 0.15, 1)
+roughness = 0.84
+
+[sub_resource type="StandardMaterial3D" id="PlanterMaterial"]
+albedo_color = Color(0.4, 0.24, 0.17, 1)
+roughness = 0.86
+
+[sub_resource type="StandardMaterial3D" id="PlantLeafMaterial"]
+albedo_color = Color(0.18, 0.56, 0.25, 1)
+roughness = 0.82
+
+[sub_resource type="StandardMaterial3D" id="MuralA"]
+albedo_color = Color(0.98, 0.18, 0.42, 1)
+emission_enabled = true
+emission = Color(0.55, 0.08, 0.18, 1)
+emission_energy_multiplier = 0.25
+roughness = 0.65
+
+[sub_resource type="StandardMaterial3D" id="MuralB"]
+albedo_color = Color(0.18, 0.78, 0.9, 1)
+emission_enabled = true
+emission = Color(0.04, 0.35, 0.48, 1)
+emission_energy_multiplier = 0.25
+roughness = 0.65
+
+[sub_resource type="StandardMaterial3D" id="MuralC"]
+albedo_color = Color(0.98, 0.8, 0.12, 1)
+emission_enabled = true
+emission = Color(0.55, 0.34, 0.04, 1)
+emission_energy_multiplier = 0.2
+roughness = 0.68
+
+[sub_resource type="StandardMaterial3D" id="StringLightMaterial"]
+albedo_color = Color(1, 0.84, 0.5, 1)
+emission_enabled = true
+emission = Color(1, 0.62, 0.22, 1)
+emission_energy_multiplier = 1.4
+roughness = 0.3
+
+[sub_resource type="BoxShape3D" id="GroundShape"]
+size = Vector3(128, 0.16, 128)
+
+[sub_resource type="BoxMesh" id="GroundMesh"]
+material = SubResource("GroundMaterial")
+size = Vector3(128, 0.16, 128)
+
+[sub_resource type="BoxShape3D" id="RoadV8Shape"]
+size = Vector3(8, 0.1, 128)
+
+[sub_resource type="BoxMesh" id="RoadV8Mesh"]
+material = SubResource("RoadMaterial")
+size = Vector3(8, 0.1, 128)
+
+[sub_resource type="BoxShape3D" id="RoadV4Shape"]
+size = Vector3(4, 0.1, 128)
+
+[sub_resource type="BoxMesh" id="RoadV4Mesh"]
+material = SubResource("RoadMaterial")
+size = Vector3(4, 0.1, 128)
+
+[sub_resource type="BoxShape3D" id="RoadH8Shape"]
+size = Vector3(128, 0.1, 8)
+
+[sub_resource type="BoxMesh" id="RoadH8Mesh"]
+material = SubResource("RoadMaterial")
+size = Vector3(128, 0.1, 8)
+
+[sub_resource type="BoxShape3D" id="RoadH4Shape"]
+size = Vector3(128, 0.1, 4)
+
+[sub_resource type="BoxMesh" id="RoadH4Mesh"]
+material = SubResource("RoadMaterial")
+size = Vector3(128, 0.1, 4)
+
+[sub_resource type="BoxShape3D" id="SidewalkVShape"]
+size = Vector3(4, 0.12, 128)
+
+[sub_resource type="BoxMesh" id="SidewalkVMesh"]
+material = SubResource("SidewalkMaterial")
+size = Vector3(4, 0.12, 128)
+
+[sub_resource type="BoxShape3D" id="SidewalkHShape"]
+size = Vector3(128, 0.12, 4)
+
+[sub_resource type="BoxMesh" id="SidewalkHMesh"]
+material = SubResource("SidewalkMaterial")
+size = Vector3(128, 0.12, 4)
+
+[sub_resource type="BoxShape3D" id="CurbVShape"]
+size = Vector3(0.35, 0.15, 128)
+
+[sub_resource type="BoxMesh" id="CurbVMesh"]
+material = SubResource("CurbMaterial")
+size = Vector3(0.35, 0.15, 128)
+
+[sub_resource type="BoxShape3D" id="CurbHShape"]
+size = Vector3(128, 0.15, 0.35)
+
+[sub_resource type="BoxMesh" id="CurbHMesh"]
+material = SubResource("CurbMaterial")
+size = Vector3(128, 0.15, 0.35)
+
+[sub_resource type="BoxShape3D" id="StallBaseShape"]
+size = Vector3(5, 1.2, 3)
+
+[sub_resource type="BoxMesh" id="StallBaseMesh"]
+material = SubResource("WoodMaterial")
+size = Vector3(5, 1.2, 3)
+
+[sub_resource type="BoxMesh" id="CanopyRedMesh"]
+material = SubResource("CanvasRedMaterial")
+size = Vector3(5.8, 0.28, 3.8)
+
+[sub_resource type="BoxMesh" id="CanopyBlueMesh"]
+material = SubResource("CanvasBlueMaterial")
+size = Vector3(5.8, 0.28, 3.8)
+
+[sub_resource type="BoxMesh" id="CanopyYellowMesh"]
+material = SubResource("CanvasYellowMaterial")
+size = Vector3(5.8, 0.28, 3.8)
+
+[sub_resource type="BoxShape3D" id="CrateShape"]
+size = Vector3(1.6, 1.1, 1.6)
+
+[sub_resource type="BoxMesh" id="CrateMesh"]
+material = SubResource("CrateMaterial")
+size = Vector3(1.6, 1.1, 1.6)
+
+[sub_resource type="BoxShape3D" id="PlanterShape"]
+size = Vector3(2.8, 0.8, 2.2)
+
+[sub_resource type="BoxMesh" id="PlanterMesh"]
+material = SubResource("PlanterMaterial")
+size = Vector3(2.8, 0.8, 2.2)
+
+[sub_resource type="BoxMesh" id="PlantLeafMesh"]
+material = SubResource("PlantLeafMaterial")
+size = Vector3(2.1, 0.35, 1.55)
+
+[sub_resource type="SphereMesh" id="StringLightMesh"]
+material = SubResource("StringLightMaterial")
+radius = 0.22
+height = 0.44
+radial_segments = 8
+rings = 4
+
+[sub_resource type="BoxShape3D" id="Shape_BrickRooms_01"]
+size = Vector3(24, 24, 18)
+
+[sub_resource type="BoxMesh" id="Mesh_BrickRooms_01"]
+material = SubResource("BrickMaterial")
+size = Vector3(24, 24, 18)
+
+[sub_resource type="BoxMesh" id="WarmFront_24_18"]
+material = SubResource("WarmWindowMaterial")
+size = Vector3(12, 0.42, 0.12)
+
+[sub_resource type="BoxMesh" id="WarmSide_24_18"]
+material = SubResource("WarmWindowMaterial")
+size = Vector3(0.12, 0.42, 9)
+
+[sub_resource type="BoxMesh" id="Roof_24_18"]
+material = SubResource("RoofTarMaterial")
+size = Vector3(22.08, 0.45, 16.56)
+
+[sub_resource type="BoxMesh" id="Mural_BrickRooms_01_MuralA"]
+material = SubResource("MuralA")
+size = Vector3(8, 5.5, 0.14)
+
+[sub_resource type="BoxShape3D" id="Shape_OchreLiveWork_02"]
+size = Vector3(20, 18, 18)
+
+[sub_resource type="BoxMesh" id="Mesh_OchreLiveWork_02"]
+material = SubResource("OchreMaterial")
+size = Vector3(20, 18, 18)
+
+[sub_resource type="BoxMesh" id="WarmFront_20_18"]
+material = SubResource("WarmWindowMaterial")
+size = Vector3(10, 0.42, 0.12)
+
+[sub_resource type="BoxMesh" id="WarmSide_20_18"]
+material = SubResource("WarmWindowMaterial")
+size = Vector3(0.12, 0.42, 9)
+
+[sub_resource type="BoxMesh" id="Roof_20_18"]
+material = SubResource("RoofTarMaterial")
+size = Vector3(18.4, 0.45, 16.56)
+
+[sub_resource type="BoxMesh" id="Mural_OchreLiveWork_02_MuralB"]
+material = SubResource("MuralB")
+size = Vector3(0.14, 5, 7)
+
+[sub_resource type="BoxShape3D" id="Shape_BlueWalkup_03"]
+size = Vector3(24, 28, 18)
+
+[sub_resource type="BoxMesh" id="Mesh_BlueWalkup_03"]
+material = SubResource("WornBlueMaterial")
+size = Vector3(24, 28, 18)
+
+[sub_resource type="BoxMesh" id="Mural_BlueWalkup_03_MuralC"]
+material = SubResource("MuralC")
+size = Vector3(9, 5, 0.14)
+
+[sub_resource type="BoxShape3D" id="Shape_TealHostel_04"]
+size = Vector3(18, 16, 16)
+
+[sub_resource type="BoxMesh" id="Mesh_TealHostel_04"]
+material = SubResource("FadedTealMaterial")
+size = Vector3(18, 16, 16)
+
+[sub_resource type="BoxMesh" id="WarmFront_18_16"]
+material = SubResource("WarmWindowMaterial")
+size = Vector3(9, 0.42, 0.12)
+
+[sub_resource type="BoxMesh" id="WarmSide_18_16"]
+material = SubResource("WarmWindowMaterial")
+size = Vector3(0.12, 0.42, 8)
+
+[sub_resource type="BoxMesh" id="Roof_18_16"]
+material = SubResource("RoofTarMaterial")
+size = Vector3(16.56, 0.45, 14.72)
+
+[sub_resource type="BoxShape3D" id="Shape_PeachCafes_05"]
+size = Vector3(22, 20, 18)
+
+[sub_resource type="BoxMesh" id="Mesh_PeachCafes_05"]
+material = SubResource("PastelPeachMaterial")
+size = Vector3(22, 20, 18)
+
+[sub_resource type="BoxMesh" id="WarmFront_22_18"]
+material = SubResource("WarmWindowMaterial")
+size = Vector3(11, 0.42, 0.12)
+
+[sub_resource type="BoxMesh" id="WarmSide_22_18"]
+material = SubResource("WarmWindowMaterial")
+size = Vector3(0.12, 0.42, 9)
+
+[sub_resource type="BoxMesh" id="Roof_22_18"]
+material = SubResource("RoofTarMaterial")
+size = Vector3(20.24, 0.45, 16.56)
+
+[sub_resource type="BoxMesh" id="Mural_PeachCafes_05_MuralB"]
+material = SubResource("MuralB")
+size = Vector3(7.5, 4.5, 0.14)
+
+[sub_resource type="BoxShape3D" id="Shape_CreamCoop_06"]
+size = Vector3(24, 24, 20)
+
+[sub_resource type="BoxMesh" id="Mesh_CreamCoop_06"]
+material = SubResource("WarmCreamMaterial")
+size = Vector3(24, 24, 20)
+
+[sub_resource type="BoxMesh" id="WarmFront_24_20"]
+material = SubResource("WarmWindowMaterial")
+size = Vector3(12, 0.42, 0.12)
+
+[sub_resource type="BoxMesh" id="WarmSide_24_20"]
+material = SubResource("WarmWindowMaterial")
+size = Vector3(0.12, 0.42, 10)
+
+[sub_resource type="BoxMesh" id="Roof_24_20"]
+material = SubResource("RoofTarMaterial")
+size = Vector3(22.08, 0.45, 18.4)
+
+[sub_resource type="BoxMesh" id="Mural_CreamCoop_06_MuralA"]
+material = SubResource("MuralA")
+size = Vector3(8, 5.5, 0.14)
+
+[sub_resource type="BoxShape3D" id="Shape_OchreAnnex_07"]
+size = Vector3(18, 14, 18)
+
+[sub_resource type="BoxMesh" id="Mesh_OchreAnnex_07"]
+material = SubResource("OchreMaterial")
+size = Vector3(18, 14, 18)
+
+[sub_resource type="BoxMesh" id="WarmFront_18_18"]
+material = SubResource("WarmWindowMaterial")
+size = Vector3(9, 0.42, 0.12)
+
+[sub_resource type="BoxMesh" id="WarmSide_18_18"]
+material = SubResource("WarmWindowMaterial")
+size = Vector3(0.12, 0.42, 9)
+
+[sub_resource type="BoxMesh" id="Roof_18_18"]
+material = SubResource("RoofTarMaterial")
+size = Vector3(16.56, 0.45, 16.56)
+
+[node name="Tile_5_1" type="Node3D"]
+
+[node name="Terrain" type="Node3D" parent="."]
+
+[node name="GroundPlane" type="StaticBody3D" parent="Terrain"]
+position = Vector3(64, -0.08, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/GroundPlane"]
+shape = SubResource("GroundShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/GroundPlane"]
+mesh = SubResource("GroundMesh")
+
+[node name="Roads" type="Node3D" parent="."]
+
+[node name="Sidewalks" type="Node3D" parent="."]
+
+[node name="Curbs" type="Node3D" parent="."]
+
+[node name="Buildings" type="Node3D" parent="."]
+
+[node name="Market" type="Node3D" parent="."]
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="StringLights" type="Node3D" parent="."]
+
+[node name="VerticalRoad_WestEdge" type="StaticBody3D" parent="Roads"]
+position = Vector3(2, 0.05, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roads/VerticalRoad_WestEdge"]
+shape = SubResource("RoadV4Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Roads/VerticalRoad_WestEdge"]
+mesh = SubResource("RoadV4Mesh")
+
+[node name="VerticalSidewalkEast_WestEdge" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(6, 0.08, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/VerticalSidewalkEast_WestEdge"]
+shape = SubResource("SidewalkVShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/VerticalSidewalkEast_WestEdge"]
+mesh = SubResource("SidewalkVMesh")
+
+[node name="VerticalCurbEast_WestEdge" type="StaticBody3D" parent="Curbs"]
+position = Vector3(4.175, 0.175, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/VerticalCurbEast_WestEdge"]
+shape = SubResource("CurbVShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/VerticalCurbEast_WestEdge"]
+mesh = SubResource("CurbVMesh")
+
+[node name="VerticalRoad_64" type="StaticBody3D" parent="Roads"]
+position = Vector3(64, 0.05, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roads/VerticalRoad_64"]
+shape = SubResource("RoadV8Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Roads/VerticalRoad_64"]
+mesh = SubResource("RoadV8Mesh")
+
+[node name="VerticalSidewalkWest_64" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(58, 0.08, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/VerticalSidewalkWest_64"]
+shape = SubResource("SidewalkVShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/VerticalSidewalkWest_64"]
+mesh = SubResource("SidewalkVMesh")
+
+[node name="VerticalSidewalkEast_64" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(70, 0.08, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/VerticalSidewalkEast_64"]
+shape = SubResource("SidewalkVShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/VerticalSidewalkEast_64"]
+mesh = SubResource("SidewalkVMesh")
+
+[node name="VerticalCurbWest_64" type="StaticBody3D" parent="Curbs"]
+position = Vector3(59.825, 0.175, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/VerticalCurbWest_64"]
+shape = SubResource("CurbVShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/VerticalCurbWest_64"]
+mesh = SubResource("CurbVMesh")
+
+[node name="VerticalCurbEast_64" type="StaticBody3D" parent="Curbs"]
+position = Vector3(68.175, 0.175, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/VerticalCurbEast_64"]
+shape = SubResource("CurbVShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/VerticalCurbEast_64"]
+mesh = SubResource("CurbVMesh")
+
+[node name="HorizontalRoad_128" type="StaticBody3D" parent="Roads"]
+position = Vector3(64, 0.05, 2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roads/HorizontalRoad_128"]
+shape = SubResource("RoadH4Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Roads/HorizontalRoad_128"]
+mesh = SubResource("RoadH4Mesh")
+
+[node name="HorizontalSidewalkSouth_128" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(64, 0.08, 6)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/HorizontalSidewalkSouth_128"]
+shape = SubResource("SidewalkHShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/HorizontalSidewalkSouth_128"]
+mesh = SubResource("SidewalkHMesh")
+
+[node name="HorizontalCurbSouth_128" type="StaticBody3D" parent="Curbs"]
+position = Vector3(64, 0.175, 4.175)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/HorizontalCurbSouth_128"]
+shape = SubResource("CurbHShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/HorizontalCurbSouth_128"]
+mesh = SubResource("CurbHMesh")
+
+[node name="HorizontalRoad_192" type="StaticBody3D" parent="Roads"]
+position = Vector3(64, 0.05, 64)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roads/HorizontalRoad_192"]
+shape = SubResource("RoadH8Shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Roads/HorizontalRoad_192"]
+mesh = SubResource("RoadH8Mesh")
+
+[node name="HorizontalSidewalkNorth_192" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(64, 0.08, 58)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/HorizontalSidewalkNorth_192"]
+shape = SubResource("SidewalkHShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/HorizontalSidewalkNorth_192"]
+mesh = SubResource("SidewalkHMesh")
+
+[node name="HorizontalSidewalkSouth_192" type="StaticBody3D" parent="Sidewalks"]
+position = Vector3(64, 0.08, 70)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sidewalks/HorizontalSidewalkSouth_192"]
+shape = SubResource("SidewalkHShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sidewalks/HorizontalSidewalkSouth_192"]
+mesh = SubResource("SidewalkHMesh")
+
+[node name="HorizontalCurbNorth_192" type="StaticBody3D" parent="Curbs"]
+position = Vector3(64, 0.175, 59.825)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/HorizontalCurbNorth_192"]
+shape = SubResource("CurbHShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/HorizontalCurbNorth_192"]
+mesh = SubResource("CurbHMesh")
+
+[node name="HorizontalCurbSouth_192" type="StaticBody3D" parent="Curbs"]
+position = Vector3(64, 0.175, 68.175)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Curbs/HorizontalCurbSouth_192"]
+shape = SubResource("CurbHShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Curbs/HorizontalCurbSouth_192"]
+mesh = SubResource("CurbHMesh")
+
+[node name="BrickRooms_01" type="StaticBody3D" parent="Buildings"]
+position = Vector3(20, 12, 26)
+rotation = Vector3(0, 0.07, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/BrickRooms_01"]
+shape = SubResource("Shape_BrickRooms_01")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/BrickRooms_01"]
+mesh = SubResource("Mesh_BrickRooms_01")
+
+[node name="WarmWindowFront_1" type="MeshInstance3D" parent="Buildings/BrickRooms_01"]
+position = Vector3(0, -5.52, -9.065)
+mesh = SubResource("WarmFront_24_18")
+
+[node name="WarmWindowFront_2" type="MeshInstance3D" parent="Buildings/BrickRooms_01"]
+position = Vector3(0, 2.4, -9.065)
+mesh = SubResource("WarmFront_24_18")
+
+[node name="WarmWindowSide_2" type="MeshInstance3D" parent="Buildings/BrickRooms_01"]
+position = Vector3(12.065, 2.4, 0)
+mesh = SubResource("WarmSide_24_18")
+
+[node name="WarmWindowFront_3" type="MeshInstance3D" parent="Buildings/BrickRooms_01"]
+position = Vector3(0, 8.16, -9.065)
+mesh = SubResource("WarmFront_24_18")
+
+[node name="PatchyRoof" type="MeshInstance3D" parent="Buildings/BrickRooms_01"]
+position = Vector3(0, 12.24, 0)
+mesh = SubResource("Roof_24_18")
+
+[node name="WallMural" type="MeshInstance3D" parent="Buildings/BrickRooms_01"]
+position = Vector3(0, -1.2, -9.08)
+mesh = SubResource("Mural_BrickRooms_01_MuralA")
+
+[node name="OchreLiveWork_02" type="StaticBody3D" parent="Buildings"]
+position = Vector3(48, 9, 44)
+rotation = Vector3(0, -0.1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/OchreLiveWork_02"]
+shape = SubResource("Shape_OchreLiveWork_02")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/OchreLiveWork_02"]
+mesh = SubResource("Mesh_OchreLiveWork_02")
+
+[node name="WarmWindowFront_1" type="MeshInstance3D" parent="Buildings/OchreLiveWork_02"]
+position = Vector3(0, -4.14, -9.065)
+mesh = SubResource("WarmFront_20_18")
+
+[node name="WarmWindowFront_2" type="MeshInstance3D" parent="Buildings/OchreLiveWork_02"]
+position = Vector3(0, 1.8, -9.065)
+mesh = SubResource("WarmFront_20_18")
+
+[node name="WarmWindowSide_2" type="MeshInstance3D" parent="Buildings/OchreLiveWork_02"]
+position = Vector3(10.065, 1.8, 0)
+mesh = SubResource("WarmSide_20_18")
+
+[node name="WarmWindowFront_3" type="MeshInstance3D" parent="Buildings/OchreLiveWork_02"]
+position = Vector3(0, 6.12, -9.065)
+mesh = SubResource("WarmFront_20_18")
+
+[node name="PatchyRoof" type="MeshInstance3D" parent="Buildings/OchreLiveWork_02"]
+position = Vector3(0, 9.24, 0)
+mesh = SubResource("Roof_20_18")
+
+[node name="WallMural" type="MeshInstance3D" parent="Buildings/OchreLiveWork_02"]
+position = Vector3(10.08, -0.9, 0)
+mesh = SubResource("Mural_OchreLiveWork_02_MuralB")
+
+[node name="BlueWalkup_03" type="StaticBody3D" parent="Buildings"]
+position = Vector3(96, 14, 26)
+rotation = Vector3(0, -0.04, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/BlueWalkup_03"]
+shape = SubResource("Shape_BlueWalkup_03")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/BlueWalkup_03"]
+mesh = SubResource("Mesh_BlueWalkup_03")
+
+[node name="WarmWindowFront_1" type="MeshInstance3D" parent="Buildings/BlueWalkup_03"]
+position = Vector3(0, -6.44, -9.065)
+mesh = SubResource("WarmFront_24_18")
+
+[node name="WarmWindowFront_2" type="MeshInstance3D" parent="Buildings/BlueWalkup_03"]
+position = Vector3(0, 2.8, -9.065)
+mesh = SubResource("WarmFront_24_18")
+
+[node name="WarmWindowSide_2" type="MeshInstance3D" parent="Buildings/BlueWalkup_03"]
+position = Vector3(12.065, 2.8, 0)
+mesh = SubResource("WarmSide_24_18")
+
+[node name="WarmWindowFront_3" type="MeshInstance3D" parent="Buildings/BlueWalkup_03"]
+position = Vector3(0, 9.52, -9.065)
+mesh = SubResource("WarmFront_24_18")
+
+[node name="PatchyRoof" type="MeshInstance3D" parent="Buildings/BlueWalkup_03"]
+position = Vector3(0, 14.24, 0)
+mesh = SubResource("Roof_24_18")
+
+[node name="WallMural" type="MeshInstance3D" parent="Buildings/BlueWalkup_03"]
+position = Vector3(0, -1.4, -9.08)
+mesh = SubResource("Mural_BlueWalkup_03_MuralC")
+
+[node name="TealHostel_04" type="StaticBody3D" parent="Buildings"]
+position = Vector3(112, 8, 50)
+rotation = Vector3(0, 0.12, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/TealHostel_04"]
+shape = SubResource("Shape_TealHostel_04")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/TealHostel_04"]
+mesh = SubResource("Mesh_TealHostel_04")
+
+[node name="WarmWindowFront_1" type="MeshInstance3D" parent="Buildings/TealHostel_04"]
+position = Vector3(0, -3.68, -8.065)
+mesh = SubResource("WarmFront_18_16")
+
+[node name="WarmWindowFront_2" type="MeshInstance3D" parent="Buildings/TealHostel_04"]
+position = Vector3(0, 1.6, -8.065)
+mesh = SubResource("WarmFront_18_16")
+
+[node name="WarmWindowSide_2" type="MeshInstance3D" parent="Buildings/TealHostel_04"]
+position = Vector3(9.065, 1.6, 0)
+mesh = SubResource("WarmSide_18_16")
+
+[node name="WarmWindowFront_3" type="MeshInstance3D" parent="Buildings/TealHostel_04"]
+position = Vector3(0, 5.44, -8.065)
+mesh = SubResource("WarmFront_18_16")
+
+[node name="PatchyRoof" type="MeshInstance3D" parent="Buildings/TealHostel_04"]
+position = Vector3(0, 8.24, 0)
+mesh = SubResource("Roof_18_16")
+
+[node name="PeachCafes_05" type="StaticBody3D" parent="Buildings"]
+position = Vector3(26, 10, 92)
+rotation = Vector3(0, -0.08, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/PeachCafes_05"]
+shape = SubResource("Shape_PeachCafes_05")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/PeachCafes_05"]
+mesh = SubResource("Mesh_PeachCafes_05")
+
+[node name="WarmWindowFront_1" type="MeshInstance3D" parent="Buildings/PeachCafes_05"]
+position = Vector3(0, -4.6, -9.065)
+mesh = SubResource("WarmFront_22_18")
+
+[node name="WarmWindowFront_2" type="MeshInstance3D" parent="Buildings/PeachCafes_05"]
+position = Vector3(0, 2, -9.065)
+mesh = SubResource("WarmFront_22_18")
+
+[node name="WarmWindowSide_2" type="MeshInstance3D" parent="Buildings/PeachCafes_05"]
+position = Vector3(11.065, 2, 0)
+mesh = SubResource("WarmSide_22_18")
+
+[node name="WarmWindowFront_3" type="MeshInstance3D" parent="Buildings/PeachCafes_05"]
+position = Vector3(0, 6.8, -9.065)
+mesh = SubResource("WarmFront_22_18")
+
+[node name="PatchyRoof" type="MeshInstance3D" parent="Buildings/PeachCafes_05"]
+position = Vector3(0, 10.24, 0)
+mesh = SubResource("Roof_22_18")
+
+[node name="WallMural" type="MeshInstance3D" parent="Buildings/PeachCafes_05"]
+position = Vector3(0, -1, -9.08)
+mesh = SubResource("Mural_PeachCafes_05_MuralB")
+
+[node name="CreamCoop_06" type="StaticBody3D" parent="Buildings"]
+position = Vector3(104, 12, 96)
+rotation = Vector3(0, 0.06, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/CreamCoop_06"]
+shape = SubResource("Shape_CreamCoop_06")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/CreamCoop_06"]
+mesh = SubResource("Mesh_CreamCoop_06")
+
+[node name="WarmWindowFront_1" type="MeshInstance3D" parent="Buildings/CreamCoop_06"]
+position = Vector3(0, -5.52, -10.065)
+mesh = SubResource("WarmFront_24_20")
+
+[node name="WarmWindowFront_2" type="MeshInstance3D" parent="Buildings/CreamCoop_06"]
+position = Vector3(0, 2.4, -10.065)
+mesh = SubResource("WarmFront_24_20")
+
+[node name="WarmWindowSide_2" type="MeshInstance3D" parent="Buildings/CreamCoop_06"]
+position = Vector3(12.065, 2.4, 0)
+mesh = SubResource("WarmSide_24_20")
+
+[node name="WarmWindowFront_3" type="MeshInstance3D" parent="Buildings/CreamCoop_06"]
+position = Vector3(0, 8.16, -10.065)
+mesh = SubResource("WarmFront_24_20")
+
+[node name="PatchyRoof" type="MeshInstance3D" parent="Buildings/CreamCoop_06"]
+position = Vector3(0, 12.24, 0)
+mesh = SubResource("Roof_24_20")
+
+[node name="WallMural" type="MeshInstance3D" parent="Buildings/CreamCoop_06"]
+position = Vector3(0, -1.2, -10.08)
+mesh = SubResource("Mural_CreamCoop_06_MuralA")
+
+[node name="OchreAnnex_07" type="StaticBody3D" parent="Buildings"]
+position = Vector3(46, 7, 112)
+rotation = Vector3(0, 0.18, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/OchreAnnex_07"]
+shape = SubResource("Shape_OchreAnnex_07")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/OchreAnnex_07"]
+mesh = SubResource("Mesh_OchreAnnex_07")
+
+[node name="WarmWindowFront_1" type="MeshInstance3D" parent="Buildings/OchreAnnex_07"]
+position = Vector3(0, -3.22, -9.065)
+mesh = SubResource("WarmFront_18_18")
+
+[node name="WarmWindowFront_2" type="MeshInstance3D" parent="Buildings/OchreAnnex_07"]
+position = Vector3(0, 1.4, -9.065)
+mesh = SubResource("WarmFront_18_18")
+
+[node name="WarmWindowSide_2" type="MeshInstance3D" parent="Buildings/OchreAnnex_07"]
+position = Vector3(9.065, 1.4, 0)
+mesh = SubResource("WarmSide_18_18")
+
+[node name="WarmWindowFront_3" type="MeshInstance3D" parent="Buildings/OchreAnnex_07"]
+position = Vector3(0, 4.76, -9.065)
+mesh = SubResource("WarmFront_18_18")
+
+[node name="PatchyRoof" type="MeshInstance3D" parent="Buildings/OchreAnnex_07"]
+position = Vector3(0, 7.24, 0)
+mesh = SubResource("Roof_18_18")
+
+[node name="MarketStall_1" type="StaticBody3D" parent="Market"]
+position = Vector3(28, 0.6, 82)
+rotation = Vector3(0, -0.52, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Market/MarketStall_1"]
+shape = SubResource("StallBaseShape")
+
+[node name="Counter" type="MeshInstance3D" parent="Market/MarketStall_1"]
+mesh = SubResource("StallBaseMesh")
+
+[node name="Canopy" type="MeshInstance3D" parent="Market/MarketStall_1"]
+position = Vector3(0, 1.05, 0)
+mesh = SubResource("CanopyYellowMesh")
+
+[node name="MarketStall_2" type="StaticBody3D" parent="Market"]
+position = Vector3(40, 0.6, 96)
+rotation = Vector3(0, 0.36, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Market/MarketStall_2"]
+shape = SubResource("StallBaseShape")
+
+[node name="Counter" type="MeshInstance3D" parent="Market/MarketStall_2"]
+mesh = SubResource("StallBaseMesh")
+
+[node name="Canopy" type="MeshInstance3D" parent="Market/MarketStall_2"]
+position = Vector3(0, 1.05, 0)
+mesh = SubResource("CanopyBlueMesh")
+
+[node name="MarketStall_3" type="StaticBody3D" parent="Market"]
+position = Vector3(50, 0.6, 84)
+rotation = Vector3(0, -0.12, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Market/MarketStall_3"]
+shape = SubResource("StallBaseShape")
+
+[node name="Counter" type="MeshInstance3D" parent="Market/MarketStall_3"]
+mesh = SubResource("StallBaseMesh")
+
+[node name="Canopy" type="MeshInstance3D" parent="Market/MarketStall_3"]
+position = Vector3(0, 1.05, 0)
+mesh = SubResource("CanopyRedMesh")
+
+[node name="MarketStall_4" type="StaticBody3D" parent="Market"]
+position = Vector3(92, 0.6, 82)
+rotation = Vector3(0, 0.48, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Market/MarketStall_4"]
+shape = SubResource("StallBaseShape")
+
+[node name="Counter" type="MeshInstance3D" parent="Market/MarketStall_4"]
+mesh = SubResource("StallBaseMesh")
+
+[node name="Canopy" type="MeshInstance3D" parent="Market/MarketStall_4"]
+position = Vector3(0, 1.05, 0)
+mesh = SubResource("CanopyYellowMesh")
+
+[node name="MarketStall_5" type="StaticBody3D" parent="Market"]
+position = Vector3(110, 0.6, 112)
+rotation = Vector3(0, -0.34, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Market/MarketStall_5"]
+shape = SubResource("StallBaseShape")
+
+[node name="Counter" type="MeshInstance3D" parent="Market/MarketStall_5"]
+mesh = SubResource("StallBaseMesh")
+
+[node name="Canopy" type="MeshInstance3D" parent="Market/MarketStall_5"]
+position = Vector3(0, 1.05, 0)
+mesh = SubResource("CanopyBlueMesh")
+
+[node name="ScatteredCrate_1" type="StaticBody3D" parent="Props"]
+position = Vector3(16, 0.55, 76)
+rotation = Vector3(0, 0.1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/ScatteredCrate_1"]
+shape = SubResource("CrateShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/ScatteredCrate_1"]
+mesh = SubResource("CrateMesh")
+
+[node name="ScatteredCrate_2" type="StaticBody3D" parent="Props"]
+position = Vector3(20, 0.55, 84)
+rotation = Vector3(0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/ScatteredCrate_2"]
+shape = SubResource("CrateShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/ScatteredCrate_2"]
+mesh = SubResource("CrateMesh")
+
+[node name="ScatteredCrate_3" type="StaticBody3D" parent="Props"]
+position = Vector3(52, 0.55, 76)
+rotation = Vector3(0, 0.2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/ScatteredCrate_3"]
+shape = SubResource("CrateShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/ScatteredCrate_3"]
+mesh = SubResource("CrateMesh")
+
+[node name="ScatteredCrate_4" type="StaticBody3D" parent="Props"]
+position = Vector3(56, 0.55, 104)
+rotation = Vector3(0, 0.7, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/ScatteredCrate_4"]
+shape = SubResource("CrateShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/ScatteredCrate_4"]
+mesh = SubResource("CrateMesh")
+
+[node name="ScatteredCrate_5" type="StaticBody3D" parent="Props"]
+position = Vector3(86, 0.55, 108)
+rotation = Vector3(0, -0.4, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/ScatteredCrate_5"]
+shape = SubResource("CrateShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/ScatteredCrate_5"]
+mesh = SubResource("CrateMesh")
+
+[node name="ScatteredCrate_6" type="StaticBody3D" parent="Props"]
+position = Vector3(118, 0.55, 76)
+rotation = Vector3(0, 0.3, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/ScatteredCrate_6"]
+shape = SubResource("CrateShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/ScatteredCrate_6"]
+mesh = SubResource("CrateMesh")
+
+[node name="ScatteredCrate_7" type="StaticBody3D" parent="Props"]
+position = Vector3(114, 0.55, 118)
+rotation = Vector3(0, -0.2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/ScatteredCrate_7"]
+shape = SubResource("CrateShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/ScatteredCrate_7"]
+mesh = SubResource("CrateMesh")
+
+[node name="ScatteredCrate_8" type="StaticBody3D" parent="Props"]
+position = Vector3(36, 0.55, 116)
+rotation = Vector3(0, 0.6, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/ScatteredCrate_8"]
+shape = SubResource("CrateShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/ScatteredCrate_8"]
+mesh = SubResource("CrateMesh")
+
+[node name="HandmadePlanter_1" type="StaticBody3D" parent="Props"]
+position = Vector3(16, 0.4, 44)
+rotation = Vector3(0, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/HandmadePlanter_1"]
+shape = SubResource("PlanterShape")
+
+[node name="Box" type="MeshInstance3D" parent="Props/HandmadePlanter_1"]
+mesh = SubResource("PlanterMesh")
+
+[node name="Leaves" type="MeshInstance3D" parent="Props/HandmadePlanter_1"]
+position = Vector3(0, 0.58, 0)
+mesh = SubResource("PlantLeafMesh")
+
+[node name="HandmadePlanter_2" type="StaticBody3D" parent="Props"]
+position = Vector3(54, 0.4, 52)
+rotation = Vector3(0, -0.4, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/HandmadePlanter_2"]
+shape = SubResource("PlanterShape")
+
+[node name="Box" type="MeshInstance3D" parent="Props/HandmadePlanter_2"]
+mesh = SubResource("PlanterMesh")
+
+[node name="Leaves" type="MeshInstance3D" parent="Props/HandmadePlanter_2"]
+position = Vector3(0, 0.58, 0)
+mesh = SubResource("PlantLeafMesh")
+
+[node name="HandmadePlanter_3" type="StaticBody3D" parent="Props"]
+position = Vector3(84, 0.4, 42)
+rotation = Vector3(0, 0.2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/HandmadePlanter_3"]
+shape = SubResource("PlanterShape")
+
+[node name="Box" type="MeshInstance3D" parent="Props/HandmadePlanter_3"]
+mesh = SubResource("PlanterMesh")
+
+[node name="Leaves" type="MeshInstance3D" parent="Props/HandmadePlanter_3"]
+position = Vector3(0, 0.58, 0)
+mesh = SubResource("PlantLeafMesh")
+
+[node name="HandmadePlanter_4" type="StaticBody3D" parent="Props"]
+position = Vector3(116, 0.4, 44)
+rotation = Vector3(0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/HandmadePlanter_4"]
+shape = SubResource("PlanterShape")
+
+[node name="Box" type="MeshInstance3D" parent="Props/HandmadePlanter_4"]
+mesh = SubResource("PlanterMesh")
+
+[node name="Leaves" type="MeshInstance3D" parent="Props/HandmadePlanter_4"]
+position = Vector3(0, 0.58, 0)
+mesh = SubResource("PlantLeafMesh")
+
+[node name="HandmadePlanter_5" type="StaticBody3D" parent="Props"]
+position = Vector3(22, 0.4, 116)
+rotation = Vector3(0, 0.1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/HandmadePlanter_5"]
+shape = SubResource("PlanterShape")
+
+[node name="Box" type="MeshInstance3D" parent="Props/HandmadePlanter_5"]
+mesh = SubResource("PlanterMesh")
+
+[node name="Leaves" type="MeshInstance3D" parent="Props/HandmadePlanter_5"]
+position = Vector3(0, 0.58, 0)
+mesh = SubResource("PlantLeafMesh")
+
+[node name="HandmadePlanter_6" type="StaticBody3D" parent="Props"]
+position = Vector3(86, 0.4, 78)
+rotation = Vector3(0, 0.3, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/HandmadePlanter_6"]
+shape = SubResource("PlanterShape")
+
+[node name="Box" type="MeshInstance3D" parent="Props/HandmadePlanter_6"]
+mesh = SubResource("PlanterMesh")
+
+[node name="Leaves" type="MeshInstance3D" parent="Props/HandmadePlanter_6"]
+position = Vector3(0, 0.58, 0)
+mesh = SubResource("PlantLeafMesh")
+
+[node name="StringRun_A" type="Node3D" parent="StringLights"]
+
+[node name="Bulb_1" type="MeshInstance3D" parent="StringLights/StringRun_A"]
+position = Vector3(18, 8.4, 38)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_2" type="MeshInstance3D" parent="StringLights/StringRun_A"]
+position = Vector3(23.143, 7.662, 39.429)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_3" type="MeshInstance3D" parent="StringLights/StringRun_A"]
+position = Vector3(28.286, 7.071, 40.857)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_4" type="MeshInstance3D" parent="StringLights/StringRun_A"]
+position = Vector3(33.429, 6.743, 42.286)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_5" type="MeshInstance3D" parent="StringLights/StringRun_A"]
+position = Vector3(38.571, 6.743, 43.714)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_6" type="MeshInstance3D" parent="StringLights/StringRun_A"]
+position = Vector3(43.714, 7.071, 45.143)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_7" type="MeshInstance3D" parent="StringLights/StringRun_A"]
+position = Vector3(48.857, 7.662, 46.571)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_8" type="MeshInstance3D" parent="StringLights/StringRun_A"]
+position = Vector3(54, 8.4, 48)
+mesh = SubResource("StringLightMesh")
+
+[node name="StringRun_A_WarmPool" type="OmniLight3D" parent="StringLights"]
+position = Vector3(36, 6.7, 43)
+light_color = Color(1, 0.62, 0.25, 1)
+light_energy = 0.35
+omni_range = 8
+shadow_enabled = false
+
+[node name="StringRun_B" type="Node3D" parent="StringLights"]
+
+[node name="Bulb_1" type="MeshInstance3D" parent="StringLights/StringRun_B"]
+position = Vector3(84, 8.6, 38)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_2" type="MeshInstance3D" parent="StringLights/StringRun_B"]
+position = Vector3(88.571, 7.949, 39.714)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_3" type="MeshInstance3D" parent="StringLights/StringRun_B"]
+position = Vector3(93.143, 7.427, 41.429)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_4" type="MeshInstance3D" parent="StringLights/StringRun_B"]
+position = Vector3(97.714, 7.138, 43.143)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_5" type="MeshInstance3D" parent="StringLights/StringRun_B"]
+position = Vector3(102.286, 7.138, 44.857)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_6" type="MeshInstance3D" parent="StringLights/StringRun_B"]
+position = Vector3(106.857, 7.427, 46.571)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_7" type="MeshInstance3D" parent="StringLights/StringRun_B"]
+position = Vector3(111.429, 7.949, 48.286)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_8" type="MeshInstance3D" parent="StringLights/StringRun_B"]
+position = Vector3(116, 8.6, 50)
+mesh = SubResource("StringLightMesh")
+
+[node name="StringRun_B_WarmPool" type="OmniLight3D" parent="StringLights"]
+position = Vector3(100, 7.1, 44)
+light_color = Color(1, 0.62, 0.25, 1)
+light_energy = 0.35
+omni_range = 8
+shadow_enabled = false
+
+[node name="StringRun_C" type="Node3D" parent="StringLights"]
+
+[node name="Bulb_1" type="MeshInstance3D" parent="StringLights/StringRun_C"]
+position = Vector3(28, 6.8, 88)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_2" type="MeshInstance3D" parent="StringLights/StringRun_C"]
+position = Vector3(32.667, 6.15, 91.333)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_3" type="MeshInstance3D" parent="StringLights/StringRun_C"]
+position = Vector3(37.333, 5.674, 94.667)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_4" type="MeshInstance3D" parent="StringLights/StringRun_C"]
+position = Vector3(42, 5.5, 98)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_5" type="MeshInstance3D" parent="StringLights/StringRun_C"]
+position = Vector3(46.667, 5.674, 101.333)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_6" type="MeshInstance3D" parent="StringLights/StringRun_C"]
+position = Vector3(51.333, 6.15, 104.667)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_7" type="MeshInstance3D" parent="StringLights/StringRun_C"]
+position = Vector3(56, 6.8, 108)
+mesh = SubResource("StringLightMesh")
+
+[node name="StringRun_C_WarmPool" type="OmniLight3D" parent="StringLights"]
+position = Vector3(42, 5.5, 98)
+light_color = Color(1, 0.62, 0.25, 1)
+light_energy = 0.35
+omni_range = 8
+shadow_enabled = false
+
+[node name="StringRun_D" type="Node3D" parent="StringLights"]
+
+[node name="Bulb_1" type="MeshInstance3D" parent="StringLights/StringRun_D"]
+position = Vector3(86, 7.2, 90)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_2" type="MeshInstance3D" parent="StringLights/StringRun_D"]
+position = Vector3(91.333, 6.4, 93.667)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_3" type="MeshInstance3D" parent="StringLights/StringRun_D"]
+position = Vector3(96.667, 5.814, 97.333)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_4" type="MeshInstance3D" parent="StringLights/StringRun_D"]
+position = Vector3(102, 5.6, 101)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_5" type="MeshInstance3D" parent="StringLights/StringRun_D"]
+position = Vector3(107.333, 5.814, 104.667)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_6" type="MeshInstance3D" parent="StringLights/StringRun_D"]
+position = Vector3(112.667, 6.4, 108.333)
+mesh = SubResource("StringLightMesh")
+
+[node name="Bulb_7" type="MeshInstance3D" parent="StringLights/StringRun_D"]
+position = Vector3(118, 7.2, 112)
+mesh = SubResource("StringLightMesh")
+
+[node name="StringRun_D_WarmPool" type="OmniLight3D" parent="StringLights"]
+position = Vector3(102, 5.6, 101)
+light_color = Color(1, 0.62, 0.25, 1)
+light_energy = 0.35
+omni_range = 8
+shadow_enabled = false
