@@ -2,6 +2,11 @@
 
 VIBE CITY is an open-world game about cheerful AI agents politely occupying a pastel Miami, district by district, while you play the human resistance reclaiming streets, vehicles, and territory.
 
+| | |
+|---|---|
+| ![Ring road](docs/media/ring_road.png) | ![Conversion zone](docs/media/conversion_zone.png) |
+| Driving the ring road | Agent-converted territory |
+
 ## Requirements
 
 - Godot 4.6+
