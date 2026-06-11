@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/playground/playground.tscn" id="1_playground"]
+[ext_resource type="Script" path="res://scripts/demo/demo_director.gd" id="2_director"]
+
+[node name="DemoScene" type="Node3D"]
+
+[node name="Playground" parent="." instance=ExtResource("1_playground")]
+
+[node name="DemoDirector" type="Node" parent="."]
+script = ExtResource("2_director")

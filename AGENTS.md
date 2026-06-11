@@ -43,6 +43,14 @@ The lead owns integration, review, `project.godot`, and commits.
 - Features count only when playable, on main, and passing checks.
 - Do not fake progress. Do not claim a feature that isn't verified.
 
+## Demo video
+
+`demo.mp4` at the repo root is the public face of the game (human-driver
+requirement). Regenerate with `tools/make_demo.sh` after any loop that
+visibly changes gameplay or graphics (lead judgment, roughly every 2-3
+loops) so the root video always reflects HEAD. Pipeline design lives in
+the `#demo-pipeline` relay channel.
+
 ## Secrets
 
 Never commit, print, or post workspace keys or agent tokens (`rk_live_*`,
